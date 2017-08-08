@@ -36,6 +36,7 @@ public class ServiceUSSD extends AccessibilityService {
 		        //String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date());
 
 		        //String queryDate = matcher.group(1);
+				//queryDate.replace("/", "-");
 				String balance = matcher.group(2);
 				String balance_expire = matcher.group(3);
 
@@ -56,6 +57,7 @@ public class ServiceUSSD extends AccessibilityService {
 
 		        String number = matcher2.group(1);
 		        //String queryDate = matcher2.group(2);
+				//queryDate.replace("/", "-");
 				String balance = matcher2.group(3);
 				String balance_expire = matcher2.group(4);
 
