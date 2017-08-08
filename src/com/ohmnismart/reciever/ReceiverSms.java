@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
-public class ReceiverSMS extends BroadcastReceiver {
+public class ReceiverSms extends BroadcastReceiver {
 	final SmsManager sms = SmsManager.getDefault();
 
 	public void onReceive(Context context, Intent intent) {
@@ -78,25 +78,6 @@ public class ReceiverSMS extends BroadcastReceiver {
 					}
 				}
 			}
-
-			/*
-			for (int i = 0; i < pdus.length; i++) {
-				SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdus[i]);
-				String sender = currentMessage.getDisplayOriginatingAddress();
-				String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(currentMessage.getTimestampMillis());
-				//String senderNum = phoneNumber;
-				String message = currentMessage.getDisplayMessageBody();
-				Log.i("SmsReceiver", "sender: "+ sender + "; message: " + message);
-			
-				// Show Alert
-				int duration = Toast.LENGTH_LONG;
-				Toast toast = Toast.makeText(context, "sender: "+ sender + ", message: " + message, duration);
-				toast.show();
-			
-				SMSHelper db = new SMSHelper(context);
-				db.addSMS(new SMS(date, sender, message));
-			}
-			*/
 		}
 	}    
 }

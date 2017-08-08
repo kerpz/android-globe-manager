@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +28,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
  
 public class FragmentListSim extends Fragment implements OnItemClickListener, OnItemLongClickListener {
  
-	public static final String ARG_ITEM_ID = "list_db";
+	public static final String ARG_ITEM_ID = "list_sim";
+	private static final int RESULT_SETTINGS = 1;
 
 	Activity activity;
 	ListView simListView;
@@ -118,12 +121,14 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	    //menu.setHeaderTitle("Choose what to do");
 	    menu.add(0, 0, 0, "Edit");
 	    menu.add(0, 1 ,1, "Delete");
-	    menu.add(0, 2 ,2, "Get Status");
+	    menu.add(0, 2 ,2, "Get Balance");
 	    menu.add(0, 3 ,3, "Send Load");
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem menuItem) {
+		String code;
+		Intent i;
 	    switch (menuItem.getItemId()) {
 	        case 0:
 				Bundle arguments = new Bundle();
@@ -135,6 +140,12 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	        case 1:
 				db.deleteSim(sim);
 				simListAdapter.remove(sim);
+	            break;
+	        case 2:
+	        	// Check balance @ USSD
+				code = "*143*2*1*2*"+ sim.getNumber() + Uri.encode("#");
+				i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+	        	startActivityForResult(i, RESULT_SETTINGS);
 	            break;
 	    }
 	    return true;

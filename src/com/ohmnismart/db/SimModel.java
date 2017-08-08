@@ -127,8 +127,8 @@ public class SimModel extends SQLiteOpenHelper {
 		values.put(SIM_BALANCE, sim.getBalance());
 		values.put(SIM_BALANCE_EXPIRE, sim.getBalanceExpire());
 
-		return db.update(SIM_TABLE, values, SIM_ID + " = ?",
-				new String[] { String.valueOf(sim.getID()) });
+		return db.update(SIM_TABLE, values, SIM_NUMBER + " = ?",
+				new String[] { String.valueOf(sim.getNumber()) });
 	}
 
 	// Delete single row
