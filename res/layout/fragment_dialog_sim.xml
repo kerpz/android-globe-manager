@@ -1,0 +1,70 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
+        <EditText
+            android:id="@+id/etNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/number"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/etExpire"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etNumber"
+            android:hint="@string/expire"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/etBalance"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etExpire"
+            android:hint="@string/balance"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/etBalanceExpire"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etBalance"
+	        android:inputType="textUri"
+            android:hint="@string/balance_expire"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:id="@+id/layout_submit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/etBalanceExpire"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/button_add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/add"
+                style="?android:attr/borderlessButtonStyle" />
+
+            <Button
+                android:id="@+id/button_reset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/reset"
+                style="?android:attr/borderlessButtonStyle" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

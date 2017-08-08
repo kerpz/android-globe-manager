@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_ussd" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefAutoRegister"
+            android:summary="@string/pref_auto_register_summary"
+            android:title="@string/pref_auto_register" >
+        </CheckBoxPreference>
+        <EditTextPreference 
+            	android:title="@string/pref_ussd_register" 
+            	android:summary="@string/pref_ussd_register_summary" 
+            	android:key="prefUSSDRegister"
+            	android:defaultValue="*143*2*1*1#" />
+        <EditTextPreference 
+            	android:title="@string/pref_ussd_status" 
+            	android:summary="@string/pref_ussd_status_summary" 
+            	android:key="prefUSSDStatus"
+            	android:defaultValue="*143*1*7#" />
+        <EditTextPreference 
+            	android:title="@string/pref_ussd_balance" 
+            	android:summary="@string/pref_ussd_balance_summary" 
+            	android:key="prefUSSDBalance"
+            	android:defaultValue="*143*2*1*1#" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/pref_update_setting" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefSendReport"
+            android:summary="@string/pref_send_report_summary"
+            android:title="@string/pref_send_report" >
+        </CheckBoxPreference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
