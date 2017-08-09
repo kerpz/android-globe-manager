@@ -58,11 +58,15 @@ public class ActivityPreferences extends PreferenceActivity {
 		private void updatePreference(Preference preference) {
 			if (preference instanceof ListPreference) {
 				ListPreference listPreference = (ListPreference) preference;
-				preference.setSummary(listPreference.getValue());
+				preference.setSummary(listPreference.getEntry());
 			}
 			else if (preference instanceof EditTextPreference) {
 				EditTextPreference editTextPrference = (EditTextPreference) preference;
 				preference.setSummary(editTextPrference.getText());
+			}
+			else if (preference instanceof PreferenceTime) {
+				PreferenceTime timePreference = (PreferenceTime) preference;
+				preference.setSummary(timePreference.getText());
 			}
         }
 	}

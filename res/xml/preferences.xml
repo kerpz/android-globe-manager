@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/pref_ussd" >
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="prefAutoRegister"
-            android:summary="@string/pref_auto_register_summary"
-            android:title="@string/pref_auto_register" >
-        </CheckBoxPreference>
-        <EditTextPreference 
-            	android:title="@string/pref_ussd_register" 
-            	android:summary="@string/pref_ussd_register_summary" 
-            	android:key="prefUSSDRegister"
-            	android:defaultValue="*143*2*1*1#" />
-        <EditTextPreference 
-            	android:title="@string/pref_ussd_status" 
-            	android:summary="@string/pref_ussd_status_summary" 
-            	android:key="prefUSSDStatus"
-            	android:defaultValue="*143*1*7#" />
-        <EditTextPreference 
-            	android:title="@string/pref_ussd_balance" 
-            	android:summary="@string/pref_ussd_balance_summary" 
-            	android:key="prefUSSDBalance"
-            	android:defaultValue="*143*2*1*1#" />
+	<PreferenceCategory android:title="@string/pref_register" >
+		<CheckBoxPreference
+			android:title="@string/pref_auto_register"
+			android:summary="@string/pref_auto_register_summary"
+			android:key="pref_auto_register"
+			android:defaultValue="false" >
+		</CheckBoxPreference>
+		<EditTextPreference 
+			android:title="@string/pref_auto_register_schedule" 
+			android:summary="@string/pref_auto_register_schedule_summary" 
+			android:key="pref_auto_register_schedule"
+			android:defaultValue="1970-01-01 00:00:00" />
+	</PreferenceCategory>
+	<com.ohmnismart.ui.PreferenceTime 
+			android:title="@string/pref_time_test" 
+			android:summary="@string/pref_time_test_summary" 
+			android:key="pref_time_test"
+			android:defaultValue="00:00" />
+	<ListPreference
+	    android:title="Query Method"
+		android:summary="Select the type of query method"
+		android:key="pref_query_method"
+		android:defaultValue="1"
+		android:entries="@array/listArray"
+		android:entryValues="@array/listValues" />
+	<PreferenceCategory android:title="@string/pref_ussd" >
+		<EditTextPreference 
+			android:title="@string/pref_ussd_register" 
+			android:summary="@string/pref_ussd_register_summary" 
+			android:key="pref_ussd_register"
+			android:defaultValue="*143*2*1*1#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_status" 
+			android:summary="@string/pref_ussd_status_summary" 
+			android:key="pref_ussd_status"
+			android:defaultValue="*143*1*7#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_balance" 
+			android:summary="@string/pref_ussd_balance_summary" 
+			android:key="pref_ussd_balance"
+			android:defaultValue="*143*2*1*1#" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/pref_update_setting" >
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="prefSendReport"
-            android:summary="@string/pref_send_report_summary"
-            android:title="@string/pref_send_report" >
-        </CheckBoxPreference>
-
+		<CheckBoxPreference
+			android:title="@string/pref_send_report"
+			android:summary="@string/pref_send_report_summary"
+			android:key="pref_send_report"
+			android:defaultValue="false" >
+		</CheckBoxPreference>
     </PreferenceCategory>
 
 </PreferenceScreen>

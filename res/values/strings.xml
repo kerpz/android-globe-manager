@@ -29,10 +29,18 @@
     <string name="pauseButtonLabel">Pause</string>
     <string name="wifiButtonLabel">OFF</string>
     
-    <string name="pref_ussd">USSD Preferences</string>
+    <string name="pref_register">Register Preferences</string>
 
     <string name="pref_auto_register">Auto Register</string>
     <string name="pref_auto_register_summary">Auto Register</string>
+
+    <string name="pref_auto_register_schedule">Auto Register Schedule</string>
+    <string name="pref_auto_register_schedule_summary">Auto Register Schedule</string>
+
+    <string name="pref_time_test">Time Preferences</string>
+    <string name="pref_time_test_summary">Time Preferences</string>
+    
+    <string name="pref_ussd">USSD Preferences</string>
 
     <string name="pref_ussd_register">USSD Register Code</string>
     <string name="pref_ussd_register_summary">USSD Register Code</string>

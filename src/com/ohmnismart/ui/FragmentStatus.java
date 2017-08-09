@@ -32,7 +32,9 @@ import android.telephony.CellSignalStrengthGsm;
 import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellSignalStrengthWcdma;
 import android.telephony.TelephonyManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -79,22 +81,20 @@ public class FragmentStatus extends Fragment {
         tvDataExpire = (TextView) view.findViewById(R.id.tvDataExpire);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-
 		updateView();
 		
-		/*
-		tvData.setOnLongClickListener(new View.OnLongClickListener() {
+		tvDataExpire.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View arg0) {
 				// TODO Auto-generated method stub
-                registerForContextMenu(tvData);
-                activity.openContextMenu(tvData);
+                registerForContextMenu(tvDataExpire);
+                activity.openContextMenu(tvDataExpire);
 				return false;
 			}
 		});
-		*/
     	
-    	tvDataExpire.setOnLongClickListener(new View.OnLongClickListener() {
+    	/*
+		tvDataExpire.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -143,6 +143,7 @@ public class FragmentStatus extends Fragment {
 				return false;
 			}
 		});
+		*/
     	
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -227,6 +228,70 @@ public class FragmentStatus extends Fragment {
         }
 
         return view;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+	    //menu.setHeaderTitle("Choose what to do");
+	    menu.add(0, 0 ,0, "Edit Date");
+	    menu.add(0, 1, 1, "Edit Time");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem menuItem) {
+        //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //String videoRtspUrl = sharedPrefs.getString("prefHost", "rtsp://kerpz.no-ip.org/ch1.h264");
+    	Calendar calendar = Calendar.getInstance();
+
+    	AccountModel db = new AccountModel(activity);
+        db.readSync();
+
+        try {
+			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        mYear = calendar.get(Calendar.YEAR);
+        mMonth = calendar.get(Calendar.MONTH);;
+        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        mHour = calendar.get(Calendar.HOUR);
+        mMinute = calendar.get(Calendar.MINUTE);
+        mSecond = calendar.get(Calendar.SECOND);
+
+        switch (menuItem.getItemId()) {
+	        case 0:
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int month, int day) {
+                            	mYear = year;
+                            	mMonth = month;
+                            	mDay = day;
+                            }
+                        }, mYear, mMonth, mDay);
+    	            datePickerDialog.show();
+	            break;
+	        case 1:
+                TimePickerDialog mTimePicker = new TimePickerDialog(activity,
+                    	new TimePickerDialog.OnTimeSetListener() {
+    	                    @Override
+    	                    public void onTimeSet(TimePicker view, int hour,
+    	                    						int minute) {
+                            	mHour = hour;
+                            	mMinute = minute;
+    	                    }
+                    }, mHour, mMinute, false);
+                    //mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
+	            break;
+	    }
+        tvDataExpire.setText(mMonth+"/"+mDay+"/"+mYear+" "+mHour+":"+mMinute+":"+mSecond);
+
+        db.setDataExpire(mYear+"-"+mMonth+"-"+mDay+" "+mHour+":"+mMinute+":"+mSecond);
+        db.writeSync();
+
+	    return true;
 	}
 
 	public void updateView() {
