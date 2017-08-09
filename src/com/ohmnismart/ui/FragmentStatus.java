@@ -22,11 +22,22 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
+import android.telephony.CellInfoGsm;
+import android.telephony.CellInfoLte;
+import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrengthCdma;
+import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthLte;
+import android.telephony.CellSignalStrengthWcdma;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -41,6 +52,7 @@ public class FragmentStatus extends Fragment {
     TextView tvBalanceExpire;
     TextView tvData;
     TextView tvDataExpire;
+    ProgressBar progressBar;
 
 	int mYear;
     int mMonth;
@@ -65,6 +77,7 @@ public class FragmentStatus extends Fragment {
         tvData = (TextView) view.findViewById(R.id.tvData);
         tvBalanceExpire = (TextView) view.findViewById(R.id.tvBalanceExpire);
         tvDataExpire = (TextView) view.findViewById(R.id.tvDataExpire);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
 
 		updateView();
@@ -242,5 +255,32 @@ public class FragmentStatus extends Fragment {
 			e.printStackTrace();
 		}
     	tvBalanceExpire.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+    	
+    	TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+    	// for example value of first element
+    	CellInfo cellInfo = (CellInfo) telephonyManager.getAllCellInfo().get(0);
+    	int level = 0;
+    	if (cellInfo instanceof CellInfoLte) {
+    		CellInfoLte cellInfoLte = (CellInfoLte) cellInfo;
+    		CellSignalStrengthLte cellSignalStrengthLte = cellInfoLte.getCellSignalStrength();
+    		level = cellSignalStrengthLte.getLevel(); // 0 - 4
+    	}
+    	else if (cellInfo instanceof CellInfoWcdma) {
+    		CellInfoWcdma cellInfoWcdma = (CellInfoWcdma) cellInfo;
+    		CellSignalStrengthWcdma cellSignalStrengthWcdma = cellInfoWcdma.getCellSignalStrength();
+    		level = cellSignalStrengthWcdma.getLevel(); // 0 - 4
+    	}
+    	else if (cellInfo instanceof CellInfoCdma) {
+    		CellInfoCdma cellInfoCdma = (CellInfoCdma) cellInfo;
+    		CellSignalStrengthCdma cellSignalStrengthCdma = cellInfoCdma.getCellSignalStrength();
+    		level = cellSignalStrengthCdma.getLevel(); // 0 - 4
+    	}
+    	else if (cellInfo instanceof CellInfoGsm) {
+    		CellInfoGsm cellInfoGsm = (CellInfoGsm) cellInfo;
+    		CellSignalStrengthGsm cellSignalStrengthGsm = cellInfoGsm.getCellSignalStrength();
+    		level = cellSignalStrengthGsm.getLevel(); // 0 - 4
+    	}
+    	 
+    	progressBar.setProgress(level * 25);
 	}
 }

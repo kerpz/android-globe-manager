@@ -98,8 +98,8 @@ public class ActivityMain extends AppCompatActivity {
         	i = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
-        case R.id.action_settings:
-			i = new Intent(this, ActivitySettings.class);
+        case R.id.action_preferences:
+			i = new Intent(this, ActivityPreferences.class);
 			startActivityForResult(i, RESULT_SETTINGS);
 			return true;
         default:

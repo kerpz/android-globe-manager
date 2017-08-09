@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     --> 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" /> 
 
@@ -37,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ohmnismart.ui.ActivitySettings"
+            android:name="com.ohmnismart.ui.ActivityPreferences"
             android:parentActivityName="com.ohmnismart.ui.ActivityMain" >
         </activity>
         
