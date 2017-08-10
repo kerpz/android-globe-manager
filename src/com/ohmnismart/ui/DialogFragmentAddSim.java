@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class DialogFragmentAddSim extends DialogFragment {
 
@@ -48,24 +49,36 @@ public class DialogFragmentAddSim extends DialogFragment {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						Sim sim = new Sim();
-						SimModel db = new SimModel(getActivity()); 
-						sim.setNumber(etNumber.getText().toString());
+						SimModel db = new SimModel(getActivity());
+						// check and correct
+						String iNumber = etNumber.getText().toString();
+						if (iNumber.length() == 11 && iNumber.charAt(0) == '0') {
+							iNumber = iNumber.substring(1);
+						}
+						else if (iNumber.length() == 12 && iNumber.charAt(0) == '6' &&
+								 iNumber.charAt(1) == '3') {
+							iNumber = iNumber.replaceFirst("63","");;
+						}
+						else if (iNumber.length() == 13 && iNumber.charAt(0) == '+' &&
+								iNumber.charAt(1) == '6' && iNumber.charAt(2) == '3') {
+							iNumber = iNumber.replaceFirst("\\+63","");;
+						}
+						else {
+							Toast.makeText(getActivity(), "Invalid phone number!", Toast.LENGTH_SHORT).show();
+							return;
+						}
+						
+						sim.setNumber(iNumber);
 						sim.setExpire(etExpire.getText().toString());
 						sim.setBalance(etBalance.getText().toString());
 						sim.setBalanceExpire(etBalanceExpire.getText().toString());
 						db.addSim(sim);
-						//long result = deviceDAO.save(device);
-						//if (result > 0) {
-							FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
-									.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
-							if (fragmentListSim != null) {
-								fragmentListSim.updateView();
-							}
-						//} else {
-						//	Toast.makeText(getActivity(),
-						//			"Unable to add device",
-						//			Toast.LENGTH_SHORT).show();
-						//}
+
+						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
+								.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+						if (fragmentListSim != null) {
+							fragmentListSim.updateView();
+						}
 					}
 				});
 		builder.setNegativeButton(R.string.cancel,

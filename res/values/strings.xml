@@ -60,11 +60,11 @@
     
     <string name="add_sim">Add SIM</string>
     <string name="edit_sim">Edit SIM</string>
-    <string name="view_sim">View SIMe</string>
-    <string name="number">SIM Number</string>
-    <string name="expire">SIM Expiry</string>
-    <string name="balance">SIM Balance</string>
-    <string name="balance_expire">SIM Balance Expiry</string>
+    <string name="view_sim">View SIM</string>
+    <string name="number">SIM Number (required)</string>
+    <string name="expire">SIM Expiry (optional)</string>
+    <string name="balance">SIM Balance (optional)</string>
+    <string name="balance_expire">SIM Balance Expiry (optional)</string>
     <string name="add">Add</string>
     <string name="edit">Edit</string>
     <string name="reset">Reset</string>
