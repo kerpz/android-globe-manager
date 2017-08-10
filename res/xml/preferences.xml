@@ -2,23 +2,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
 	<PreferenceCategory android:title="@string/pref_register" >
-		<CheckBoxPreference
+		<SwitchPreference
 			android:title="@string/pref_auto_register"
-			android:summary="@string/pref_auto_register_summary"
+			android:summaryOn="@string/pref_auto_register_summary_on"
+			android:summaryOff="@string/pref_auto_register_summary_off"
 			android:key="pref_auto_register"
 			android:defaultValue="false" >
-		</CheckBoxPreference>
-		<EditTextPreference 
-			android:title="@string/pref_auto_register_schedule" 
-			android:summary="@string/pref_auto_register_schedule_summary" 
-			android:key="pref_auto_register_schedule"
-			android:defaultValue="1970-01-01 00:00:00" />
+		</SwitchPreference>
+		<com.ohmnismart.ui.PreferenceDate
+				android:title="@string/pref_auto_register_date" 
+				android:summary="@string/pref_auto_register_date_summary" 
+				android:key="pref_auto_register_date"
+				android:defaultValue="1970-01-01" />
+		<com.ohmnismart.ui.PreferenceTime
+				android:title="@string/pref_auto_register_time" 
+				android:summary="@string/pref_auto_register_time_summary" 
+				android:key="pref_auto_register_time"
+				android:defaultValue="00:00" />
 	</PreferenceCategory>
-	<com.ohmnismart.ui.PreferenceTime 
-			android:title="@string/pref_time_test" 
-			android:summary="@string/pref_time_test_summary" 
-			android:key="pref_time_test"
-			android:defaultValue="00:00" />
 	<ListPreference
 	    android:title="Query Method"
 		android:summary="Select the type of query method"

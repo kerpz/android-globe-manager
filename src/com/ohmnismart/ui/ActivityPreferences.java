@@ -5,16 +5,24 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
-public class ActivityPreferences extends PreferenceActivity {
+public class ActivityPreferences extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
+        setContentView(R.layout.activity_preferences);
+        
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Preferences");
+
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, new MyPreferenceFragment()).commit();
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -63,6 +71,10 @@ public class ActivityPreferences extends PreferenceActivity {
 			else if (preference instanceof EditTextPreference) {
 				EditTextPreference editTextPrference = (EditTextPreference) preference;
 				preference.setSummary(editTextPrference.getText());
+			}
+			else if (preference instanceof PreferenceDate) {
+				PreferenceDate datePreference = (PreferenceDate) preference;
+				preference.setSummary(datePreference.getText());
 			}
 			else if (preference instanceof PreferenceTime) {
 				PreferenceTime timePreference = (PreferenceTime) preference;

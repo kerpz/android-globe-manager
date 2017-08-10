@@ -68,8 +68,10 @@ public class ListAdapterSim extends ArrayAdapter<Sim> {
 		Sim sim = (Sim) getItem(position);
 
 		holder.devHostNameTxt.setText(sim.getNumber());
-		holder.devMACTxt.setText(sim.getBalance());
-		holder.devIPTxt.setText(sim.getBalanceExpire());
+		holder.devMACTxt.setText(sim.getBalanceExpire());
+		holder.devIPTxt.setText("P"+String.format("%.2f", Float.valueOf(sim.getBalance())));
+		
+		
 
 		return convertView;
 	}

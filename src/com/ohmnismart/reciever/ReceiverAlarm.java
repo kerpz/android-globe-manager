@@ -49,5 +49,8 @@ public class ReceiverAlarm extends BroadcastReceiver {
            notify.flags |= Notification.FLAG_AUTO_CANCEL;
            notif.notify(0, notify);
     	}
+
+    	db.setAutoRegisterEnable(false);
+    	db.writeSync();
     }
 }

@@ -48,30 +48,40 @@
 			android:layout_centerHorizontal="true"
 			android:layout_centerVertical="true"  >
 								
-				<TextView
+			    <ToggleButton
+			        android:id="@+id/toggleButton"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerHorizontal="true"
+			        android:layout_marginBottom="10dp"
+			        android:checked="false" />
+
+			    <TextView
+					android:id="@+id/tvAutoRegisterDate"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:textColor="#555"
+					android:textSize="18sp"
+					android:layout_below="@id/toggleButton" />
+		    
+			    <TextView
 					android:id="@+id/tvData"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_centerHorizontal="true"
 					android:textColor="#999"
-					android:textSize="30sp"/>
+					android:textSize="35sp"
+			        android:layout_below="@id/tvAutoRegisterDate" />
 					
 				<TextView
 					android:id="@+id/tvDataExpire"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_centerHorizontal="true"
-					android:textColor="#111"
+					android:textColor="#777"
 					android:layout_below="@id/tvData" />
 
-			    <ToggleButton
-			        android:id="@+id/toggleButton"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_centerHorizontal="true"
-			        android:layout_margin="20dp"
-			        android:checked="false"
-			        android:layout_below="@id/tvDataExpire"  />
 		</RelativeLayout>
 	</RelativeLayout>
 

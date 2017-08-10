@@ -127,28 +127,31 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 
 	@Override
 	public boolean onContextItemSelected(MenuItem menuItem) {
-		String code;
-		Intent i;
-	    switch (menuItem.getItemId()) {
-	        case 0:
-				Bundle arguments = new Bundle();
-				arguments.putParcelable("selectedDevice", sim);
-				DialogFragmentEditSim customDevDialogFragment = new DialogFragmentEditSim();
-				customDevDialogFragment.setArguments(arguments);
-				customDevDialogFragment.show(getFragmentManager(), DialogFragmentEditSim.ARG_ITEM_ID);
-	            break;
-	        case 1:
-				db.deleteSim(sim);
-				simListAdapter.remove(sim);
-	            break;
-	        case 2:
-	        	// Check balance @ USSD
-				code = "*143*2*1*2*"+ sim.getNumber() + Uri.encode("#");
-				i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-	        	startActivityForResult(i, RESULT_SETTINGS);
-	            break;
+	    if (getUserVisibleHint()) {
+			String code;
+			Intent i;
+		    switch (menuItem.getItemId()) {
+		        case 0:
+					Bundle arguments = new Bundle();
+					arguments.putParcelable("selectedDevice", sim);
+					DialogFragmentEditSim customDevDialogFragment = new DialogFragmentEditSim();
+					customDevDialogFragment.setArguments(arguments);
+					customDevDialogFragment.show(getFragmentManager(), DialogFragmentEditSim.ARG_ITEM_ID);
+		            break;
+		        case 1:
+					db.deleteSim(sim);
+					simListAdapter.remove(sim);
+		            break;
+		        case 2:
+		        	// Check balance @ USSD
+					code = "*143*2*1*2*"+ sim.getNumber() + Uri.encode("#");
+					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+		        	startActivityForResult(i, RESULT_SETTINGS);
+		            break;
+		    }
+		    return true;
 	    }
-	    return true;
+	    return false;
 	}
 	
 	public class GetDevTask extends AsyncTask<Void, Void, ArrayList<Sim>> {
