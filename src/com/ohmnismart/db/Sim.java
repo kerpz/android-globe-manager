@@ -7,9 +7,9 @@ public class Sim implements Parcelable {
 	
 	int id;
 	String number;
-	String expire;
-	String balance;
-	String balance_expire;
+	String expire = "1970-01-01 00:00:00";
+	String balance = "0.0";
+	String balance_expire = "1970-01-01 00:00:00";
 	
 	public Sim() {
 	}

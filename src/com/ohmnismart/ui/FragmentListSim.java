@@ -7,20 +7,25 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -139,8 +144,16 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 					customDevDialogFragment.show(getFragmentManager(), DialogFragmentEditSim.ARG_ITEM_ID);
 		            break;
 		        case 1:
-					db.deleteSim(sim);
-					simListAdapter.remove(sim);
+					new AlertDialog.Builder(activity)
+					//.setTitle("Title")
+					.setMessage("Are you sure you want to delete?")
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							db.deleteSim(sim);
+							simListAdapter.remove(sim);
+						}})
+					.setNegativeButton(android.R.string.no, null).show();
 		            break;
 		        case 2:
 		        	// Check balance @ USSD
@@ -148,6 +161,19 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 		            break;
+		        case 3:
+	                final EditText input = new EditText(activity);
+	                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+	                input.setRawInputType(Configuration.KEYBOARD_12KEY);
+		        	new AlertDialog.Builder(activity)
+	                .setTitle("Amount")
+	                .setView(input)  
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							Toast.makeText(activity, "Sent " + input.getText() + " to " + sim.getNumber(), Toast.LENGTH_SHORT).show();
+						}})
+					.setNegativeButton(android.R.string.cancel, null).show();
+	                break;
 		    }
 		    return true;
 	    }

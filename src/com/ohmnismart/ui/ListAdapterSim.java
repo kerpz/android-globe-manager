@@ -69,6 +69,7 @@ public class ListAdapterSim extends ArrayAdapter<Sim> {
 
 		holder.devHostNameTxt.setText(sim.getNumber());
 		holder.devMACTxt.setText(sim.getBalanceExpire());
+		//holder.devIPTxt.setText("P"+sim.getBalance());
 		holder.devIPTxt.setText("P"+String.format("%.2f", Float.valueOf(sim.getBalance())));
 		
 		

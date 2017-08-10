@@ -11,6 +11,8 @@
             android:id="@+id/etNumber"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="10"
             android:ems="10"
             android:hint="@string/number"
             android:singleLine="true" />

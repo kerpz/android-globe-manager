@@ -27,10 +27,10 @@ public class SimModel extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_SIM_TABLE = "CREATE TABLE " + SIM_TABLE + "("
 				+ SIM_ID + " INTEGER PRIMARY KEY,"
-				+ SIM_NUMBER + " TEXT,"
-				+ SIM_EXPIRE + " TEXT,"
-				+ SIM_BALANCE + " TEXT,"
-				+ SIM_BALANCE_EXPIRE + " TEXT" + ")";
+				+ SIM_NUMBER + " TEXT NOT NULL,"
+				+ SIM_EXPIRE + " TEXT DEFAULT '1970-01-01 00:00:00',"
+				+ SIM_BALANCE + " TEXT DEFAULT '0.0',"
+				+ SIM_BALANCE_EXPIRE + " TEXT DEFAULT '1970-01-01 00:00:00'" + ")";
 		db.execSQL(CREATE_SIM_TABLE);
 	}
 
@@ -47,9 +47,12 @@ public class SimModel extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(SIM_NUMBER, sim.getNumber());
-		values.put(SIM_EXPIRE, sim.getExpire());
-		values.put(SIM_BALANCE, sim.getBalance());
-		values.put(SIM_BALANCE_EXPIRE, sim.getBalanceExpire());
+		if (! sim.getExpire().equals(""))
+			values.put(SIM_EXPIRE, sim.getExpire());
+		if (! sim.getBalance().equals(""))
+			values.put(SIM_BALANCE, sim.getBalance());
+		if (! sim.getBalanceExpire().equals(""))
+			values.put(SIM_BALANCE_EXPIRE, sim.getBalanceExpire());
 
 		db.insert(SIM_TABLE, null, values);
 		db.close();
