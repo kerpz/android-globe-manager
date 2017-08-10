@@ -274,7 +274,7 @@ public class FragmentStatus extends Fragment {
     	
     	toggleButton.setChecked(db.getAutoRegisterEnable());
 
-    	tvBalance.setText("P" + db.getBalance());
+    	tvBalance.setText("P" + String.format("%.2f", Float.valueOf(db.getBalance())));
     	tvData.setText(db.getData() + "MB");
 
         Calendar calendar = Calendar.getInstance();
