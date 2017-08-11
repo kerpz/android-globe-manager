@@ -43,12 +43,6 @@
         </activity>
         
         <receiver
-            android:name="com.ohmnismart.reciever.ReceiverSms">   
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-        <receiver
             android:name="com.ohmnismart.reciever.ReceiverAlarm" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
