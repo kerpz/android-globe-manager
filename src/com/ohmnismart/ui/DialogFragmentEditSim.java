@@ -23,15 +23,13 @@ public class DialogFragmentEditSim extends DialogFragment {
 	EditText etBalanceExpire;
 	LinearLayout submitLayout;
 	
-	Sim sim;
-	
 	public static final String ARG_ITEM_ID = "sim_edit_dialog_fragment";
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 		Bundle bundle = this.getArguments();
-		sim = bundle.getParcelable("selectedDevice");
+		Sim sim = bundle.getParcelable("selectedDevice");
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -47,7 +45,10 @@ public class DialogFragmentEditSim extends DialogFragment {
 				.findViewById(R.id.layout_submit);
 		submitLayout.setVisibility(View.GONE);
 
-		setValue();
+		etNumber.setText(sim.getNumber());
+		etExpire.setText(sim.getExpire());
+		etBalance.setText(sim.getBalance());
+		etBalanceExpire.setText(sim.getBalanceExpire());
 
 		builder.setTitle(R.string.edit_sim);
 		builder.setCancelable(false);
@@ -58,7 +59,10 @@ public class DialogFragmentEditSim extends DialogFragment {
 						SimModel db = new SimModel(getActivity()); 
 						// check and correct
 						String iNumber = etNumber.getText().toString();
-						if (iNumber.length() == 11 && iNumber.charAt(0) == '0') {
+						if (iNumber.length() == 10) {
+							//iNumber = iNumber;
+						}
+						else if (iNumber.length() == 11 && iNumber.charAt(0) == '0') {
 							iNumber = iNumber.substring(1);
 						}
 						else if (iNumber.length() == 12 && iNumber.charAt(0) == '6' &&
@@ -79,6 +83,12 @@ public class DialogFragmentEditSim extends DialogFragment {
 						sim.setBalance(etBalance.getText().toString());
 						sim.setBalanceExpire(etBalanceExpire.getText().toString());
 						db.updateSim(sim);
+
+						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
+								.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+						if (fragmentListSim != null) {
+							fragmentListSim.updateView();
+						}
 					}
 				});
 		builder.setNegativeButton(R.string.cancel,
@@ -91,15 +101,6 @@ public class DialogFragmentEditSim extends DialogFragment {
 		AlertDialog alertDialog = builder.create();
 
 		return alertDialog;
-	}
-
-	private void setValue() {
-		if (sim != null) {
-			etNumber.setText(sim.getNumber());
-			etExpire.setText(sim.getExpire());
-			etBalance.setText(sim.getBalance());
-			etBalanceExpire.setText(sim.getBalanceExpire());
-		}
 	}
 
 }

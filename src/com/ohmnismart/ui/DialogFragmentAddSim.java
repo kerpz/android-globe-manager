@@ -52,7 +52,10 @@ public class DialogFragmentAddSim extends DialogFragment {
 						SimModel db = new SimModel(getActivity());
 						// check and correct
 						String iNumber = etNumber.getText().toString();
-						if (iNumber.length() == 11 && iNumber.charAt(0) == '0') {
+						if (iNumber.length() == 10) {
+							//iNumber = iNumber;
+						}
+						else if (iNumber.length() == 11 && iNumber.charAt(0) == '0') {
 							iNumber = iNumber.substring(1);
 						}
 						else if (iNumber.length() == 12 && iNumber.charAt(0) == '6' &&
