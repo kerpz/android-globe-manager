@@ -7,7 +7,6 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +17,7 @@ import android.widget.Button;
 
 public class ActivityAlarm extends AppCompatActivity {
 	Ringtone ringtone;
-	Vibrator vibrator;
+	//Vibrator vibrator;
 	Button bIgnore;
 	Button bLaunch;
 
@@ -40,7 +39,7 @@ public class ActivityAlarm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             	ringtone.stop();
-            	vibrator.cancel();
+            	//vibrator.cancel();
                 finish();
             }
         });
@@ -49,7 +48,7 @@ public class ActivityAlarm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             	ringtone.stop();
-            	vibrator.cancel();
+            	//vibrator.cancel();
                 finish();
                 
             	//Intent intent = new Intent(this, ActivityMain.class);
@@ -73,9 +72,9 @@ public class ActivityAlarm extends AppCompatActivity {
         //}
         ringtone.play();
 
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        long pattern[] = { 50, 100, 100, 100, 500 };
-        vibrator.vibrate(pattern, 0);
+        //vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        //long pattern[] = { 50, 100, 100, 100, 500 };
+        //vibrator.vibrate(pattern, 0);
 
 		AccountModel db = new AccountModel(this);
         db.readSync();
