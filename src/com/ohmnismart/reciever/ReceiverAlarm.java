@@ -4,16 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import com.ohmnismart.db.AccountModel;
-import com.ohmnismart.ui.ActivityMain;
-import com.ohmnismart.ui.R;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.ohmnismart.db.AccountModel;
+import com.ohmnismart.ui.ActivityMain;
+import com.ohmnismart.ui.R;
 
 public class ReceiverAlarm extends BroadcastReceiver {
 
@@ -32,7 +32,7 @@ public class ReceiverAlarm extends BroadcastReceiver {
     	AccountModel db = new AccountModel(context);
         db.readSync();
 
-        if (Float.valueOf(db.getBalance()) < 80.0) {
+        //if (Float.valueOf(db.getBalance()) < 80.0) {
             Calendar calendar = Calendar.getInstance();
             
             Intent notificationIntent = new Intent(context, ActivityMain.class);
@@ -48,7 +48,7 @@ public class ReceiverAlarm extends BroadcastReceiver {
                 
            notify.flags |= Notification.FLAG_AUTO_CANCEL;
            notif.notify(0, notify);
-    	}
+    	//}
 
     	db.setAutoRegisterEnable(false);
     	db.writeSync();

@@ -29,6 +29,9 @@ public class ActivityMain extends AppCompatActivity {
 	private static final int RESULT_SETTINGS = 1;
 
 	ViewPager viewPager;
+	
+	ReceiverUssd receiverUssd;
+	ReceiverSms receiverSms;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +75,6 @@ public class ActivityMain extends AppCompatActivity {
  
             }
         });
-
-        // if we encounter problem here, move this to onResume and unregister at onDestroy
-		this.registerReceiver(new ReceiverUssd(), new IntentFilter("com.ohmnismart.ussd.action.REFRESH"));
-		this.registerReceiver(new ReceiverSms(), new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
     }
  
 	@Override
@@ -89,8 +88,6 @@ public class ActivityMain extends AppCompatActivity {
     	Intent i;
     	String code;
         switch (item.getItemId()) {
-        case R.id.action_refresh:
-			return true;
         case R.id.action_status:
         	// Check GoSAKTO status @ SMS
 			code = "*143*1*7" + Uri.encode("#");
@@ -118,16 +115,18 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    /*
 	@Override
 	public void onResume() {
 	    super.onResume();
-	    registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_GET_CONTENT));
+		registerReceiver(receiverUssd, new IntentFilter("com.ohmnismart.ussd.action.REFRESH"));
+		registerReceiver(receiverSms, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
 	}
 	
+	/*
 	@Override
-	public void onDestroy() {
-	    unregisterReceiver(broadcastReceiver);      
+	public void onPause() {
+		unregisterReceiver(receiverUssd);
+		unregisterReceiver(receiverSms);
 	    super.onDestroy();              
 	}
 	*/
@@ -194,6 +193,7 @@ public class ActivityMain extends AppCompatActivity {
 	public class ReceiverSms extends BroadcastReceiver {
 		final SmsManager sms = SmsManager.getDefault();
 
+        @Override
 		public void onReceive(Context context, Intent intent) {
 			final Bundle bundle = intent.getExtras();
 			

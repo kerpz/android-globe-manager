@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.ohmnismart.db.AccountModel;
-import com.ohmnismart.reciever.ReceiverAlarm;
 import com.ohmnismart.reciever.ReceiverBoot;
 import com.ohmnismart.ui.R;
 
@@ -92,8 +91,10 @@ public class FragmentStatus extends Fragment {
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-				Intent alarmIntent = new Intent(activity, ReceiverAlarm.class);
-				PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0);
+				//Intent alarmIntent = new Intent(activity, ReceiverAlarm.class);
+				//PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, 0);
+				Intent alarmIntent = new Intent(activity, ActivityAlarm.class);
+		        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
                 ComponentName receiver = new ComponentName(activity, ReceiverBoot.class);
                 PackageManager pm = activity.getPackageManager();

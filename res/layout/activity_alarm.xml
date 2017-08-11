@@ -1,90 +1,21 @@
-<RelativeLayout
-    android:id="@+id/main_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ActivityAlarm">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="horizontal" >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-    <TextView
-        android:id="@+id/tvBalance"
+    <Button
+        android:id="@+id/bIgnore"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:textColor="#555"
-        android:textSize="35sp"
-        android:layout_marginTop="30dp" />
+        android:text="@string/ignore" />
 
-	<TextView
-		android:id="@+id/tvBalanceExpire"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-		android:textColor="#111"
-		android:layout_below="@id/tvBalance" />
+    <Button
+        android:id="@+id/bLaunch"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/launch" />
 
-	<RelativeLayout
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:gravity="center_vertical" 
-	    android:layout_below="@id/tvBalanceExpire" >
-		
-		<ProgressBar
-		    android:id="@+id/progressBarToday"
-		    style="?android:attr/progressBarStyleHorizontal"
-		    android:layout_width="350dp"
-		    android:layout_height="350dp"
-		    android:layout_centerInParent="true"
-		    android:indeterminate="false"
-		    android:max="100"
-		    android:progress="50"
-		    android:progressDrawable="@drawable/circular_progress_bar"
-		    android:rotation="90" />
-
-		<RelativeLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"  >
-								
-				<TextView
-					android:id="@+id/tvData"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerHorizontal="true"
-					android:textColor="#999"
-					android:textSize="30sp"/>
-					
-				<TextView
-					android:id="@+id/tvDataExpire"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerHorizontal="true"
-					android:textColor="#111"
-					android:layout_below="@id/tvData" />
-
-			    <ToggleButton
-			        android:id="@+id/toggleButton"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_centerHorizontal="true"
-			        android:layout_margin="20dp"
-			        android:checked="false"
-			        android:layout_below="@id/tvDataExpire"  />
-		</RelativeLayout>
-	</RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>
