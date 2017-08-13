@@ -35,6 +35,8 @@ public class ReceiverBoot extends BroadcastReceiver {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+            
+            db.close();
 
             //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 120000, pendingIntent); // 10 sec interval
 			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);

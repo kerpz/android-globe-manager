@@ -51,6 +51,8 @@ public class FragmentStatus extends Fragment {
 	ToggleButton toggleButton;
     TextView tvBalance;
     TextView tvBalanceExpire;
+    TextView tvPoint;
+    TextView tvPointExpire;
     TextView tvData;
     TextView tvDataExpire;
     TextView tvAutoRegisterDate;
@@ -70,8 +72,10 @@ public class FragmentStatus extends Fragment {
 
 		toggleButton = (ToggleButton) view.findViewById(R.id.toggleButton);
         tvBalance = (TextView) view.findViewById(R.id.tvBalance);
-        tvData = (TextView) view.findViewById(R.id.tvData);
         tvBalanceExpire = (TextView) view.findViewById(R.id.tvBalanceExpire);
+        tvPoint = (TextView) view.findViewById(R.id.tvPoint);
+        tvPointExpire = (TextView) view.findViewById(R.id.tvPointExpire);
+        tvData = (TextView) view.findViewById(R.id.tvData);
         tvDataExpire = (TextView) view.findViewById(R.id.tvDataExpire);
         tvAutoRegisterDate = (TextView) view.findViewById(R.id.tvAutoRegisterDate);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -163,6 +167,7 @@ public class FragmentStatus extends Fragment {
                     Toast.makeText(activity, "Alarm Off", Toast.LENGTH_SHORT).show();
                 }
                 db.writeSync();
+                db.close();
             }
         });
 
@@ -205,6 +210,8 @@ public class FragmentStatus extends Fragment {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+	        
+	        db.close();
 
 	        switch (menuItem.getItemId()) {
 		        case 0:
@@ -271,13 +278,17 @@ public class FragmentStatus extends Fragment {
         AccountModel db = new AccountModel(activity);
         db.readSync();
     	
-    	toggleButton.setChecked(db.getAutoRegisterEnable());
-
-    	tvBalance.setText("P" + String.format("%.2f", Float.valueOf(db.getBalance())));
-    	tvData.setText(db.getData() + "MB");
-
         Calendar calendar = Calendar.getInstance();
 
+    	tvBalance.setText("P" + String.format("%.2f", Float.valueOf(db.getBalance())));
+    	try {
+			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getBalanceExpire()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+    	tvBalanceExpire.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+
+    	tvData.setText(db.getData() + "MB");
         try {
 			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
 		} catch (ParseException e) {
@@ -285,19 +296,23 @@ public class FragmentStatus extends Fragment {
 		}
     	tvDataExpire.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
 
-    	try {
-			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getBalanceExpire()));
+    	tvPoint.setText(db.getPoint());
+        try {
+			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getPointExpire()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-    	tvBalanceExpire.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-    	
+    	tvPointExpire.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+
+    	toggleButton.setChecked(db.getAutoRegisterEnable());
     	try {
 			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
     	tvAutoRegisterDate.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+    	
+    	db.close();
     	
     	TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
     	// for example value of first element

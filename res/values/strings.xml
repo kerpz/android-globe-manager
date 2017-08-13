@@ -17,8 +17,11 @@
     <string name="action_wifi">Wifi</string>
     <string name="action_custom">Custom</string>
     <string name="action_alarm">Alarm</string>
-    <string name="action_balance">Balance</string>
+    <string name="action_load_balance">Load Balance</string>
+    <string name="action_point_balance">Point Balance</string>
     <string name="action_status">Status</string>
+    <string name="action_activate_load">Activate Load</string>
+    <string name="action_activate_point">Activate Point</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_accessibility">Accessibility</string>
     <string name="action_preferences">Preferences</string>

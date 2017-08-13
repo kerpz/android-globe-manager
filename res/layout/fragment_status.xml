@@ -24,11 +24,28 @@
 		android:textColor="#111"
 		android:layout_below="@id/tvBalance" />
 
+    <TextView
+        android:id="@+id/tvPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvBalanceExpire"
+        android:layout_centerHorizontal="true"
+        android:textColor="#777"
+        android:textSize="30sp" />
+
+	<TextView
+		android:id="@+id/tvPointExpire"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:textColor="#111"
+		android:layout_below="@id/tvPoint" />
+
 	<RelativeLayout
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:gravity="center_vertical" 
-	    android:layout_below="@id/tvBalanceExpire" >
+	    android:layout_below="@id/tvPointExpire" >
 		
 		<ProgressBar
 		    android:id="@+id/progressBar"

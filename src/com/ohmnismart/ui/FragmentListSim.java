@@ -42,7 +42,6 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 
 	ListAdapterSim simListAdapter;
 	Sim sim;
-	SimModel db;
 
 	private GetDevTask task;
 	private SwipeRefreshLayout swipeLayout;
@@ -150,7 +149,9 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 					.setIcon(android.R.drawable.ic_dialog_alert)
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
+							SimModel db = new SimModel(activity);
 							db.deleteSim(sim);
+							db.close();
 							simListAdapter.remove(sim);
 						}})
 					.setNegativeButton(android.R.string.no, null).show();
@@ -190,8 +191,9 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 
 		@Override
 		protected ArrayList<Sim> doInBackground(Void... arg0) {
-			db = new SimModel(activity.getBaseContext());
+			SimModel db = new SimModel(activity);
 			ArrayList<Sim> simList = db.getAllSim();
+			db.close();
 			return simList;
 		}
 

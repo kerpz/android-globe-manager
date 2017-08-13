@@ -3,16 +3,31 @@
     tools:context=".ActivityMain" >
 
     <item
-        android:id="@+id/action_balance"
+        android:id="@+id/action_load_balance"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_balance"/>
+        android:title="@string/action_load_balance"/>
+    <item
+        android:id="@+id/action_point_balance"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_point_balance"/>
     <item
         android:id="@+id/action_status"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_status"/>
-        <item
+    <item
+        android:id="@+id/action_activate_load"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_activate_load"/>
+    <item
+        android:id="@+id/action_activate_point"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_activate_point"/>
+    <item
         android:id="@+id/action_accessibility"
         android:orderInCategory="100"
         android:showAsAction="never"

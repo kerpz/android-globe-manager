@@ -49,7 +49,6 @@ public class DialogFragmentAddSim extends DialogFragment {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						Sim sim = new Sim();
-						SimModel db = new SimModel(getActivity());
 						// check and correct
 						String iNumber = etNumber.getText().toString();
 						if (iNumber.length() == 10) {
@@ -75,7 +74,10 @@ public class DialogFragmentAddSim extends DialogFragment {
 						sim.setExpire(etExpire.getText().toString());
 						sim.setBalance(etBalance.getText().toString());
 						sim.setBalanceExpire(etBalanceExpire.getText().toString());
+
+						SimModel db = new SimModel(getActivity());
 						db.addSim(sim);
+						db.close();
 
 						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
 								.findFragmentByTag("android:switcher:" + R.id.pager + ":1");

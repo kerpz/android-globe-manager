@@ -1,12 +1,24 @@
 package com.ohmnismart.ui;
 
-import com.ohmnismart.db.AccountModel;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-import android.media.AudioAttributes;
+import com.ohmnismart.db.AccountModel;
+import com.ohmnismart.reciever.ReceiverBoot;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +29,8 @@ import android.widget.Button;
 
 public class ActivityAlarm extends AppCompatActivity {
 	Ringtone ringtone;
-	//Vibrator vibrator;
+	Vibrator vibrator;
+	NotificationManager notificationManager;
 	Button bIgnore;
 	Button bLaunch;
 
@@ -35,24 +48,38 @@ public class ActivityAlarm extends AppCompatActivity {
         bIgnore = (Button) findViewById(R.id.bIgnore);
         bLaunch = (Button) findViewById(R.id.bLaunch);
 
+	    final ComponentName receiver = new ComponentName(this, ReceiverBoot.class);
+        final PackageManager pm = this.getPackageManager();
         bIgnore.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
             	ringtone.stop();
-            	//vibrator.cancel();
+            	vibrator.cancel();
+        	    notificationManager.cancel(0);
+
+        	    pm.setComponentEnabledSetting(receiver,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+
                 finish();
             }
         });
         
+    	final Intent intent = new Intent(this, ActivityMain.class);
         bLaunch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
             	ringtone.stop();
-            	//vibrator.cancel();
+            	vibrator.cancel();
+        	    notificationManager.cancel(0);
+
+                pm.setComponentEnabledSetting(receiver,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+
                 finish();
                 
-            	//Intent intent = new Intent(this, ActivityMain.class);
-            	//startActivity(intent);
+            	startActivity(intent);
             }
         });
 
@@ -61,6 +88,7 @@ public class ActivityAlarm extends AppCompatActivity {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
         ringtone = RingtoneManager.getRingtone(this, alarmUri);
+        /*
         //if (Build.VERSION.SDK_INT >= 21) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ALARM)
@@ -70,16 +98,34 @@ public class ActivityAlarm extends AppCompatActivity {
         //} else {
         //    ringtone.setStreamType(AudioManager.STREAM_ALARM);
         //}
+        */
         ringtone.play();
 
-        //vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        //long pattern[] = { 50, 100, 100, 100, 500 };
-        //vibrator.vibrate(pattern, 0);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        long pattern[] = { 500, 500 };
+        vibrator.vibrate(pattern, 0);
 
-		AccountModel db = new AccountModel(this);
-        db.readSync();
-        db.setAutoRegisterEnable(false);
-    	db.writeSync();
+        Calendar calendar = Calendar.getInstance();
+        
+        Intent notificationIntent = new Intent(this, ActivityAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification.Builder(this)
+        	.setContentTitle(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()))
+        	.setContentText("Gotscombodd70 is about to expire.")
+        	.setSmallIcon(R.drawable.ic_launcher)
+        	.setContentIntent(pendingIntent)
+        	.build();
+            
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(0, notification);
+
+        AccountModel db = new AccountModel(this);
+		db.readSync();
+		db.setAutoRegisterEnable(false);
+		db.writeSync();
+		db.close();
     }
 
 }

@@ -75,6 +75,10 @@ public class ActivityMain extends AppCompatActivity {
  
             }
         });
+    	receiverUssd = new ReceiverUssd();
+    	receiverSms = new ReceiverSms();
+		registerReceiver(receiverUssd, new IntentFilter("com.ohmnismart.ussd.action.REFRESH"));
+		registerReceiver(receiverSms, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
     }
  
 	@Override
@@ -88,17 +92,35 @@ public class ActivityMain extends AppCompatActivity {
     	Intent i;
     	String code;
         switch (item.getItemId()) {
+        case R.id.action_load_balance:
+        	// Check your balance @ USSD
+			code = "*143*2*1*1" + Uri.encode("#");
+        	// Check other's balance @ USSD
+			//String code = "*143*2*1*2*" + "9XXXXXXXXX" + Uri.encode("#");
+			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+        	startActivityForResult(i, RESULT_SETTINGS);
+			return true;
+        case R.id.action_point_balance:
+        	// Check your point @ USSD
+			code = "*143*11*1*1" + Uri.encode("#");
+			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+        	startActivityForResult(i, RESULT_SETTINGS);
+			return true;
         case R.id.action_status:
         	// Check GoSAKTO status @ SMS
 			code = "*143*1*7" + Uri.encode("#");
 			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
-        case R.id.action_balance:
-        	// Check your balance @ USSD
-			code = "*143*2*1*1" + Uri.encode("#");
-        	// Check other's balance @ USSD
-			//String code = "*143*2*1*2*" + "9XXXXXXXXX" + Uri.encode("#");
+        case R.id.action_activate_load:
+        	// Activate Gotscombodd70 via load @ USSD
+			code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
+			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+        	startActivityForResult(i, RESULT_SETTINGS);
+			return true;
+        case R.id.action_activate_point:
+        	// Activate Gotscombodd70 via point @ USSD
+			code = "*143*11*2" + Uri.encode("#");
 			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
@@ -115,21 +137,21 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-	@Override
+	/*
+    @Override
 	public void onResume() {
 	    super.onResume();
 		registerReceiver(receiverUssd, new IntentFilter("com.ohmnismart.ussd.action.REFRESH"));
 		registerReceiver(receiverSms, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
 	}
+	*/
 	
-	/*
 	@Override
-	public void onPause() {
+	public void onDestroy() {
 		unregisterReceiver(receiverUssd);
 		unregisterReceiver(receiverSms);
 	    super.onDestroy();              
 	}
-	*/
 
 	public class ReceiverUssd extends BroadcastReceiver {
         //private String TAG = ServiceUSSD.class.getSimpleName();
@@ -153,6 +175,7 @@ public class ActivityMain extends AppCompatActivity {
 				db.setBalance(balance);
 				db.setBalanceExpire(balance_expire);
 				db.writeSync();
+				db.close();
 
 				//performGlobalAction(GLOBAL_ACTION_BACK);
 				FragmentStatus fragmentStatus = (FragmentStatus) getSupportFragmentManager()
@@ -179,6 +202,7 @@ public class ActivityMain extends AppCompatActivity {
 				sim.setBalance(balance);
 				sim.setBalanceExpire(balance_expire);
 				db.updateSim(sim);
+				db.close();
 
 				//performGlobalAction(GLOBAL_ACTION_BACK);
 				FragmentListSim fragmentListSim = (FragmentListSim) getSupportFragmentManager()
@@ -230,6 +254,28 @@ public class ActivityMain extends AppCompatActivity {
 							db.setData(data);
 							db.setDataExpire(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second);
 							db.writeSync();
+							db.close();
+						}
+					}
+
+					if (sender.equals("4438")) {
+						//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
+						Matcher matcher = Pattern.compile("([0-9]{1,5}) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
+						if (matcher.find()) {
+							String point = matcher.group(1);
+							String year = matcher.group(2);
+							String month = matcher.group(3);
+							String day = matcher.group(4);
+							//String hour = matcher.group(5);
+							//String minute = matcher.group(6);
+							//String second = matcher.group(7);
+
+							AccountModel db = new AccountModel(context);
+							db.readSync();
+							db.setPoint(point);
+							db.setPointExpire(year+"-"+month+"-"+day+" 00:00:00");
+							db.writeSync();
+							db.close();
 						}
 					}
 
@@ -254,6 +300,7 @@ public class ActivityMain extends AppCompatActivity {
 							db.setBalance(balance);
 							db.setBalanceExpire(year+"-"+month+"-"+day+" "+hour+":"+minute+":00");
 							db.writeSync();
+							db.close();
 						}
 					}
 					FragmentStatus fragmentStatus = (FragmentStatus) getSupportFragmentManager()
