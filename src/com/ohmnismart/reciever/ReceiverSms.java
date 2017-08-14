@@ -101,7 +101,7 @@ public class ReceiverSms extends BroadcastReceiver {
 						db.close();
 					}
 				}
-				Intent myIntent = new Intent("com.ohmnismart.main.action.REFRESH");
+				Intent myIntent = new Intent("com.ohmnismart.status.action.REFRESH");
 	            //intent.putExtra("text", text);
 				context.sendBroadcast(myIntent);
 			}

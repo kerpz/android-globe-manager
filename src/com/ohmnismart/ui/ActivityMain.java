@@ -24,7 +24,8 @@ public class ActivityMain extends AppCompatActivity {
 
 	ViewPager viewPager;
 	
-	ReceiverUpdate receiverUpdate;
+	ReceiverStatusUpdate receiverStatusUpdate;
+	ReceiverSimUpdate receiverSimUpdate;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,10 @@ public class ActivityMain extends AppCompatActivity {
  
             }
         });
-    	receiverUpdate = new ReceiverUpdate();
-		registerReceiver(receiverUpdate, new IntentFilter("com.ohmnismart.main.action.REFRESH"));
+    	receiverStatusUpdate = new ReceiverStatusUpdate();
+		registerReceiver(receiverStatusUpdate, new IntentFilter("com.ohmnismart.status.action.REFRESH"));
+    	receiverSimUpdate = new ReceiverSimUpdate();
+		registerReceiver(receiverSimUpdate, new IntentFilter("com.ohmnismart.sim.action.REFRESH"));
     }
  
 	@Override
@@ -84,7 +87,7 @@ public class ActivityMain extends AppCompatActivity {
     	String code;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         //String videoRtspUrl = sharedPrefs.getString("prefHost", "rtsp://kerpz.no-ip.org/ch1.h264");
-    	int method = sharedPrefs.getInt("pref_query_method", 1);
+    	int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
         switch (item.getItemId()) {
         case R.id.action_load_balance:
         	if (method == 1) { // ussd
@@ -190,11 +193,12 @@ public class ActivityMain extends AppCompatActivity {
 	
 	@Override
 	public void onDestroy() {
-		unregisterReceiver(receiverUpdate);
+		unregisterReceiver(receiverStatusUpdate);
+		unregisterReceiver(receiverSimUpdate);
 	    super.onDestroy();              
 	}
 
-	public class ReceiverUpdate extends BroadcastReceiver {
+	public class ReceiverStatusUpdate extends BroadcastReceiver {
         @Override
 		public void onReceive(Context context, Intent intent) {
 			//final Bundle bundle = intent.getExtras();
@@ -204,7 +208,14 @@ public class ActivityMain extends AppCompatActivity {
 			if (fragmentStatus.isVisible()) {
 				fragmentStatus.updateView();
 			}
-			
+		}
+	}
+
+	public class ReceiverSimUpdate extends BroadcastReceiver {
+        @Override
+		public void onReceive(Context context, Intent intent) {
+			//final Bundle bundle = intent.getExtras();
+            //String text = intent.getStringExtra("text");
 			FragmentListSim fragmentListSim = (FragmentListSim) getSupportFragmentManager()
 					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
 			if (fragmentListSim.isVisible()) {

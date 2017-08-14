@@ -39,6 +39,9 @@ public class ServiceUSSD extends AccessibilityService {
 				db.close();
 
 				//performGlobalAction(GLOBAL_ACTION_BACK);
+				Intent intent = new Intent("com.ohmnismart.status.action.REFRESH");
+	            //intent.putExtra("text", text);
+				sendBroadcast(intent);
 			}
 
 			//String test = "[The balance of 9XXXXXXXXX as of 2017/08/02 05:07:30 is P27.0 valid till 2017-08-23 10:02:55 with 0.0 Free texts.]";
@@ -61,11 +64,10 @@ public class ServiceUSSD extends AccessibilityService {
 				db.close();
 
 				//performGlobalAction(GLOBAL_ACTION_BACK);
+				Intent intent = new Intent("com.ohmnismart.sim.action.REFRESH");
+	            //intent.putExtra("text", text);
+				sendBroadcast(intent);
 			}
-
-			Intent intent = new Intent("com.ohmnismart.main.action.REFRESH");
-            //intent.putExtra("text", text);
-			sendBroadcast(intent);
         }
     }
 
