@@ -43,7 +43,7 @@ public class DialogFragmentAddSim extends DialogFragment {
 
 		//setValue();
 
-		builder.setTitle(R.string.add_sim);
+		builder.setTitle("Add Sim");
 		builder.setCancelable(false);
 		builder.setPositiveButton(R.string.add,
 				new DialogInterface.OnClickListener() {
@@ -81,12 +81,12 @@ public class DialogFragmentAddSim extends DialogFragment {
 
 						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
 								.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
-						if (fragmentListSim != null) {
+						if (fragmentListSim.isVisible()) {
 							fragmentListSim.updateView();
 						}
 					}
 				});
-		builder.setNegativeButton(R.string.cancel,
+		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();

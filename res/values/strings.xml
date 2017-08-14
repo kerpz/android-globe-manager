@@ -46,9 +46,26 @@
     <string name="pref_ussd_send_load">USSD Send Load Code</string>
     <string name="pref_ussd_send_load_summary">USSD Send Load Code</string>
 
-    <string name="add_sim">Add SIM</string>
-    <string name="edit_sim">Edit SIM</string>
-    <string name="view_sim">View SIM</string>
+    <string name="pref_sms">SMS Preferences</string>
+
+    <string name="pref_sms_load_balance">SMS Load Balance Code</string>
+    <string name="pref_sms_load_balance_summary">SMS Load Balance Code</string>
+
+    <string name="pref_sms_point_balance">SMS Point Balance Code</string>
+    <string name="pref_sms_point_balance_summary">SMS Point Balance Code</string>
+
+    <string name="pref_sms_status">SMS Status Code</string>
+    <string name="pref_sms_status_summary">SMS Status Code</string>
+
+    <string name="pref_sms_activate_load">SMS Activate Load Code</string>
+    <string name="pref_sms_activate_load_summary">SMS Activate Load Code</string>
+
+    <string name="pref_sms_activate_point">SMS Activate Point Code</string>
+    <string name="pref_sms_activate_point_summary">SMS Activate Point Code</string>
+
+    <string name="pref_sms_send_load">SMS Send Load Code</string>
+    <string name="pref_sms_send_load_summary">SMS Send Load Code</string>
+
     <string name="number">SIM Number (required)</string>
     <string name="expire">SIM Expiry (optional)</string>
     <string name="balance">SIM Balance (optional)</string>

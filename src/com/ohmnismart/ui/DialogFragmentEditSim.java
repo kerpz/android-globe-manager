@@ -50,9 +50,9 @@ public class DialogFragmentEditSim extends DialogFragment {
 		etBalance.setText(sim.getBalance());
 		etBalanceExpire.setText(sim.getBalanceExpire());
 
-		builder.setTitle(R.string.edit_sim);
+		builder.setTitle("Edit Sim");
 		builder.setCancelable(false);
-		builder.setPositiveButton(R.string.edit,
+		builder.setPositiveButton("Save",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						Sim sim = new Sim();
@@ -88,12 +88,12 @@ public class DialogFragmentEditSim extends DialogFragment {
 
 						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
 								.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
-						if (fragmentListSim != null) {
+						if (fragmentListSim.isVisible()) {
 							fragmentListSim.updateView();
 						}
 					}
 				});
-		builder.setNegativeButton(R.string.cancel,
+		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();

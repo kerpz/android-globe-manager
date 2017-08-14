@@ -269,7 +269,11 @@ public class FragmentStatus extends Fragment {
 		AccountModel db = new AccountModel(activity);
         db.readSync();
         db.setAutoRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        db.setAutoRegisterEnable(true);
         db.writeSync();
+        db.close();
+    	toggleButton.setChecked(true);
+
 	}
 
 	public void updateView() {

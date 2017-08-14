@@ -59,5 +59,37 @@
 			android:key="pref_ussd_send_load"
 			android:defaultValue="*143*11*2#" />
 	</PreferenceCategory>
-
+	<PreferenceCategory android:title="@string/pref_sms" >
+		<EditTextPreference 
+			android:title="@string/pref_sms_load_balance" 
+			android:summary="@string/pref_sms_load_balance" 
+			android:key="pref_sms_load_balance"
+			android:defaultValue="222:Bal" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_point_balance" 
+			android:summary="@string/pref_sms_point_balance" 
+			android:key="pref_sms_point_balance"
+			android:defaultValue="4483:Bal" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_status" 
+			android:summary="@string/pref_sms_status_summary" 
+			android:key="pref_sms_status"
+			android:defaultValue="8080:Gosakto Status" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_activate_load" 
+			android:summary="@string/pref_sms_activate_load_summary" 
+			android:key="pref_sms_activate_load"
+			android:defaultValue="8080:Gotscombodd70" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_activate_point" 
+			android:summary="@string/pref_sms_activate_point_summary" 
+			android:key="pref_sms_activate_point"
+			android:defaultValue="" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_send_load" 
+			android:summary="@string/pref_sms_send_load_summary" 
+			android:key="pref_sms_send_load"
+			android:defaultValue="" />
+	</PreferenceCategory>
+	
 </PreferenceScreen>
