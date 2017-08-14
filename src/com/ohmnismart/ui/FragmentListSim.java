@@ -10,21 +10,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -162,6 +159,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 		        	startActivityForResult(i, RESULT_SETTINGS);
 		            break;
 		        case 3:
+		        	/*
 	                final EditText input = new EditText(activity);
 	                input.setInputType(InputType.TYPE_CLASS_NUMBER);
 	                input.setRawInputType(Configuration.KEYBOARD_12KEY);
@@ -169,10 +167,15 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	                .setTitle("Amount")
 	                .setView(input)  
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						// 2*2*917xxxxxxx*PIN
 						public void onClick(DialogInterface dialog, int whichButton) {
 							Toast.makeText(activity, "Sent " + input.getText() + " to " + sim.getNumber(), Toast.LENGTH_SHORT).show();
 						}})
 					.setNegativeButton(android.R.string.cancel, null).show();
+					*/
+					code = "*143*2*2*"+ sim.getNumber() + Uri.encode("#");
+					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+		        	startActivityForResult(i, RESULT_SETTINGS);
 	                break;
 		    }
 		    return true;

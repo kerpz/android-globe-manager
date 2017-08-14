@@ -57,7 +57,7 @@
 			android:title="@string/pref_ussd_send_load" 
 			android:summary="@string/pref_ussd_send_load_summary" 
 			android:key="pref_ussd_send_load"
-			android:defaultValue="*143*11*2#" />
+			android:defaultValue="*143*2*2*NUMBER*PIN#" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_sms" >
 		<EditTextPreference 
@@ -89,7 +89,7 @@
 			android:title="@string/pref_sms_send_load" 
 			android:summary="@string/pref_sms_send_load_summary" 
 			android:key="pref_sms_send_load"
-			android:defaultValue="" />
+			android:defaultValue="2NUMBER:5" />
 	</PreferenceCategory>
 	
 </PreferenceScreen>
