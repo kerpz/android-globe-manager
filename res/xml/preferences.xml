@@ -29,28 +29,35 @@
 		android:entryValues="@array/listValues" />
 	<PreferenceCategory android:title="@string/pref_ussd" >
 		<EditTextPreference 
-			android:title="@string/pref_ussd_register" 
-			android:summary="@string/pref_ussd_register_summary" 
-			android:key="pref_ussd_register"
+			android:title="@string/pref_ussd_load_balance" 
+			android:summary="@string/pref_ussd_load_balance" 
+			android:key="pref_ussd_load_balance"
 			android:defaultValue="*143*2*1*1#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_point_balance" 
+			android:summary="@string/pref_ussd_point_balance" 
+			android:key="pref_ussd_point_balance"
+			android:defaultValue="*143*11*1*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_status" 
 			android:summary="@string/pref_ussd_status_summary" 
 			android:key="pref_ussd_status"
 			android:defaultValue="*143*1*7#" />
 		<EditTextPreference 
-			android:title="@string/pref_ussd_balance" 
-			android:summary="@string/pref_ussd_balance_summary" 
-			android:key="pref_ussd_balance"
-			android:defaultValue="*143*2*1*1#" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_update_setting" >
-		<CheckBoxPreference
-			android:title="@string/pref_send_report"
-			android:summary="@string/pref_send_report_summary"
-			android:key="pref_send_report"
-			android:defaultValue="false" >
-		</CheckBoxPreference>
-    </PreferenceCategory>
+			android:title="@string/pref_ussd_activate_load" 
+			android:summary="@string/pref_ussd_activate_load_summary" 
+			android:key="pref_ussd_activate_load"
+			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_activate_point" 
+			android:summary="@string/pref_ussd_activate_point_summary" 
+			android:key="pref_ussd_activate_point"
+			android:defaultValue="*143*11*2#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_send_load" 
+			android:summary="@string/pref_ussd_send_load_summary" 
+			android:key="pref_ussd_send_load"
+			android:defaultValue="*143*11*2#" />
+	</PreferenceCategory>
 
 </PreferenceScreen>

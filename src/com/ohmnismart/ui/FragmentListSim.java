@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -45,7 +44,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 
 	private GetDevTask task;
 	private SwipeRefreshLayout swipeLayout;
-	private ProgressDialog progressDialog;
+	//private ProgressDialog progressDialog;
 	private FloatingActionButton fab;
 
 	@Override
@@ -98,8 +97,8 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		if (isVisibleToUser) {
-			progressDialog = ProgressDialog.show(activity, "", "Scanning Devices via DB ...", true);
-			progressDialog.setCancelable(true);
+			//progressDialog = ProgressDialog.show(activity, "", "Scanning Devices via DB ...", true);
+			//progressDialog.setCancelable(true);
 			updateView();
 		}
 	}
@@ -215,7 +214,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	            	swipeLayout.setRefreshing(false);
 	            }
 	            else {
-	            	progressDialog.dismiss();
+	            	//progressDialog.dismiss();
 	            }
 
 			}

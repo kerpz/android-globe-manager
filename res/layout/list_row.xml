@@ -15,7 +15,7 @@
  
         <ImageView
             android:id="@+id/imageView1"
-        	android:contentDescription="@string/action_wifi"
+        	android:contentDescription="@string/app_name"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:src="@drawable/ic_launcher"/>
@@ -51,7 +51,6 @@
         android:textColor="#343434"
         android:textSize="14sp"
         android:layout_marginTop="1dip"
-        android:text="00:00:00:00:00:00"
         android:layout_toEndOf="@+id/thumbnail" />
  
     <!-- 

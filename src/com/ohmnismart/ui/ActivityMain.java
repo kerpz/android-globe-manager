@@ -1,25 +1,18 @@
 package com.ohmnismart.ui;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.ohmnismart.db.AccountModel;
-import com.ohmnismart.db.Sim;
-import com.ohmnismart.db.SimModel;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TabLayout.TabLayoutOnPageChangeListener;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.view.Menu;
 import android.view.MenuItem;
  
@@ -30,8 +23,7 @@ public class ActivityMain extends AppCompatActivity {
 
 	ViewPager viewPager;
 	
-	ReceiverUssd receiverUssd;
-	ReceiverSms receiverSms;
+	ReceiverUpdate receiverUpdate;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +67,8 @@ public class ActivityMain extends AppCompatActivity {
  
             }
         });
-    	receiverUssd = new ReceiverUssd();
-    	receiverSms = new ReceiverSms();
-		registerReceiver(receiverUssd, new IntentFilter("com.ohmnismart.ussd.action.REFRESH"));
-		registerReceiver(receiverSms, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+    	receiverUpdate = new ReceiverUpdate();
+		registerReceiver(receiverUpdate, new IntentFilter("com.ohmnismart.main.action.REFRESH"));
     }
  
 	@Override
@@ -91,30 +81,40 @@ public class ActivityMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	Intent i;
     	String code;
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //String videoRtspUrl = sharedPrefs.getString("prefHost", "rtsp://kerpz.no-ip.org/ch1.h264");
         switch (item.getItemId()) {
         case R.id.action_load_balance:
+        	code = sharedPrefs.getString("pref_ussd_load_balance", "*143*2*1*1#");
+        	code = code.replace("#", "") + Uri.encode("#");
         	// Check your balance @ USSD
-			code = "*143*2*1*1" + Uri.encode("#");
+			//code = "*143*2*1*1" + Uri.encode("#");
         	// Check other's balance @ USSD
 			//String code = "*143*2*1*2*" + "9XXXXXXXXX" + Uri.encode("#");
 			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
         case R.id.action_point_balance:
+        	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*11*1*1#");
+        	code = code.replace("#", "") + Uri.encode("#");
         	// Check your point @ USSD
-			code = "*143*11*1*1" + Uri.encode("#");
+			//code = "*143*11*1*1" + Uri.encode("#");
 			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
         case R.id.action_status:
+        	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*1*7#");
+        	code = code.replace("#", "") + Uri.encode("#");
         	// Check GoSAKTO status @ SMS
-			code = "*143*1*7" + Uri.encode("#");
+			//code = "*143*1*7" + Uri.encode("#");
 			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
         case R.id.action_activate_load:
+        	code = sharedPrefs.getString("pref_ussd_activate_load", "*143*1*1*6*1*4*1*5*3*1#");
+        	code = code.replace("#", "") + Uri.encode("#");
         	// Activate Gotscombodd70 via load @ USSD
-			code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
+			//code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
 			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
         	startActivityForResult(i, RESULT_SETTINGS);
 			return true;
@@ -148,169 +148,27 @@ public class ActivityMain extends AppCompatActivity {
 	
 	@Override
 	public void onDestroy() {
-		unregisterReceiver(receiverUssd);
-		unregisterReceiver(receiverSms);
+		unregisterReceiver(receiverUpdate);
 	    super.onDestroy();              
 	}
 
-	public class ReceiverUssd extends BroadcastReceiver {
-        //private String TAG = ServiceUSSD.class.getSimpleName();
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String text = intent.getStringExtra("text");
-            //Log.i(TAG, "Got text: " + text);
-
-			//String test = "[The balance as of 2017/08/02 05:07:30 is P27.0 valid till 2017-08-23 10:02:55 with 0.0 Free texts. Please note that system time may vary from the time on your phone., OK]";
-			Matcher matcher = Pattern.compile("balance as of ([0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) is P([0-9]{1,5}.[0-9]{1,2}) valid till ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})").matcher(text);
-			if (matcher.find()) {
-		        //String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date());
-
-		        //String queryDate = matcher.group(1);
-				//queryDate.replace("/", "-");
-				String balance = matcher.group(2);
-				String balance_expire = matcher.group(3);
-
-				AccountModel db = new AccountModel(context);
-				db.readSync();
-				db.setBalance(balance);
-				db.setBalanceExpire(balance_expire);
-				db.writeSync();
-				db.close();
-
-				//performGlobalAction(GLOBAL_ACTION_BACK);
-				FragmentStatus fragmentStatus = (FragmentStatus) getSupportFragmentManager()
-						.findFragmentByTag("android:switcher:" + R.id.pager + ":0");
-				if (fragmentStatus != null) {
-					fragmentStatus.updateView();
-				}
-			}
-
-			//String test = "[The balance of 9XXXXXXXXX as of 2017/08/02 05:07:30 is P27.0 valid till 2017-08-23 10:02:55 with 0.0 Free texts.]";
-			Matcher matcher2 = Pattern.compile("([0-9]{10}) as of ([0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) is P([0-9]{1,5}.[0-9]{1,2}) valid till ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})").matcher(text);
-			if (matcher2.find()) {
-		        //String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date());
-
-		        String number = matcher2.group(1);
-		        //String queryDate = matcher2.group(2);
-				//queryDate.replace("/", "-");
-				String balance = matcher2.group(3);
-				String balance_expire = matcher2.group(4);
-
-				SimModel db = new SimModel(context);
-				Sim sim = new Sim();
-				sim.setNumber(number);
-				sim.setBalance(balance);
-				sim.setBalanceExpire(balance_expire);
-				db.updateSim(sim);
-				db.close();
-
-				//performGlobalAction(GLOBAL_ACTION_BACK);
-				FragmentListSim fragmentListSim = (FragmentListSim) getSupportFragmentManager()
-						.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
-				if (fragmentListSim != null) {
-					fragmentListSim.updateView();
-				}
-			}
-        }
-    }
-
-	public class ReceiverSms extends BroadcastReceiver {
-		final SmsManager sms = SmsManager.getDefault();
-
+	public class ReceiverUpdate extends BroadcastReceiver {
         @Override
 		public void onReceive(Context context, Intent intent) {
-			final Bundle bundle = intent.getExtras();
-			
-			if (bundle != null) {
-				Object[] pdus = (Object[]) bundle.get("pdus");
-				final SmsMessage[] messages = new SmsMessage[pdus.length];
-
-				for (int i = 0; i < pdus.length; i++) {
-					messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
-				}
-
-				StringBuffer content = new StringBuffer();
-				if (messages.length > 0) {
-					for (int i = 0; i < messages.length; i++) {
-						content.append(messages[i].getMessageBody());
-					}
-					String sender = messages[0].getDisplayOriginatingAddress();
-					//String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(messages[0].getTimestampMillis());
-
-					if (sender.equals("8080")) {
-						//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
-						Matcher matcher = Pattern.compile("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2}).,Your remaining ([0-9]{1,5})").matcher(content.toString());
-						if (matcher.find()) {
-							String month = matcher.group(2);
-							String day = matcher.group(3);
-							String year = matcher.group(1);
-							String hour = matcher.group(4);
-							String minute = matcher.group(5);
-							String second = matcher.group(6);
-							String data = matcher.group(7);
-
-							AccountModel db = new AccountModel(context);
-							db.readSync();
-							db.setData(data);
-							db.setDataExpire(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second);
-							db.writeSync();
-							db.close();
-						}
-					}
-
-					if (sender.equals("4438")) {
-						//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
-						Matcher matcher = Pattern.compile("([0-9]{1,5}) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
-						if (matcher.find()) {
-							String point = matcher.group(1);
-							String year = matcher.group(2);
-							String month = matcher.group(3);
-							String day = matcher.group(4);
-							//String hour = matcher.group(5);
-							//String minute = matcher.group(6);
-							//String second = matcher.group(7);
-
-							AccountModel db = new AccountModel(context);
-							db.readSync();
-							db.setPoint(point);
-							db.setPointExpire(year+"-"+month+"-"+day+" 00:00:00");
-							db.writeSync();
-							db.close();
-						}
-					}
-
-					if (sender.equals("Globe")) {
-						//String test = "Hi! Your load balance as of 08/02/2017 03:02 PM is 27.00, valid till 08/23/2017 10:02 PM. You have 0 texts to all networks. Thanks!"
-						Matcher matcher = Pattern.compile("([0-9]{1,5}.[0-9]{1,2}), valid till ([0-9]{2})/([0-9]{2})/([0-9]{4}) ([0-9]{2}):([0-9]{2}) ([A-Z]{2})").matcher(content.toString());
-						if (matcher.find()) {
-							String balance = matcher.group(1);
-							String month = matcher.group(2);
-							String day = matcher.group(3);
-							String year = matcher.group(4);
-							String hour = matcher.group(5);
-							String minute = matcher.group(6);
-							String ampm = matcher.group(7);
-
-							if (ampm.equals("PM")) {
-								hour = Integer.toString(Integer.parseInt(hour) + 12);
-							}
-
-							AccountModel db = new AccountModel(context);
-							db.readSync();
-							db.setBalance(balance);
-							db.setBalanceExpire(year+"-"+month+"-"+day+" "+hour+":"+minute+":00");
-							db.writeSync();
-							db.close();
-						}
-					}
-					FragmentStatus fragmentStatus = (FragmentStatus) getSupportFragmentManager()
-							.findFragmentByTag("android:switcher:" + R.id.pager + ":0");
-					if (fragmentStatus != null) {
-						fragmentStatus.updateView();
-					}
-				}
+			//final Bundle bundle = intent.getExtras();
+            //String text = intent.getStringExtra("text");
+			FragmentStatus fragmentStatus = (FragmentStatus) getSupportFragmentManager()
+					.findFragmentByTag("android:switcher:" + R.id.pager + ":0");
+			if (fragmentStatus.isVisible()) {
+				fragmentStatus.updateView();
 			}
-		}    
+			
+			FragmentListSim fragmentListSim = (FragmentListSim) getSupportFragmentManager()
+					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+			if (fragmentListSim.isVisible()) {
+				fragmentListSim.updateView();
+			}
+		}
 	}
 
 }
