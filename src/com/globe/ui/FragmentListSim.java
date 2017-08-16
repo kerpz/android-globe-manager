@@ -1,7 +1,8 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
-import com.ohmnismart.db.Sim;
-import com.ohmnismart.db.SimModel;
+import com.globe.db.Sim;
+import com.globe.db.SimModel;
+import com.ohmnismart.ui.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

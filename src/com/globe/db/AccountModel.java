@@ -1,4 +1,4 @@
-package com.ohmnismart.db;
+package com.globe.db;
 
 import android.content.ContentValues;
 import android.content.Context;

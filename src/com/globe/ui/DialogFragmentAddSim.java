@@ -1,7 +1,8 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
-import com.ohmnismart.db.Sim;
-import com.ohmnismart.db.SimModel;
+import com.globe.db.Sim;
+import com.globe.db.SimModel;
+import com.ohmnismart.ui.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,22 +16,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class DialogFragmentEditSim extends DialogFragment {
+public class DialogFragmentAddSim extends DialogFragment {
 
 	EditText etNumber;
 	EditText etExpire;
 	EditText etBalance;
 	EditText etBalanceExpire;
 	LinearLayout submitLayout;
-	
-	public static final String ARG_ITEM_ID = "sim_edit_dialog_fragment";
+
+	public static final String ARG_ITEM_ID = "sim_add_dialog_fragment";
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-		Bundle bundle = this.getArguments();
-		Sim sim = bundle.getParcelable("selectedDevice");
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -45,14 +42,11 @@ public class DialogFragmentEditSim extends DialogFragment {
 				.findViewById(R.id.layout_submit);
 		submitLayout.setVisibility(View.GONE);
 
-		etNumber.setText(sim.getNumber());
-		etExpire.setText(sim.getExpire());
-		etBalance.setText(sim.getBalance());
-		etBalanceExpire.setText(sim.getBalanceExpire());
+		//setValue();
 
-		builder.setTitle("Edit Sim");
+		builder.setTitle("Add Sim");
 		builder.setCancelable(false);
-		builder.setPositiveButton("Save",
+		builder.setPositiveButton(R.string.add,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						Sim sim = new Sim();
@@ -76,14 +70,14 @@ public class DialogFragmentEditSim extends DialogFragment {
 							Toast.makeText(getActivity(), "Invalid phone number!", Toast.LENGTH_SHORT).show();
 							return;
 						}
-
+						
 						sim.setNumber(iNumber);
 						sim.setExpire(etExpire.getText().toString());
 						sim.setBalance(etBalance.getText().toString());
 						sim.setBalanceExpire(etBalanceExpire.getText().toString());
 
-						SimModel db = new SimModel(getActivity()); 
-						db.updateSim(sim);
+						SimModel db = new SimModel(getActivity());
+						db.addSim(sim);
 						db.close();
 
 						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()

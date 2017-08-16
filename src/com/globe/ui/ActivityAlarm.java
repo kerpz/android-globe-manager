@@ -1,11 +1,12 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import com.ohmnismart.db.AccountModel;
-import com.ohmnismart.reciever.ReceiverBoot;
+import com.globe.db.AccountModel;
+import com.globe.reciever.ReceiverBoot;
+import com.ohmnismart.ui.R;
 
 import android.app.Notification;
 import android.app.NotificationManager;

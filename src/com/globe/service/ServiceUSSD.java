@@ -1,11 +1,11 @@
-package com.ohmnismart.service;
+package com.globe.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.ohmnismart.db.AccountModel;
-import com.ohmnismart.db.Sim;
-import com.ohmnismart.db.SimModel;
+import com.globe.db.AccountModel;
+import com.globe.db.Sim;
+import com.globe.db.SimModel;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
@@ -39,7 +39,7 @@ public class ServiceUSSD extends AccessibilityService {
 				db.close();
 
 				//performGlobalAction(GLOBAL_ACTION_BACK);
-				Intent intent = new Intent("com.ohmnismart.status.action.REFRESH");
+				Intent intent = new Intent("com.globe.status.action.REFRESH");
 	            //intent.putExtra("text", text);
 				sendBroadcast(intent);
 			}
@@ -64,7 +64,7 @@ public class ServiceUSSD extends AccessibilityService {
 				db.close();
 
 				//performGlobalAction(GLOBAL_ACTION_BACK);
-				Intent intent = new Intent("com.ohmnismart.sim.action.REFRESH");
+				Intent intent = new Intent("com.globe.sim.action.REFRESH");
 	            //intent.putExtra("text", text);
 				sendBroadcast(intent);
 			}

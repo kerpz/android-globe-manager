@@ -1,4 +1,6 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
+
+import com.ohmnismart.ui.R;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

@@ -1,10 +1,11 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import com.ohmnismart.db.Sms;
-import com.ohmnismart.db.SmsModel;
+import com.globe.db.Sms;
+import com.globe.db.SmsModel;
+import com.ohmnismart.ui.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

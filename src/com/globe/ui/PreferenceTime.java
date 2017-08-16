@@ -1,4 +1,4 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;

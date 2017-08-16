@@ -1,4 +1,4 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

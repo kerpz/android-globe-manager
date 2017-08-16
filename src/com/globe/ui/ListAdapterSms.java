@@ -1,9 +1,9 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
 
 import java.util.List;
 
+import com.globe.db.Sms;
 import com.ohmnismart.ui.R;
-import com.ohmnismart.db.Sim;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ListAdapterSim extends ArrayAdapter<Sim> {
+public class ListAdapterSms extends ArrayAdapter<Sms> {
 
 	private Context context;
-	List<Sim> sims;
+	List<Sms> smss;
 
-	public ListAdapterSim(Context context, List<Sim> sims) {
-		super(context, R.layout.list_row, sims);
+	public ListAdapterSms(Context context, List<Sms> smss) {
+		super(context, R.layout.list_row, smss);
 		this.context = context;
-		this.sims = sims;
+		this.smss = smss;
 	}
 
 	private class ViewHolder {
@@ -32,12 +32,12 @@ public class ListAdapterSim extends ArrayAdapter<Sim> {
 
 	@Override
 	public int getCount() {
-		return sims.size();
+		return smss.size();
 	}
 
 	@Override
-	public Sim getItem(int position) {
-		return sims.get(position);
+	public Sms getItem(int position) {
+		return smss.get(position);
 	}
 
 	@Override
@@ -65,29 +65,26 @@ public class ListAdapterSim extends ArrayAdapter<Sim> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Sim sim = (Sim) getItem(position);
+		Sms sms = (Sms) getItem(position);
 
-		holder.devHostNameTxt.setText(sim.getNumber());
-		holder.devMACTxt.setText(sim.getBalanceExpire());
-		//holder.devIPTxt.setText("P"+sim.getBalance());
-		holder.devIPTxt.setText("P"+String.format("%.2f", Float.valueOf(sim.getBalance())));
-		
-		
+		holder.devHostNameTxt.setText(sms.getDate());
+		holder.devMACTxt.setText(sms.getSender());
+		holder.devIPTxt.setText(sms.getContent());
 
 		return convertView;
 	}
 
 	@Override
-	public void add(Sim sim) {
-		sims.add(sim);
+	public void add(Sms sms) {
+		smss.add(sms);
 		notifyDataSetChanged();
-		super.add(sim);
+		super.add(sms);
 	}
 
 	@Override
-	public void remove(Sim sim) {
-		sims.remove(sim);
+	public void remove(Sms sms) {
+		smss.remove(sms);
 		notifyDataSetChanged();
-		super.remove(sim);
+		super.remove(sms);
 	}
 }

@@ -1,12 +1,12 @@
-package com.ohmnismart.reciever;
+package com.globe.reciever;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import com.ohmnismart.db.AccountModel;
-import com.ohmnismart.ui.ActivityAlarm;
+import com.globe.db.AccountModel;
+import com.globe.ui.ActivityAlarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

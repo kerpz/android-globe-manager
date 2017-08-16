@@ -1,4 +1,6 @@
-package com.ohmnismart.ui;
+package com.globe.ui;
+
+import com.ohmnismart.ui.R;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -70,9 +72,9 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
     	receiverStatusUpdate = new ReceiverStatusUpdate();
-		registerReceiver(receiverStatusUpdate, new IntentFilter("com.ohmnismart.status.action.REFRESH"));
+		registerReceiver(receiverStatusUpdate, new IntentFilter("com.globe.status.action.REFRESH"));
     	receiverSimUpdate = new ReceiverSimUpdate();
-		registerReceiver(receiverSimUpdate, new IntentFilter("com.ohmnismart.sim.action.REFRESH"));
+		registerReceiver(receiverSimUpdate, new IntentFilter("com.globe.sim.action.REFRESH"));
     }
  
 	@Override

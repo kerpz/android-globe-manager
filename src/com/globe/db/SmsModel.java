@@ -1,4 +1,4 @@
-package com.ohmnismart.db;
+package com.globe.db;
 
 import java.util.ArrayList;
 

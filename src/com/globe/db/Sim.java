@@ -1,4 +1,4 @@
-package com.ohmnismart.db;
+package com.globe.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;

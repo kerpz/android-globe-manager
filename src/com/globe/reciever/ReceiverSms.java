@@ -1,4 +1,4 @@
-package com.ohmnismart.reciever;
+package com.globe.reciever;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
-import com.ohmnismart.db.AccountModel;
+import com.globe.db.AccountModel;
 
 public class ReceiverSms extends BroadcastReceiver {
 	final SmsManager sms = SmsManager.getDefault();
@@ -101,7 +101,7 @@ public class ReceiverSms extends BroadcastReceiver {
 						db.close();
 					}
 				}
-				Intent myIntent = new Intent("com.ohmnismart.status.action.REFRESH");
+				Intent myIntent = new Intent("com.globe.status.action.REFRESH");
 	            //intent.putExtra("text", text);
 				context.sendBroadcast(myIntent);
 			}
