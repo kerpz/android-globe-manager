@@ -1,7 +1,5 @@
 package com.globe.ui;
 
-import com.ohmnismart.ui.R;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.EditTextPreference;

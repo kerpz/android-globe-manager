@@ -3,7 +3,6 @@ package com.globe.ui;
 import java.util.List;
 
 import com.globe.db.Sim;
-import com.ohmnismart.ui.R;
 
 import android.app.Activity;
 import android.content.Context;

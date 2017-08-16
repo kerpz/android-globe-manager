@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import com.globe.db.Sms;
 import com.globe.db.SmsModel;
-import com.ohmnismart.ui.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

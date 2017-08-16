@@ -6,7 +6,6 @@ import java.util.Locale;
 
 import com.globe.db.AccountModel;
 import com.globe.reciever.ReceiverBoot;
-import com.ohmnismart.ui.R;
 
 import android.app.Notification;
 import android.app.NotificationManager;

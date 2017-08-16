@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import com.globe.db.AccountModel;
 import com.globe.reciever.ReceiverBoot;
-import com.ohmnismart.ui.R;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -320,29 +319,31 @@ public class FragmentStatus extends Fragment {
     	
     	TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
     	// for example value of first element
-    	CellInfo cellInfo = (CellInfo) telephonyManager.getAllCellInfo().get(0);
-    	int level = 0;
-    	if (cellInfo instanceof CellInfoLte) {
-    		CellInfoLte cellInfoLte = (CellInfoLte) cellInfo;
-    		CellSignalStrengthLte cellSignalStrengthLte = cellInfoLte.getCellSignalStrength();
-    		level = cellSignalStrengthLte.getLevel(); // 0 - 4
-    	}
-    	else if (cellInfo instanceof CellInfoWcdma) {
-    		CellInfoWcdma cellInfoWcdma = (CellInfoWcdma) cellInfo;
-    		CellSignalStrengthWcdma cellSignalStrengthWcdma = cellInfoWcdma.getCellSignalStrength();
-    		level = cellSignalStrengthWcdma.getLevel(); // 0 - 4
-    	}
-    	else if (cellInfo instanceof CellInfoCdma) {
-    		CellInfoCdma cellInfoCdma = (CellInfoCdma) cellInfo;
-    		CellSignalStrengthCdma cellSignalStrengthCdma = cellInfoCdma.getCellSignalStrength();
-    		level = cellSignalStrengthCdma.getLevel(); // 0 - 4
-    	}
-    	else if (cellInfo instanceof CellInfoGsm) {
-    		CellInfoGsm cellInfoGsm = (CellInfoGsm) cellInfo;
-    		CellSignalStrengthGsm cellSignalStrengthGsm = cellInfoGsm.getCellSignalStrength();
-    		level = cellSignalStrengthGsm.getLevel(); // 0 - 4
+    	if (telephonyManager.getAllCellInfo() != null) {
+	    	CellInfo cellInfo = (CellInfo) telephonyManager.getAllCellInfo().get(0);
+	    	int level = 0;
+	    	if (cellInfo instanceof CellInfoLte) {
+	    		CellInfoLte cellInfoLte = (CellInfoLte) cellInfo;
+	    		CellSignalStrengthLte cellSignalStrengthLte = cellInfoLte.getCellSignalStrength();
+	    		level = cellSignalStrengthLte.getLevel(); // 0 - 4
+	    	}
+	    	else if (cellInfo instanceof CellInfoWcdma) {
+	    		CellInfoWcdma cellInfoWcdma = (CellInfoWcdma) cellInfo;
+	    		CellSignalStrengthWcdma cellSignalStrengthWcdma = cellInfoWcdma.getCellSignalStrength();
+	    		level = cellSignalStrengthWcdma.getLevel(); // 0 - 4
+	    	}
+	    	else if (cellInfo instanceof CellInfoCdma) {
+	    		CellInfoCdma cellInfoCdma = (CellInfoCdma) cellInfo;
+	    		CellSignalStrengthCdma cellSignalStrengthCdma = cellInfoCdma.getCellSignalStrength();
+	    		level = cellSignalStrengthCdma.getLevel(); // 0 - 4
+	    	}
+	    	else if (cellInfo instanceof CellInfoGsm) {
+	    		CellInfoGsm cellInfoGsm = (CellInfoGsm) cellInfo;
+	    		CellSignalStrengthGsm cellSignalStrengthGsm = cellInfoGsm.getCellSignalStrength();
+	    		level = cellSignalStrengthGsm.getLevel(); // 0 - 4
+	    	}
+	    	progressBar.setProgress(level * 25);
     	}
     	 
-    	progressBar.setProgress(level * 25);
 	}
 }

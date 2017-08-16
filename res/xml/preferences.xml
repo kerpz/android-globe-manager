@@ -9,12 +9,12 @@
 			android:key="pref_auto_register"
 			android:defaultValue="false" >
 		</SwitchPreference>
-		<com.ohmnismart.ui.PreferenceDate
+		<com.globe.ui.PreferenceDate
 				android:title="@string/pref_auto_register_date" 
 				android:summary="@string/pref_auto_register_date_summary" 
 				android:key="pref_auto_register_date"
 				android:defaultValue="1970-01-01" />
-		<com.ohmnismart.ui.PreferenceTime
+		<com.globe.ui.PreferenceTime
 				android:title="@string/pref_auto_register_time" 
 				android:summary="@string/pref_auto_register_time_summary" 
 				android:key="pref_auto_register_time"
