@@ -1,5 +1,8 @@
 package com.globe.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TabLayout.TabLayoutOnPageChangeListener;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,8 +36,12 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        setupViewPager(viewPager);
         // Show menu icon
         /*
         final ActionBar ab = getSupportActionBar();
@@ -40,11 +49,13 @@ public class ActivityMain extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         */
         
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Status"));
-        tabLayout.addTab(tabLayout.newTab().setText("Load"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+        //tabLayout.addTab(tabLayout.newTab().setText("Status"));
+        //tabLayout.addTab(tabLayout.newTab().setText("Load"));
+        //tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
  
+        /*
         viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -69,13 +80,51 @@ public class ActivityMain extends AppCompatActivity {
  
             }
         });
+        */
     	receiverStatusUpdate = new ReceiverStatusUpdate();
 		registerReceiver(receiverStatusUpdate, new IntentFilter("com.globe.status.action.REFRESH"));
     	receiverSimUpdate = new ReceiverSimUpdate();
 		registerReceiver(receiverSimUpdate, new IntentFilter("com.globe.sim.action.REFRESH"));
     }
  
-	@Override
+    // Add Fragments to Tabs
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new FragmentCardStatus(), "Status");
+        adapter.addFragment(new FragmentListSim(), "Sim");
+        viewPager.setAdapter(adapter);
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
+        private final List<String> mFragmentTitleList = new ArrayList<String>();
+
+        public Adapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -89,6 +138,7 @@ public class ActivityMain extends AppCompatActivity {
         //String videoRtspUrl = sharedPrefs.getString("prefHost", "rtsp://kerpz.no-ip.org/ch1.h264");
     	int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
         switch (item.getItemId()) {
+        /*
         case R.id.action_load_balance:
         	if (method == 1) { // ussd
 	        	code = sharedPrefs.getString("pref_ussd_load_balance", "*143*2*1*1#");
@@ -137,6 +187,7 @@ public class ActivityMain extends AppCompatActivity {
 				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
         	}
 			return true;
+		*/
         case R.id.action_activate_load:
         	if (method == 1) { // ussd
             	code = sharedPrefs.getString("pref_ussd_activate_load", "*143*1*1*6*1*4*1*5*3*1#");
@@ -203,10 +254,10 @@ public class ActivityMain extends AppCompatActivity {
 		public void onReceive(Context context, Intent intent) {
 			//final Bundle bundle = intent.getExtras();
             //String text = intent.getStringExtra("text");
-			FragmentStatus fragmentStatus = (FragmentStatus) getSupportFragmentManager()
-					.findFragmentByTag("android:switcher:" + R.id.pager + ":0");
-			if (fragmentStatus.isVisible()) {
-				fragmentStatus.updateView();
+        	FragmentCardStatus fragmentCardStatus = (FragmentCardStatus) getSupportFragmentManager()
+					.findFragmentByTag("android:switcher:" + R.id.viewPager + ":0");
+			if (fragmentCardStatus.isVisible()) {
+				fragmentCardStatus.updateView();
 			}
 		}
 	}
@@ -217,7 +268,7 @@ public class ActivityMain extends AppCompatActivity {
 			//final Bundle bundle = intent.getExtras();
             //String text = intent.getStringExtra("text");
 			FragmentListSim fragmentListSim = (FragmentListSim) getSupportFragmentManager()
-					.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+					.findFragmentByTag("android:switcher:" + R.id.viewPager + ":1");
 			if (fragmentListSim.isVisible()) {
 				fragmentListSim.updateView();
 			}

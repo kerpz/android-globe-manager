@@ -39,9 +39,9 @@
 			android:key="pref_ussd_point_balance"
 			android:defaultValue="*143*11*1*1#" />
 		<EditTextPreference 
-			android:title="@string/pref_ussd_status" 
-			android:summary="@string/pref_ussd_status_summary" 
-			android:key="pref_ussd_status"
+			android:title="@string/pref_ussd_data_balance" 
+			android:summary="@string/pref_ussd_data_balance" 
+			android:key="pref_ussd_data_balance"
 			android:defaultValue="*143*1*7#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load" 
@@ -71,9 +71,9 @@
 			android:key="pref_sms_point_balance"
 			android:defaultValue="4483:Bal" />
 		<EditTextPreference 
-			android:title="@string/pref_sms_status" 
-			android:summary="@string/pref_sms_status_summary" 
-			android:key="pref_sms_status"
+			android:title="@string/pref_sms_data_balance" 
+			android:summary="@string/pref_sms_data_balance" 
+			android:key="pref_sms_data_balance"
 			android:defaultValue="8080:Gosakto Status" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_load" 

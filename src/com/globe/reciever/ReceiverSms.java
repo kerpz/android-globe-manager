@@ -58,12 +58,29 @@ public class ReceiverSms extends BroadcastReceiver {
 
 				if (sender.equals("4438")) {
 					//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
-					Matcher matcher = Pattern.compile("([0-9]{1,5}) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
+					Matcher matcher = Pattern.compile("Your regular points of ([0-9]{1,5}.[0-9]{1,2}) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
 					if (matcher.find()) {
 						String point = matcher.group(1);
 						String year = matcher.group(2);
 						String month = matcher.group(3);
 						String day = matcher.group(4);
+						//String hour = matcher.group(5);
+						//String minute = matcher.group(6);
+						//String second = matcher.group(7);
+
+						AccountModel db = new AccountModel(context);
+						db.readSync();
+						db.setPoint(point);
+						db.setPointExpire(year+"-"+month+"-"+day+" 00:00:00");
+						db.writeSync();
+						db.close();
+					}
+					Matcher matcher2 = Pattern.compile("Your regular points of ([0-9]{1,5}) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
+					if (matcher2.find()) {
+						String point = matcher2.group(1);
+						String year = matcher2.group(2);
+						String month = matcher2.group(3);
+						String day = matcher2.group(4);
 						//String hour = matcher.group(5);
 						//String minute = matcher.group(6);
 						//String second = matcher.group(7);

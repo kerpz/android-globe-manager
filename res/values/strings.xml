@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Globe Manager</string>
     
+    <string name="action_action">Action</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_load_balance">Load Balance</string>
     <string name="action_point_balance">Point Balance</string>
@@ -11,8 +12,14 @@
     <string name="action_preferences">Preferences</string>
     <string name="action_reset">Reset</string>
     
+    <string name="item_title">Palais Garnier</string>
+    <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for
+        the Paris Opera.
+    </string>
+    
     <string name="default_date">1970&#8211;01&#8211;01 00:00:00</string>
     <string name="default_load">0.0</string>
+    <string name="image_description">imageButton</string>
     
     <string name="pref_register">Register Preferences</string>
 
@@ -34,8 +41,8 @@
     <string name="pref_ussd_point_balance">USSD Point Balance Code</string>
     <string name="pref_ussd_point_balance_summary">USSD Point Balance Code</string>
 
-    <string name="pref_ussd_status">USSD Status Code</string>
-    <string name="pref_ussd_status_summary">USSD Status Code</string>
+    <string name="pref_ussd_data_balance">USSD Data Balance Code</string>
+    <string name="pref_ussd_data_balance_summary">USSD Data Balance Code</string>
 
     <string name="pref_ussd_activate_load">USSD Activate Load Code</string>
     <string name="pref_ussd_activate_load_summary">USSD Activate Load Code</string>
@@ -54,8 +61,8 @@
     <string name="pref_sms_point_balance">SMS Point Balance Code</string>
     <string name="pref_sms_point_balance_summary">SMS Point Balance Code</string>
 
-    <string name="pref_sms_status">SMS Status Code</string>
-    <string name="pref_sms_status_summary">SMS Status Code</string>
+    <string name="pref_sms_data_balance">SMS Data Balance Code</string>
+    <string name="pref_sms_data_balance_summary">SMS Data Balance Code</string>
 
     <string name="pref_sms_activate_load">SMS Activate Load Code</string>
     <string name="pref_sms_activate_load_summary">SMS Activate Load Code</string>

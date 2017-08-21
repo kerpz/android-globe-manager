@@ -56,7 +56,7 @@ public class AccountModel extends SQLiteOpenHelper {
 		values.put(ACCOUNT_BALANCE_EXPIRE, "1970-01-01 00:00:00");
 		values.put(ACCOUNT_DATA, "0");
 		values.put(ACCOUNT_DATA_EXPIRE, "1970-01-01 00:00:00");
-		values.put(ACCOUNT_POINT, "0");
+		values.put(ACCOUNT_POINT, "0.00");
 		values.put(ACCOUNT_POINT_EXPIRE, "1970-01-01 00:00:00");
 		values.put(ACCOUNT_AUTO_REGISTER_ENABLE, 0);
 		values.put(ACCOUNT_AUTO_REGISTER_DATE, "1970-01-01 00:00:00");

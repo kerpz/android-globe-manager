@@ -87,7 +87,7 @@ public class DialogFragmentEditSim extends DialogFragment {
 						db.close();
 
 						FragmentListSim fragmentListSim = (FragmentListSim) getFragmentManager()
-								.findFragmentByTag("android:switcher:" + R.id.pager + ":1");
+								.findFragmentByTag("android:switcher:" + R.id.viewPager + ":1");
 						if (fragmentListSim.isVisible()) {
 							fragmentListSim.updateView();
 						}
