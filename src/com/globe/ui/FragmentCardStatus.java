@@ -400,7 +400,8 @@ public class FragmentCardStatus extends Fragment {
     	//contentAdapter.mExpire.set(3, new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
     	//contentAdapter.mAmount.set(3, DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
         contentAdapter.mExpire.set(3, "triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        contentAdapter.mUnit.set(3, new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
         contentAdapter.notifyDataSetChanged();
 	}
 
@@ -445,7 +446,8 @@ public class FragmentCardStatus extends Fragment {
     	//contentAdapter.mExpire.set(3, new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
     	//contentAdapter.mAmount.set(3, DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
         contentAdapter.mExpire.set(3, "triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        contentAdapter.mUnit.set(3, new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
 
     	db.close();
     	contentAdapter.notifyDataSetChanged();
