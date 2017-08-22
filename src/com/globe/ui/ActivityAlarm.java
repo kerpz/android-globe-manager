@@ -18,6 +18,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -113,7 +114,7 @@ public class ActivityAlarm extends AppCompatActivity {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification.Builder(this)
         	.setContentTitle(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()))
-        	.setContentText("Gotscombodd70 is about to expire.")
+        	.setContentText("GoSakto is about to expire.")
         	.setSmallIcon(R.drawable.ic_launcher)
         	.setContentIntent(pendingIntent)
         	.build();
@@ -126,6 +127,21 @@ public class ActivityAlarm extends AppCompatActivity {
 		db.setAutoRegisterEnable(false);
 		db.writeSync();
 		db.close();
+
+		Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+            	ringtone.stop();
+            	vibrator.cancel();
+        	    notificationManager.cancel(0);
+
+                pm.setComponentEnabledSetting(receiver,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+
+                finish();
+            }
+        }, 300000); // 5 mins duration?
     }
 
 }
