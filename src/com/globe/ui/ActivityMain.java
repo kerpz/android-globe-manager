@@ -51,9 +51,9 @@ public class ActivityMain extends AppCompatActivity {
         
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         //tabLayout.addTab(tabLayout.newTab().setText("Status"));
         //tabLayout.addTab(tabLayout.newTab().setText("Load"));
-        //tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
  
         /*
         viewPager = (ViewPager) findViewById(R.id.pager);

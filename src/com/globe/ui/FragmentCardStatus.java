@@ -28,7 +28,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
-import android.util.TypedValue;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -311,7 +311,8 @@ public class FragmentCardStatus extends Fragment {
     		} catch (ParseException e) {
     			e.printStackTrace();
     		}
-        	mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	mExpire.add("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
         	mAmount.add(String.format("%.2f", Float.valueOf(db.getBalance())));
         	mUnit.add("PHP");
         	mSwitch.add(false);
@@ -322,7 +323,8 @@ public class FragmentCardStatus extends Fragment {
     		} catch (ParseException e) {
     			e.printStackTrace();
     		}
-        	mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	mExpire.add("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
         	mAmount.add(String.format("%.2f", Float.valueOf(db.getPoint())));
         	mUnit.add("PTS");
         	mSwitch.add(false);
@@ -333,7 +335,8 @@ public class FragmentCardStatus extends Fragment {
     		} catch (ParseException e) {
     			e.printStackTrace();
     		}
-        	mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	mExpire.add("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
         	mAmount.add(db.getData());
         	mUnit.add("MB");
         	mSwitch.add(false);
@@ -344,9 +347,12 @@ public class FragmentCardStatus extends Fragment {
     		} catch (ParseException e) {
     			e.printStackTrace();
     		}
-        	mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mAmount.add("");
-        	mUnit.add("");
+        	//mExpire.add(new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	mExpire.add("triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+        	//mAmount.add(DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+        	mAmount.add(new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
+        	mUnit.add(new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
         	mSwitch.add(db.getAutoRegisterEnable());
 
         	db.close();
@@ -365,7 +371,9 @@ public class FragmentCardStatus extends Fragment {
             holder.tvUnit.setText(mUnit.get(position));
         	holder.switchAlarm.setChecked(mSwitch.get(position));
             if (position == 3) {
-            	holder.tvExpire.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+            	//holder.tvExpire.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+            	//holder.tvAmount.setTypeface(null, Typeface.NORMAL);
+            	//holder.tvAmount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             	holder.switchAlarm.setVisibility(View.VISIBLE);
             	holder.ibRefresh.setVisibility(View.GONE);
             	holder.ibCalendar.setVisibility(View.VISIBLE);
@@ -389,7 +397,10 @@ public class FragmentCardStatus extends Fragment {
         db.close();
     	//switchAlarm.setChecked(true);
         contentAdapter.mSwitch.set(3, true);
-    	contentAdapter.mExpire.set(3, new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+    	//contentAdapter.mExpire.set(3, new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+    	//contentAdapter.mAmount.set(3, DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+        contentAdapter.mExpire.set(3, "triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.getTimeInMillis()));
         contentAdapter.notifyDataSetChanged();
 	}
 
@@ -431,9 +442,13 @@ public class FragmentCardStatus extends Fragment {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-    	contentAdapter.mExpire.set(3, new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+    	//contentAdapter.mExpire.set(3, new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+    	//contentAdapter.mAmount.set(3, DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+        contentAdapter.mExpire.set(3, "triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm a", Locale.getDefault()).format(calendar.getTimeInMillis()));
 
     	db.close();
     	contentAdapter.notifyDataSetChanged();
     }
+    
 }
