@@ -226,8 +226,6 @@ public class ActivityMain extends AppCompatActivity {
 			i = new Intent(this, ActivityPreferences.class);
 			startActivityForResult(i, RESULT_SETTINGS);
 			return true;
-        case R.id.action_reset:
-			return true;
         default:
             return super.onOptionsItemSelected(item);
         }

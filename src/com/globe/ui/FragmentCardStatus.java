@@ -297,7 +297,10 @@ public class FragmentCardStatus extends Fragment {
                 	AccountModel db = new AccountModel(context);
                     db.readSync();
 
-                    Calendar calendar = Calendar.getInstance();
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+                	int trigger = Integer.valueOf(sharedPrefs.getString("pref_alarm_trigger", "2")) * -1;
+
+                	Calendar calendar = Calendar.getInstance();
 			        try {
 						calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
 					} catch (ParseException e) {
@@ -305,7 +308,7 @@ public class FragmentCardStatus extends Fragment {
 					}
 
                     //calendar.add(Calendar.DATE, 7); // add 7 days
-                    calendar.add(Calendar.MINUTE, -1); // sub 1 minute
+                    calendar.add(Calendar.MINUTE, trigger); // sub 1 minute
                     
                     //calendar.add(Calendar.DATE, 1);
                     db.setAutoRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));

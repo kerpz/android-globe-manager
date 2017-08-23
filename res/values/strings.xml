@@ -1,25 +1,23 @@
 <resources>
     <string name="app_name">Globe Manager</string>
     
-    <string name="action_action">Action</string>
-    <string name="action_refresh">Refresh</string>
-    <string name="action_load_balance">Load Balance</string>
-    <string name="action_point_balance">Point Balance</string>
-    <string name="action_status">Status</string>
     <string name="action_activate_load">Activate Load</string>
     <string name="action_activate_point">Activate Point</string>
     <string name="action_accessibility">Accessibility</string>
     <string name="action_preferences">Preferences</string>
-    <string name="action_reset">Reset</string>
-    
-    <string name="item_title">Palais Garnier</string>
-    <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for
-        the Paris Opera.
-    </string>
     
     <string name="default_date">1970&#8211;01&#8211;01 00:00:00</string>
     <string name="default_load">0.0</string>
+
     <string name="image_description">imageButton</string>
+
+    <string name="pref_alarm">Alarm Preferences</string>
+
+    <string name="pref_alarm_duration">ALarm Duration (Minutes)</string>
+    <string name="pref_alarm_duration_summary">ALarm Duration (Minutes)</string>
+
+    <string name="pref_alarm_trigger">ALarm Trigger (Minutes)</string>
+    <string name="pref_alarm_trigger_summary">ALarm Trigger (Minutes)</string>
     
     <string name="pref_register">Register Preferences</string>
 

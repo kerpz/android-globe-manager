@@ -13,6 +13,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -20,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -128,7 +130,10 @@ public class ActivityAlarm extends AppCompatActivity {
 		db.writeSync();
 		db.close();
 
-		Handler handler = new Handler();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+    	int duration = Integer.valueOf(sharedPrefs.getString("pref_alarm_duration", "3"));
+
+    	Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
             	ringtone.stop();
@@ -141,7 +146,7 @@ public class ActivityAlarm extends AppCompatActivity {
 
                 finish();
             }
-        }, 180000); // 3 mins alarm duration?
+        }, duration * 60000);
     }
 
 }
