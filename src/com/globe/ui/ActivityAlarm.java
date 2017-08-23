@@ -141,7 +141,7 @@ public class ActivityAlarm extends AppCompatActivity {
 
                 finish();
             }
-        }, 300000); // 5 mins duration?
+        }, 180000); // 3 mins alarm duration?
     }
 
 }

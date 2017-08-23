@@ -2,7 +2,6 @@ package com.globe.ui;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -86,6 +85,8 @@ public class FragmentCardStatus extends Fragment {
         ImageButton ibCalendar;
         ImageButton ibDownload;
         
+        CompoundButton.OnCheckedChangeListener switchListener;
+        
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.item_card, parent, false));
             //picture = (ImageView) itemView.findViewById(R.id.card_image);
@@ -94,8 +95,11 @@ public class FragmentCardStatus extends Fragment {
             tvAmount = (TextView) itemView.findViewById(R.id.tvAmount);
             tvUnit = (TextView) itemView.findViewById(R.id.tvUnit);
             
+            
             switchAlarm = (Switch) itemView.findViewById(R.id.switchAlarm);
-            switchAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            //switchAlarm.setOnCheckedChangeListener(switchListener);
+            //switchAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            switchListener = new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton v, boolean isChecked) {
                 	Context context = v.getContext();
     				AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -146,7 +150,7 @@ public class FragmentCardStatus extends Fragment {
                     db.writeSync();
                     db.close();
                 }
-            });
+            };
             ibRefresh = (ImageButton) itemView.findViewById(R.id.ibRefresh);
             ibRefresh.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -215,9 +219,8 @@ public class FragmentCardStatus extends Fragment {
             ibCalendar = (ImageButton) itemView.findViewById(R.id.ibCalendar);
         	ibCalendar.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v) {
-                    //Snackbar.make(v, "Calendar", Snackbar.LENGTH_LONG).show();
-                	Context context = v.getContext();
+                public void onClick(View view) {
+                	Context context = view.getContext();
         	    	AccountModel db = new AccountModel(context);
         	        db.readSync();
                 	final Calendar calendar = Calendar.getInstance();
@@ -231,10 +234,19 @@ public class FragmentCardStatus extends Fragment {
 	                        new DatePickerDialog.OnDateSetListener() {
 	                            @Override
 	                            public void onDateSet(DatePicker view, int year, int month, int day) {
+	                            	switchAlarm.setChecked(false);
 	                                calendar.set(Calendar.YEAR, year);
 	                                calendar.set(Calendar.MONTH, month);
 	                                calendar.set(Calendar.DAY_OF_MONTH, day);
-	                            	updateAutoRegisterDate(calendar);
+
+	                                AccountModel db = new AccountModel(view.getContext());
+	                                db.readSync();
+	                                db.setAutoRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+	                                db.setAutoRegisterEnable(true);
+	                                db.writeSync();
+	                                db.close();
+
+	                                contentAdapter.notifyDataSetChanged();
 	                            }
 	                        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 	    	        datePickerDialog.show();
@@ -243,9 +255,8 @@ public class FragmentCardStatus extends Fragment {
             ibClock = (ImageButton) itemView.findViewById(R.id.ibClock);
             ibClock.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v) {
-                    //Snackbar.make(v, "Clock", Snackbar.LENGTH_LONG).show();
-                	Context context = v.getContext();
+                public void onClick(View view) {
+                	Context context = view.getContext();
         	    	AccountModel db = new AccountModel(context);
         	        db.readSync();
                 	final Calendar calendar = Calendar.getInstance();
@@ -259,10 +270,19 @@ public class FragmentCardStatus extends Fragment {
 	                    	new TimePickerDialog.OnTimeSetListener() {
 	    	                    @Override
 	    	                    public void onTimeSet(TimePicker view, int hour, int minute) {
+	                            	switchAlarm.setChecked(false);
 	                                calendar.set(Calendar.HOUR_OF_DAY, hour);
 	                                calendar.set(Calendar.MINUTE, minute);
 	                                //calendar.set(Calendar.SECOND, 0);
-	                            	updateAutoRegisterDate(calendar);
+
+	                                AccountModel db = new AccountModel(view.getContext());
+	                                db.readSync();
+	                                db.setAutoRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+	                                db.setAutoRegisterEnable(true);
+	                                db.writeSync();
+	                                db.close();
+
+	                                contentAdapter.notifyDataSetChanged();
 	    	                    }
 	                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
 	                timePickerDialog.show();
@@ -271,185 +291,121 @@ public class FragmentCardStatus extends Fragment {
             ibDownload = (ImageButton) itemView.findViewById(R.id.ibDownload);
             ibDownload.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v) {
-                	Context context = v.getContext();
+                public void onClick(View view) {
+                	switchAlarm.setChecked(false);
+                	Context context = view.getContext();
                 	AccountModel db = new AccountModel(context);
                     db.readSync();
-                	Calendar calendar = Calendar.getInstance();
+
+                    Calendar calendar = Calendar.getInstance();
 			        try {
 						calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
-			        db.close();
+
                     //calendar.add(Calendar.DATE, 7); // add 7 days
                     calendar.add(Calendar.MINUTE, -1); // sub 1 minute
                     
                     //calendar.add(Calendar.DATE, 1);
-                	updateAutoRegisterDate(calendar);
-                    Snackbar.make(v, "Alarm is automatically set", Snackbar.LENGTH_SHORT).show();
+                    db.setAutoRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
+                    db.setAutoRegisterEnable(true);
+                    db.writeSync();
+                    db.close();
+
+                    contentAdapter.notifyDataSetChanged();
+
+                    Snackbar.make(view, "Alarm is automatically set", Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        final ArrayList<String> mTitle = new ArrayList<String>();
-        final ArrayList<String> mExpire = new ArrayList<String>();
-        final ArrayList<String> mAmount = new ArrayList<String>();
-        final ArrayList<String> mUnit = new ArrayList<String>();
-        final ArrayList<Boolean> mSwitch = new ArrayList<Boolean>();
+        Context context;
 
         public ContentAdapter(Context context) {
-        	AccountModel db = new AccountModel(context);
-            db.readSync();
-        	Calendar calendar = Calendar.getInstance();
-
-        	mTitle.add("Load Balance");
-        	try {
-    			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getBalanceExpire()));
-    		} catch (ParseException e) {
-    			e.printStackTrace();
-    		}
-        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mExpire.add("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        	mAmount.add(String.format("%.2f", Float.valueOf(db.getBalance())));
-        	mUnit.add("PHP");
-        	mSwitch.add(false);
-
-        	mTitle.add("Point Balance");
-        	try {
-    			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getPointExpire()));
-    		} catch (ParseException e) {
-    			e.printStackTrace();
-    		}
-        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mExpire.add("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        	mAmount.add(String.format("%.2f", Float.valueOf(db.getPoint())));
-        	mUnit.add("PTS");
-        	mSwitch.add(false);
-
-        	mTitle.add("Data Balance");
-        	try {
-    			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
-    		} catch (ParseException e) {
-    			e.printStackTrace();
-    		}
-        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mExpire.add("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        	mAmount.add(db.getData());
-        	mUnit.add("MB");
-        	mSwitch.add(false);
-
-        	mTitle.add("Alarm Setting");
-        	try {
-    			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
-    		} catch (ParseException e) {
-    			e.printStackTrace();
-    		}
-        	//mExpire.add(new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	//mExpire.add(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mExpire.add("triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        	//mAmount.add(DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        	mAmount.add(new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mUnit.add(new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        	mSwitch.add(db.getAutoRegisterEnable());
-
-        	db.close();
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        	context = parent.getContext();
             return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.tvTitle.setText(mTitle.get(position));
-            holder.tvExpire.setText(mExpire.get(position));
-            holder.tvAmount.setText(mAmount.get(position));
-            holder.tvUnit.setText(mUnit.get(position));
-        	holder.switchAlarm.setChecked(mSwitch.get(position));
-            if (position == 3) {
-            	//holder.tvExpire.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-            	//holder.tvAmount.setTypeface(null, Typeface.NORMAL);
-            	//holder.tvAmount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            	holder.switchAlarm.setVisibility(View.VISIBLE);
-            	holder.ibRefresh.setVisibility(View.GONE);
-            	holder.ibCalendar.setVisibility(View.VISIBLE);
-            	holder.ibClock.setVisibility(View.VISIBLE);
-            	holder.ibDownload.setVisibility(View.VISIBLE);
+        	AccountModel db = new AccountModel(context);
+            db.readSync();
+        	Calendar calendar = Calendar.getInstance();
+
+            switch (position) {
+	        	case 0:
+	            	try {
+	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getBalanceExpire()));
+	        		} catch (ParseException e) {
+	        			e.printStackTrace();
+	        		}
+		        	holder.tvTitle.setText("Load Balance");
+		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+		            holder.tvAmount.setText(String.format("%.2f", Float.valueOf(db.getBalance())));
+		            holder.tvUnit.setText("PHP");
+		            break;
+	        	case 1:
+	            	try {
+	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getPointExpire()));
+	        		} catch (ParseException e) {
+	        			e.printStackTrace();
+	        		}
+		        	holder.tvTitle.setText("Point Balance");
+		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+		            holder.tvAmount.setText(String.format("%.2f", Float.valueOf(db.getPoint())));
+		            holder.tvUnit.setText("PTS");
+		            break;
+	        	case 2:
+	            	try {
+	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
+	        		} catch (ParseException e) {
+	        			e.printStackTrace();
+	        		}
+		        	holder.tvTitle.setText("Data Balance");
+		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+		            holder.tvAmount.setText(db.getData());
+		            holder.tvUnit.setText("MB");
+		            break;
+	        	case 3:
+	            	try {
+	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
+	        		} catch (ParseException e) {
+	        			e.printStackTrace();
+	        		}
+		        	holder.tvTitle.setText("Alarm Settings");
+		            holder.tvExpire.setText("triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+		            holder.tvAmount.setText(new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
+		            holder.tvUnit.setText(new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+		            //holder.switchAlarm.setOnCheckedChangeListener(null);
+		        	holder.switchAlarm.setChecked(db.getAutoRegisterEnable());
+		            holder.switchAlarm.setOnCheckedChangeListener(holder.switchListener);
+	
+	            	//holder.tvExpire.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+	            	//holder.tvAmount.setTypeface(null, Typeface.NORMAL);
+	            	//holder.tvAmount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+	            	holder.switchAlarm.setVisibility(View.VISIBLE);
+	            	holder.ibRefresh.setVisibility(View.GONE);
+	            	holder.ibCalendar.setVisibility(View.VISIBLE);
+	            	holder.ibClock.setVisibility(View.VISIBLE);
+	            	holder.ibDownload.setVisibility(View.VISIBLE);
+		            break;
             }
         }
 
         @Override
         public int getItemCount() {
-            return mTitle.size();
+            return 4;
         }
     }
 	
-	private static void updateAutoRegisterDate(Calendar calendar) {
-		AccountModel db = new AccountModel(activity);
-        db.readSync();
-        db.setAutoRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        db.setAutoRegisterEnable(true);
-        db.writeSync();
-        db.close();
-    	//switchAlarm.setChecked(true);
-        contentAdapter.mSwitch.set(3, true);
-    	//contentAdapter.mExpire.set(3, new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-    	//contentAdapter.mAmount.set(3, DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        contentAdapter.mExpire.set(3, "triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        contentAdapter.mUnit.set(3, new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        contentAdapter.notifyDataSetChanged();
-	}
-
 	public void updateView() {
-    	AccountModel db = new AccountModel(activity);
-        db.readSync();
-    	Calendar calendar = Calendar.getInstance();
-
-    	//contentAdapter.mTitle.add("Load Balance");
-    	try {
-			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getBalanceExpire()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	contentAdapter.mExpire.set(0, new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-    	contentAdapter.mAmount.set(0, String.format("%.2f", Float.valueOf(db.getBalance())));
-
-    	//contentAdapter.mTitle.add("Point Balance");
-    	try {
-			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getPointExpire()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	contentAdapter.mExpire.set(1, new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-    	contentAdapter.mAmount.set(1, String.format("%.2f", Float.valueOf(db.getPoint())));
-
-    	//contentAdapter.mTitle.add("Data Balance");
-    	try {
-			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	contentAdapter.mExpire.set(2, new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()));
-    	contentAdapter.mAmount.set(2, db.getData());
-
-    	//contentAdapter.mTitle.add("Alarm Setting");
-    	try {
-			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	//contentAdapter.mExpire.set(3, new SimpleDateFormat("EEE, MMM d, h:mm:ss a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-    	//contentAdapter.mAmount.set(3, DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        contentAdapter.mExpire.set(3, "triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
-        contentAdapter.mAmount.set(3, new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
-        contentAdapter.mUnit.set(3, new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-
-    	db.close();
     	contentAdapter.notifyDataSetChanged();
     }
     
