@@ -27,7 +27,7 @@ public class ActivityMain extends AppCompatActivity {
 	
 	private static final int RESULT_SETTINGS = 1;
 
-	ViewPager viewPager;
+	//ViewPager viewPager;
 	
 	ReceiverStatusUpdate receiverStatusUpdate;
 	ReceiverSimUpdate receiverSimUpdate;
