@@ -9,13 +9,12 @@ import com.globe.reciever.ReceiverBoot;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.Ringtone;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +30,8 @@ import android.widget.Button;
 // reference https://blog.mikesir87.io/2013/04/android-creating-an-alarm-with-alarmmanager/
 
 public class ActivityAlarm extends AppCompatActivity {
-	Ringtone ringtone;
+	//Ringtone ringtone;
+	MediaPlayer ringtone;
 	Vibrator vibrator;
 	NotificationManager notificationManager;
 	Button bIgnore;
@@ -90,7 +90,7 @@ public class ActivityAlarm extends AppCompatActivity {
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
-        ringtone = RingtoneManager.getRingtone(this, alarmUri);
+        //ringtone = RingtoneManager.getRingtone(this, alarmUri);
         /*
         //if (Build.VERSION.SDK_INT >= 21) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -102,7 +102,12 @@ public class ActivityAlarm extends AppCompatActivity {
         //    ringtone.setStreamType(AudioManager.STREAM_ALARM);
         //}
         */
-        ringtone.play();
+        //ringtone.play();
+        
+        ringtone = MediaPlayer.create(this, alarmUri);
+        ringtone.setLooping(true);
+        ringtone.setVolume((float) 1.0, (float) 1.0);
+        ringtone.start();        
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         long pattern[] = { 500, 500 };
@@ -110,15 +115,15 @@ public class ActivityAlarm extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         
-        Intent notificationIntent = new Intent(this, ActivityAlarm.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        //Intent notificationIntent = new Intent(this, ActivityAlarm.class);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification.Builder(this)
         	.setContentTitle(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()))
         	.setContentText("GoSakto is about to expire.")
         	.setSmallIcon(R.drawable.ic_launcher)
-        	.setContentIntent(pendingIntent)
+        	//.setContentIntent(pendingIntent)
         	.build();
             
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -138,7 +143,7 @@ public class ActivityAlarm extends AppCompatActivity {
             public void run() {
             	ringtone.stop();
             	vibrator.cancel();
-        	    notificationManager.cancel(0);
+        	    //notificationManager.cancel(0);
 
                 pm.setComponentEnabledSetting(receiver,
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED,

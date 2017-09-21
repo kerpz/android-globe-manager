@@ -122,7 +122,8 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	    menu.add(0, 0, 0, "Edit");
 	    menu.add(0, 1 ,1, "Delete");
 	    menu.add(0, 2 ,2, "Get Balance");
-	    menu.add(0, 3 ,3, "Send Load");
+	    menu.add(0, 3 ,3, "Send Load(PHP)");
+	    menu.add(0, 4 ,4, "Send Data(MB)");
 	}
 
 	@Override
@@ -173,7 +174,17 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 						}})
 					.setNegativeButton(android.R.string.cancel, null).show();
 					*/
-					code = "*143*2*2*"+ sim.getNumber() + Uri.encode("#");
+		        	// send load
+		        	//int load_value = 10; // php
+					//code = "*143*2*3*1*"+load_value+"*"+ sim.getNumber() + Uri.encode("#");
+					//i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+		        	//startActivityForResult(i, RESULT_SETTINGS);
+	                //break;
+		        case 4:
+		        	// send data
+		        	//int data_value = 10; // mb
+					//code = "*143*2*3*5*"+data_value+"*"+ sim.getNumber() + Uri.encode("#");
+					code = "*143*2*3" + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 	                break;
