@@ -6,18 +6,15 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.globe.db.AccountModel;
-import com.globe.reciever.ReceiverBoot;
 
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -107,8 +104,8 @@ public class FragmentCardStatus extends Fragment {
     				Intent alarmIntent = new Intent(context, ActivityAlarm.class);
     		        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-                    ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
-                    PackageManager pm = context.getPackageManager();
+                    //ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
+                    //PackageManager pm = context.getPackageManager();
 
                     AccountModel db = new AccountModel(context);
                     db.readSync();
@@ -130,9 +127,9 @@ public class FragmentCardStatus extends Fragment {
                     	db.setAutoRegisterEnable(true);
     					alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     					
-    					pm.setComponentEnabledSetting(receiver,
-    					        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-    					        PackageManager.DONT_KILL_APP);
+    					//pm.setComponentEnabledSetting(receiver,
+    					//        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+    					//        PackageManager.DONT_KILL_APP);
 
     					Toast.makeText(context, "Alarm enabled", Toast.LENGTH_SHORT).show();
                         //Snackbar.make(v, "Alarm enabled", Snackbar.LENGTH_SHORT).show();
@@ -140,9 +137,9 @@ public class FragmentCardStatus extends Fragment {
                     	db.setAutoRegisterEnable(false);
                         alarmManager.cancel(pendingIntent);
 
-                        pm.setComponentEnabledSetting(receiver,
-                                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                                PackageManager.DONT_KILL_APP);
+                        //pm.setComponentEnabledSetting(receiver,
+                        //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        //        PackageManager.DONT_KILL_APP);
 
                         Toast.makeText(context, "Alarm diasbled", Toast.LENGTH_SHORT).show();
                         //Snackbar.make(v, "Alarm disabled", Snackbar.LENGTH_SHORT).show();

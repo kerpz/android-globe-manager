@@ -207,7 +207,7 @@ public class ActivityMain extends AppCompatActivity {
 			return true;
         case R.id.action_activate_point:
         	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_activate_load", "*143*11*2#");
+            	code = sharedPrefs.getString("pref_ussd_activate_point", "*143*11*2#");
             	code = code.replace("#", "") + Uri.encode("#");
             	// Activate Gotscombodd70 via point @ USSD
     			//code = "*143*11*2" + Uri.encode("#");

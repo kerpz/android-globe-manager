@@ -23,7 +23,7 @@ public class ReceiverBoot extends BroadcastReceiver {
 			//Intent alarmIntent = new Intent(context, ReceiverAlarm.class);
 			//PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
 			Intent alarmIntent = new Intent(context, ActivityAlarm.class);
-	        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+	        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AccountModel db = new AccountModel(context);
             db.readSync();
@@ -35,11 +35,13 @@ public class ReceiverBoot extends BroadcastReceiver {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+
+            if (db.getAutoRegisterEnable()) {
+                //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 120000, pendingIntent); // 10 sec interval
+    			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
             
             db.close();
-
-            //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 120000, pendingIntent); // 10 sec interval
-			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
     }
 

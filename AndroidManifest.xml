@@ -58,7 +58,8 @@
         
         <receiver
             android:name="com.globe.reciever.ReceiverBoot"
-            android:enabled="false" >
+            android:enabled="true"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

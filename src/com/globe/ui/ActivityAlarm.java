@@ -5,26 +5,24 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.globe.db.AccountModel;
-import com.globe.reciever.ReceiverBoot;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -42,18 +40,22 @@ public class ActivityAlarm extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        Window win = getWindow();
+        win.addFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN |
+        		WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                //WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON );
+        
         setContentView(R.layout.activity_alarm);
 
         // modify to Ignore, Renew, or goto App?
         bIgnore = (Button) findViewById(R.id.bIgnore);
         bLaunch = (Button) findViewById(R.id.bLaunch);
 
-	    final ComponentName receiver = new ComponentName(this, ReceiverBoot.class);
-        final PackageManager pm = this.getPackageManager();
+	    //final ComponentName receiver = new ComponentName(this, ReceiverBoot.class);
+        //final PackageManager pm = this.getPackageManager();
         bIgnore.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,9 +63,9 @@ public class ActivityAlarm extends AppCompatActivity {
             	vibrator.cancel();
         	    notificationManager.cancel(0);
 
-        	    pm.setComponentEnabledSetting(receiver,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
+        	    //pm.setComponentEnabledSetting(receiver,
+                //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                //        PackageManager.DONT_KILL_APP);
 
                 finish();
             }
@@ -77,13 +79,13 @@ public class ActivityAlarm extends AppCompatActivity {
             	vibrator.cancel();
         	    notificationManager.cancel(0);
 
-                pm.setComponentEnabledSetting(receiver,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
+                //pm.setComponentEnabledSetting(receiver,
+                //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                //        PackageManager.DONT_KILL_APP);
 
-                finish();
-                
             	startActivity(intent);
+
+            	finish();
             }
         });
 
@@ -105,10 +107,22 @@ public class ActivityAlarm extends AppCompatActivity {
         */
         //ringtone.play();
         
-        ringtone = MediaPlayer.create(this, alarmUri);
-        ringtone.setLooping(true);
-        ringtone.setVolume((float) 1.0, (float) 1.0);
-        ringtone.start();        
+        //AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        //audioManager.setStreamVolume(AudioManager.STREAM_ALARM, audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM), 0);
+        
+        //ringtone = MediaPlayer.create(this, alarmUri);
+        try {
+            ringtone = new MediaPlayer();
+			ringtone.setDataSource(this, alarmUri);
+	        ringtone.setLooping(true);
+	        //ringtone.setVolume((float) 1.0, (float) 1.0);
+	        ringtone.setAudioStreamType(AudioManager.STREAM_ALARM);
+
+	        ringtone.prepare();
+	        ringtone.start();        
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         long pattern[] = { 500, 500 };
@@ -119,9 +133,10 @@ public class ActivityAlarm extends AppCompatActivity {
         //Intent notificationIntent = new Intent(this, ActivityAlarm.class);
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
-        wl.acquire();
+        //wakeLock = ((PowerManager)getSystemService(POWER_SERVICE)).newWakeLock(
+        //		PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "Alarm Tag"
+        //);
+        //wakeLock.acquire();
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = new Notification.Builder(this)
@@ -133,8 +148,6 @@ public class ActivityAlarm extends AppCompatActivity {
             
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, notification);
-
-        wl.release();
 
         AccountModel db = new AccountModel(this);
 		db.readSync();
@@ -152,9 +165,11 @@ public class ActivityAlarm extends AppCompatActivity {
             	vibrator.cancel();
         	    //notificationManager.cancel(0);
 
-                pm.setComponentEnabledSetting(receiver,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
+                //pm.setComponentEnabledSetting(receiver,
+                //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                //        PackageManager.DONT_KILL_APP);
+
+                //wakeLock.release();
 
                 finish();
             }
