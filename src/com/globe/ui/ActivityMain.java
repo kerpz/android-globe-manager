@@ -188,9 +188,9 @@ public class ActivityMain extends AppCompatActivity {
         	}
 			return true;
 		*/
-        case R.id.action_activate_load:
+        case R.id.action_activate_load1:
         	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_activate_load", "*143*1*1*6*1*4*1*5*3*1#");
+            	code = sharedPrefs.getString("pref_ussd_activate_load1", "*143*1*1*6*1*4*1*5*3*1#");
             	code = code.replace("#", "") + Uri.encode("#");
             	// Activate Gotscombodd70 via load @ USSD
     			//code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
@@ -199,7 +199,24 @@ public class ActivityMain extends AppCompatActivity {
         	}
         	else if (method == 2) { // sms
         		// 8080:Gotscombodd70
-	        	code = sharedPrefs.getString("pref_sms_load_balance", "8080:Gotscombodd70");
+	        	code = sharedPrefs.getString("pref_sms_activate_load1", "8080:Gotscombodd70");
+	        	String[] sms = code.split(":");
+				SmsManager smsManager = SmsManager.getDefault();
+				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+        	}
+			return true;
+        case R.id.action_activate_load2:
+        	if (method == 1) { // ussd
+            	code = sharedPrefs.getString("pref_ussd_activate_load2", "*143*1*1*6*1*4*1*5*3*1#");
+            	code = code.replace("#", "") + Uri.encode("#");
+            	// Activate Gotscombodd70 via load @ USSD
+    			//code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
+    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+            	startActivityForResult(i, RESULT_SETTINGS);
+        	}
+        	else if (method == 2) { // sms
+        		// 8080:Gotscombogbbff108
+	        	code = sharedPrefs.getString("pref_sms_activate_load2", "8080:Gotscombogbbff108");
 	        	String[] sms = code.split(":");
 				SmsManager smsManager = SmsManager.getDefault();
 				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);

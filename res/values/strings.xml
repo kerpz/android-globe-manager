@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Globe Manager</string>
     
-    <string name="action_activate_load">Activate Load</string>
+    <string name="action_activate_load1">Activate Load (GoSakto1)</string>
+    <string name="action_activate_load2">Activate Load (GoSakto2)</string>
     <string name="action_activate_point">Activate Point</string>
     <string name="action_accessibility">Accessibility</string>
     <string name="action_preferences">Preferences</string>
@@ -42,8 +43,11 @@
     <string name="pref_ussd_data_balance">USSD Data Balance Code</string>
     <string name="pref_ussd_data_balance_summary">USSD Data Balance Code</string>
 
-    <string name="pref_ussd_activate_load">USSD Activate Load Code</string>
-    <string name="pref_ussd_activate_load_summary">USSD Activate Load Code</string>
+    <string name="pref_ussd_activate_load1">USSD Activate Load Code (Gosakto1)</string>
+    <string name="pref_ussd_activate_load1_summary">USSD Activate Load Code (Gosakto1)</string>
+
+    <string name="pref_ussd_activate_load2">USSD Activate Load Code (Gosakto2)</string>
+    <string name="pref_ussd_activate_load2_summary">USSD Activate Load Code (Gosakto2)</string>
 
     <string name="pref_ussd_activate_point">USSD Activate Point Code</string>
     <string name="pref_ussd_activate_point_summary">USSD Activate Point Code</string>
@@ -62,8 +66,11 @@
     <string name="pref_sms_data_balance">SMS Data Balance Code</string>
     <string name="pref_sms_data_balance_summary">SMS Data Balance Code</string>
 
-    <string name="pref_sms_activate_load">SMS Activate Load Code</string>
-    <string name="pref_sms_activate_load_summary">SMS Activate Load Code</string>
+    <string name="pref_sms_activate_load1">SMS Activate Load Code (Gosakto1)</string>
+    <string name="pref_sms_activate_load1_summary">SMS Activate Load Code (Gosakto1)</string>
+
+    <string name="pref_sms_activate_load2">SMS Activate Load Code (Gosakto2)</string>
+    <string name="pref_sms_activate_load2_summary">SMS Activate Load Code (Gosakto2)</string>
 
     <string name="pref_sms_activate_point">SMS Activate Point Code</string>
     <string name="pref_sms_activate_point_summary">SMS Activate Point Code</string>

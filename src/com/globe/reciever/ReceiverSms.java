@@ -37,15 +37,16 @@ public class ReceiverSms extends BroadcastReceiver {
 
 				if (sender.equals("8080")) {
 					//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
-					Matcher matcher = Pattern.compile("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2}).,Your remaining ([0-9]{1,5})").matcher(content.toString());
+					//Matcher matcher = Pattern.compile("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2}).,Your remaining ([0-9]{1,5})").matcher(content.toString());
+					Matcher matcher = Pattern.compile("Your remaining ([0-9]{1,5})MB of consumable internet from your GoSAKTO subscription will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})").matcher(content.toString());
 					if (matcher.find()) {
-						String month = matcher.group(2);
-						String day = matcher.group(3);
-						String year = matcher.group(1);
-						String hour = matcher.group(4);
-						String minute = matcher.group(5);
-						String second = matcher.group(6);
-						String data = matcher.group(7);
+						String data = matcher.group(1);
+						String year = matcher.group(2);
+						String month = matcher.group(3);
+						String day = matcher.group(4);
+						String hour = matcher.group(5);
+						String minute = matcher.group(6);
+						String second = matcher.group(7);
 
 						AccountModel db = new AccountModel(context);
 						db.readSync();

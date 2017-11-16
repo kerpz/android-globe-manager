@@ -58,9 +58,14 @@
 			android:key="pref_ussd_data_balance"
 			android:defaultValue="*143*1*7#" />
 		<EditTextPreference 
-			android:title="@string/pref_ussd_activate_load" 
-			android:summary="@string/pref_ussd_activate_load_summary" 
-			android:key="pref_ussd_activate_load"
+			android:title="@string/pref_ussd_activate_load1" 
+			android:summary="@string/pref_ussd_activate_load1_summary" 
+			android:key="pref_ussd_activate_load1"
+			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_activate_load2" 
+			android:summary="@string/pref_ussd_activate_load2_summary" 
+			android:key="pref_ussd_activate_load2"
 			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_point" 
@@ -90,10 +95,15 @@
 			android:key="pref_sms_data_balance"
 			android:defaultValue="8080:Gosakto Status" />
 		<EditTextPreference 
-			android:title="@string/pref_sms_activate_load" 
-			android:summary="@string/pref_sms_activate_load_summary" 
-			android:key="pref_sms_activate_load"
+			android:title="@string/pref_sms_activate_load1" 
+			android:summary="@string/pref_sms_activate_load1_summary" 
+			android:key="pref_sms_activate_load1"
 			android:defaultValue="8080:Gotscombodd70" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_activate_load2" 
+			android:summary="@string/pref_sms_activate_load2_summary" 
+			android:key="pref_sms_activate_load2"
+			android:defaultValue="8080:Gotscombogbbff108" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_point" 
 			android:summary="@string/pref_sms_activate_point_summary" 
