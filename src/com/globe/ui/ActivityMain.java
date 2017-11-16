@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -133,118 +132,32 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	Intent i;
-    	String code;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //String videoRtspUrl = sharedPrefs.getString("prefHost", "rtsp://kerpz.no-ip.org/ch1.h264");
-    	int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
+    	//int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
+
+    	SmsManager smsManager = SmsManager.getDefault();
+    	String[] code;
         switch (item.getItemId()) {
-        /*
-        case R.id.action_load_balance:
-        	if (method == 1) { // ussd
-	        	code = sharedPrefs.getString("pref_ussd_load_balance", "*143*2*1*1#");
-	        	code = code.replace("#", "") + Uri.encode("#");
-	        	// Check your balance @ USSD
-				//code = "*143*2*1*1" + Uri.encode("#");
-	        	// Check other's balance @ USSD
-				//String code = "*143*2*1*2*" + "9XXXXXXXXX" + Uri.encode("#");
-				i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+	        case R.id.action_activate_load1:
+	        	code = sharedPrefs.getString("pref_sms_activate_load1", "8080:Gotscombodd70").split(":");
+				smsManager.sendTextMessage(code[0], null, code[1], null, null);
+				return true;
+	        case R.id.action_activate_load2:
+	        	code = sharedPrefs.getString("pref_sms_activate_load2", "8080:Gotscombogbbff108").split(":");
+				smsManager.sendTextMessage(code[0], null, code[1], null, null);
+				return true;
+	        case R.id.action_activate_point:
+				return true;
+	        case R.id.action_accessibility:
+	        	i = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
 	        	startActivityForResult(i, RESULT_SETTINGS);
-        	}
-        	else if (method == 2) { // sms
-        		// 222:Bal
-	        	code = sharedPrefs.getString("pref_sms_load_balance", "222:Bal");
-	        	String[] sms = code.split(":");
-				SmsManager smsManager = SmsManager.getDefault();
-				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
-        	}
-			return true;
-        case R.id.action_point_balance:
-        	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*11*1*1#");
-            	code = code.replace("#", "") + Uri.encode("#");
-            	// Check your point @ USSD
-    			//code = "*143*11*1*1" + Uri.encode("#");
-    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-            	startActivityForResult(i, RESULT_SETTINGS);
-        	}
-        	else if (method == 2) { // sms
-        	}
-			return true;
-        case R.id.action_status:
-        	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_status", "*143*1*7#");
-            	code = code.replace("#", "") + Uri.encode("#");
-            	// Check GoSAKTO status @ SMS
-    			//code = "*143*1*7" + Uri.encode("#");
-    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-            	startActivityForResult(i, RESULT_SETTINGS);
-        	}
-        	else if (method == 2) { // sms
-        		// 8080:Gotscombodd70
-	        	code = sharedPrefs.getString("pref_sms_status", "8080:Gosakto Status");
-	        	String[] sms = code.split(":");
-				SmsManager smsManager = SmsManager.getDefault();
-				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
-        	}
-			return true;
-		*/
-        case R.id.action_activate_load1:
-        	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_activate_load1", "*143*1*1*6*1*4*1*5*3*1#");
-            	code = code.replace("#", "") + Uri.encode("#");
-            	// Activate Gotscombodd70 via load @ USSD
-    			//code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
-    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-            	startActivityForResult(i, RESULT_SETTINGS);
-        	}
-        	else if (method == 2) { // sms
-        		// 8080:Gotscombodd70
-	        	code = sharedPrefs.getString("pref_sms_activate_load1", "8080:Gotscombodd70");
-	        	String[] sms = code.split(":");
-				SmsManager smsManager = SmsManager.getDefault();
-				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
-        	}
-			return true;
-        case R.id.action_activate_load2:
-        	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_activate_load2", "*143*1*1*6*1*4*1*5*3*1#");
-            	code = code.replace("#", "") + Uri.encode("#");
-            	// Activate Gotscombodd70 via load @ USSD
-    			//code = "*143*1*1*6*1*4*1*5*3*1" + Uri.encode("#");
-    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-            	startActivityForResult(i, RESULT_SETTINGS);
-        	}
-        	else if (method == 2) { // sms
-        		// 8080:Gotscombogbbff108
-	        	code = sharedPrefs.getString("pref_sms_activate_load2", "8080:Gotscombogbbff108");
-	        	String[] sms = code.split(":");
-				SmsManager smsManager = SmsManager.getDefault();
-				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
-        	}
-			return true;
-        case R.id.action_activate_point:
-        	if (method == 1) { // ussd
-            	code = sharedPrefs.getString("pref_ussd_activate_point", "*143*11*2#");
-            	code = code.replace("#", "") + Uri.encode("#");
-            	// Activate Gotscombodd70 via point @ USSD
-    			//code = "*143*11*2" + Uri.encode("#");
-    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-            	startActivityForResult(i, RESULT_SETTINGS);
-        	}
-        	else if (method == 2) { // sms
-        		// 8080:Gotscombodd70
-        	}
-			return true;
-        case R.id.action_accessibility:
-        	i = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        	startActivityForResult(i, RESULT_SETTINGS);
-			return true;
-        case R.id.action_preferences:
-			i = new Intent(this, ActivityPreferences.class);
-			startActivityForResult(i, RESULT_SETTINGS);
-			return true;
-        default:
-            return super.onOptionsItemSelected(item);
+				return true;
+	        case R.id.action_preferences:
+				i = new Intent(this, ActivityPreferences.class);
+				startActivityForResult(i, RESULT_SETTINGS);
+				return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
         }
     }
 

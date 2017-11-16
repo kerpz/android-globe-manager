@@ -171,7 +171,6 @@ public class FragmentCardStatus extends Fragment {
                 				context.startActivity(i);
                         	}
                         	else if (method == 2) { // sms
-                        		// 222:Bal
                 	        	code = sharedPrefs.getString("pref_sms_load_balance", "222:Bal");
                 	        	String[] sms = code.split(":");
                 				SmsManager smsManager = SmsManager.getDefault();
@@ -182,8 +181,6 @@ public class FragmentCardStatus extends Fragment {
                         	if (method == 1) { // ussd
                             	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*11*1*1#");
                             	code = code.replace("#", "") + Uri.encode("#");
-                            	// Check your point @ USSD
-                    			//code = "*143*11*1*1" + Uri.encode("#");
                     			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                     			context.startActivity(i);
                         	}
@@ -194,8 +191,6 @@ public class FragmentCardStatus extends Fragment {
                         	if (method == 1) { // ussd
                             	code = sharedPrefs.getString("pref_ussd_data_balance", "*143*1*7#");
                             	code = code.replace("#", "") + Uri.encode("#");
-                            	// Check GoSAKTO status @ SMS
-                    			//code = "*143*1*7" + Uri.encode("#");
                     			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                     			context.startActivity(i);
                         	}
