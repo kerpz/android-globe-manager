@@ -58,6 +58,21 @@
 			android:key="pref_ussd_data_balance"
 			android:defaultValue="*143*1*7#" />
 		<EditTextPreference 
+			android:title="@string/pref_ussd_surf_alert_status" 
+			android:summary="@string/pref_ussd_surf_alert_status" 
+			android:key="pref_ussd_surf_alert_status"
+			android:defaultValue="*143*2*4*4*1#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_surf_alert_on" 
+			android:summary="@string/pref_ussd_surf_alert_on" 
+			android:key="pref_ussd_surf_alert_on"
+			android:defaultValue="*143*2*4*2*1*1#" />
+		<EditTextPreference 
+			android:title="@string/pref_ussd_surf_alert_off" 
+			android:summary="@string/pref_ussd_surf_alert_off" 
+			android:key="pref_ussd_surf_alert_off"
+			android:defaultValue="*143*2*4*3*1*2*1#" />
+		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load1" 
 			android:summary="@string/pref_ussd_activate_load1_summary" 
 			android:key="pref_ussd_activate_load1"
@@ -94,6 +109,26 @@
 			android:summary="@string/pref_sms_data_balance" 
 			android:key="pref_sms_data_balance"
 			android:defaultValue="8080:Gosakto Status" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_surf_alert_status" 
+			android:summary="@string/pref_sms_surf_alert_status" 
+			android:key="pref_sms_surf_alert_status"
+			android:defaultValue="8080:Surfalert status" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_surf_alert_on" 
+			android:summary="@string/pref_sms_surf_alert_on" 
+			android:key="pref_sms_surf_alert_on"
+			android:defaultValue="8080:Surfalert on" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_surf_alert_off" 
+			android:summary="@string/pref_sms_surf_alert_off" 
+			android:key="pref_sms_surf_alert_off"
+			android:defaultValue="8080:Surfalert off" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_surf_alert_status" 
+			android:summary="@string/pref_sms_surf_alert_status" 
+			android:key="pref_sms_surf_alert_status"
+			android:defaultValue="8080:Surfalert status" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_load1" 
 			android:summary="@string/pref_sms_activate_load1_summary" 

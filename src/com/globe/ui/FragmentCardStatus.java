@@ -99,53 +99,91 @@ public class FragmentCardStatus extends Fragment {
             switchListener = new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton v, boolean isChecked) {
                 	Context context = v.getContext();
-    				AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-    				Intent alarmIntent = new Intent(context, ActivityAlarm.class);
-    		        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-                    //ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
-                    //PackageManager pm = context.getPackageManager();
-
-                    AccountModel db = new AccountModel(context);
-                    db.readSync();
-                    
-                    if (isChecked) {
-                    	Calendar calendar = Calendar.getInstance();
-                        try {
-    						calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
-    					} catch (ParseException e) {
-    						e.printStackTrace();
-    					}
-                        
-                        if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
-                            Toast.makeText(context, "Invalid set date, please set a valid date.", Toast.LENGTH_SHORT).show();
-                            switchAlarm.setChecked(false);
-                        	return;
-                        }
-
-                    	db.setAutoRegisterEnable(true);
-    					alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-    					
-    					//pm.setComponentEnabledSetting(receiver,
-    					//        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-    					//        PackageManager.DONT_KILL_APP);
-
-    					Toast.makeText(context, "Alarm enabled", Toast.LENGTH_SHORT).show();
-                        //Snackbar.make(v, "Alarm enabled", Snackbar.LENGTH_SHORT).show();
-    				} else {
-                    	db.setAutoRegisterEnable(false);
-                        alarmManager.cancel(pendingIntent);
-
-                        //pm.setComponentEnabledSetting(receiver,
-                        //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        //        PackageManager.DONT_KILL_APP);
-
-                        Toast.makeText(context, "Alarm diasbled", Toast.LENGTH_SHORT).show();
-                        //Snackbar.make(v, "Alarm disabled", Snackbar.LENGTH_SHORT).show();
+                	Intent i;
+                	String code;
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+                	int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
+                    switch (getAdapterPosition()) {
+	                	case 3:
+		    				AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		
+		    				Intent alarmIntent = new Intent(context, ActivityAlarm.class);
+		    		        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		
+		                    //ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
+		                    //PackageManager pm = context.getPackageManager();
+		
+		                    AccountModel db = new AccountModel(context);
+		                    db.readSync();
+		                    
+		                    if (isChecked) {
+		                    	Calendar calendar = Calendar.getInstance();
+		                        try {
+		    						calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
+		    					} catch (ParseException e) {
+		    						e.printStackTrace();
+		    					}
+		                        
+		                        if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
+		                            Toast.makeText(context, "Invalid set date, please set a valid date.", Toast.LENGTH_SHORT).show();
+		                            switchAlarm.setChecked(false);
+		                        	return;
+		                        }
+		
+		                    	db.setAutoRegisterEnable(true);
+		    					alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+		    					
+		    					//pm.setComponentEnabledSetting(receiver,
+		    					//        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+		    					//        PackageManager.DONT_KILL_APP);
+		
+		    					Toast.makeText(context, "Alarm enabled", Toast.LENGTH_SHORT).show();
+		                        //Snackbar.make(v, "Alarm enabled", Snackbar.LENGTH_SHORT).show();
+		    				} else {
+		                    	db.setAutoRegisterEnable(false);
+		                        alarmManager.cancel(pendingIntent);
+		
+		                        //pm.setComponentEnabledSetting(receiver,
+		                        //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+		                        //        PackageManager.DONT_KILL_APP);
+		
+		                        Toast.makeText(context, "Alarm diasbled", Toast.LENGTH_SHORT).show();
+		                        //Snackbar.make(v, "Alarm disabled", Snackbar.LENGTH_SHORT).show();
+		                    }
+		                    db.writeSync();
+		                    db.close();
+		                    break;
+	                	case 4:
+                        	if (method == 1) { // ussd
+    		                    if (isChecked) {
+	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_on", "*143*2*4*2*1*1#");
+	                            	code = code.replace("#", "") + Uri.encode("#");
+	                    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+	                    			context.startActivity(i);
+    		                    } else {
+	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_off", "*143*2*4*3*1*2*1#");
+	                            	code = code.replace("#", "") + Uri.encode("#");
+	                    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+	                    			context.startActivity(i);
+	                    		}
+                        	}
+                        	else if (method == 2) { // sms
+    		                    if (isChecked) {
+	                        		// 8080:Surfalert on
+	                	        	code = sharedPrefs.getString("pref_sms_surf_alert_on", "8080:Surfalert on");
+	                	        	String[] sms = code.split(":");
+	                				SmsManager smsManager = SmsManager.getDefault();
+	                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+    		                    } else {
+	                        		// 8080:Surfalert off
+	                	        	code = sharedPrefs.getString("pref_sms_surf_alert_off", "8080:Surfalert off");
+	                	        	String[] sms = code.split(":");
+	                				SmsManager smsManager = SmsManager.getDefault();
+	                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                				}
+                        	}
+		                    break;
                     }
-                    db.writeSync();
-                    db.close();
                 }
             };
             ibRefresh = (ImageButton) itemView.findViewById(R.id.ibRefresh);
@@ -196,7 +234,22 @@ public class FragmentCardStatus extends Fragment {
                         	}
                         	else if (method == 2) { // sms
                         		// 8080:Gotscombodd70
-                	        	code = sharedPrefs.getString("pref_sms_data_balance", "8080:Gosakto Status");
+                	        	code = sharedPrefs.getString("pref_sms_data_balance", "8080:Gosakto status");
+                	        	String[] sms = code.split(":");
+                				SmsManager smsManager = SmsManager.getDefault();
+                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                        	}
+                        	break;
+                    	case 4:
+                        	if (method == 1) { // ussd
+                            	code = sharedPrefs.getString("pref_ussd_surf_alert_status", "*143*2*4*4*1#");
+                            	code = code.replace("#", "") + Uri.encode("#");
+                    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+                    			context.startActivity(i);
+                        	}
+                        	else if (method == 2) { // sms
+                        		// 8080:Surfalert status
+                	        	code = sharedPrefs.getString("pref_sms_surf_alert_status", "8080:Surfalert status");
                 	        	String[] sms = code.split(":");
                 				SmsManager smsManager = SmsManager.getDefault();
                 				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
@@ -378,7 +431,7 @@ public class FragmentCardStatus extends Fragment {
 		            holder.tvExpire.setText("triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
 		            holder.tvAmount.setText(new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
 		            holder.tvUnit.setText(new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
-		            //holder.switchAlarm.setOnCheckedChangeListener(null);
+		            holder.switchAlarm.setOnCheckedChangeListener(null);
 		        	holder.switchAlarm.setChecked(db.getAutoRegisterEnable());
 		            holder.switchAlarm.setOnCheckedChangeListener(holder.switchListener);
 	
@@ -391,12 +444,33 @@ public class FragmentCardStatus extends Fragment {
 	            	holder.ibClock.setVisibility(View.VISIBLE);
 	            	holder.ibDownload.setVisibility(View.VISIBLE);
 		            break;
+	        	case 4:
+		        	holder.tvTitle.setText("Surf Alert");
+		            //holder.tvExpire.setVisibility(View.GONE);
+		            //holder.tvAmount.setVisibility(View.GONE);
+		            //holder.tvUnit.setVisibility(View.GONE);
+		            holder.tvExpire.setText("Protects from unexpected browsing charges");
+		            if (db.getSurfAlertEnable()) {
+		            	holder.tvAmount.setText("ON");
+		            } else {
+		            	holder.tvAmount.setText("OFF");
+		            }
+		            holder.tvUnit.setText("");
+		            holder.switchAlarm.setOnCheckedChangeListener(null);
+		        	holder.switchAlarm.setChecked(db.getSurfAlertEnable());
+		            holder.switchAlarm.setOnCheckedChangeListener(holder.switchListener);
+	            	holder.switchAlarm.setVisibility(View.VISIBLE);
+	            	holder.ibRefresh.setVisibility(View.VISIBLE);
+	            	holder.ibCalendar.setVisibility(View.GONE);
+	            	holder.ibClock.setVisibility(View.GONE);
+	            	holder.ibDownload.setVisibility(View.GONE);
+		            break;
             }
         }
 
         @Override
         public int getItemCount() {
-            return 4;
+            return 5;
         }
     }
 	

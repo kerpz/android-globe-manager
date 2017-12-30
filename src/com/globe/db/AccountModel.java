@@ -20,6 +20,7 @@ public class AccountModel extends SQLiteOpenHelper {
 	private static final String ACCOUNT_POINT_EXPIRE = "point_expire";
 	private static final String ACCOUNT_AUTO_REGISTER_ENABLE = "auto_register_enable";
 	private static final String ACCOUNT_AUTO_REGISTER_DATE = "auto_register_date";
+	private static final String ACCOUNT_SURF_ALERT_ENABLE = "surf_alert_enable";
 
 	//int id;
 	String balance;
@@ -30,6 +31,7 @@ public class AccountModel extends SQLiteOpenHelper {
 	String point_expire;
 	Boolean auto_register_enable;
 	String auto_register_date;
+	Boolean surf_alert_enable;
 
 	public AccountModel(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,7 +48,8 @@ public class AccountModel extends SQLiteOpenHelper {
 				+ ACCOUNT_POINT + " TEXT,"
 				+ ACCOUNT_POINT_EXPIRE + " TEXT,"
 				+ ACCOUNT_AUTO_REGISTER_ENABLE + " INTEGER,"
-				+ ACCOUNT_AUTO_REGISTER_DATE + " TEXT" + ")";
+				+ ACCOUNT_AUTO_REGISTER_DATE + " TEXT,"
+				+ ACCOUNT_SURF_ALERT_ENABLE + " INTEGER" + ")";
 		db.execSQL(CREATE_ACCOUNT_TABLE);
 
 		// Initial values
@@ -60,6 +63,7 @@ public class AccountModel extends SQLiteOpenHelper {
 		values.put(ACCOUNT_POINT_EXPIRE, "1970-01-01 00:00:00");
 		values.put(ACCOUNT_AUTO_REGISTER_ENABLE, 0);
 		values.put(ACCOUNT_AUTO_REGISTER_DATE, "1970-01-01 00:00:00");
+		values.put(ACCOUNT_SURF_ALERT_ENABLE, 0);
 
 		db.insert(ACCOUNT_TABLE, null, values);
 	}
@@ -135,6 +139,14 @@ public class AccountModel extends SQLiteOpenHelper {
 		this.auto_register_date = auto_register_date;
 	}
 
+	public Boolean getSurfAlertEnable() {
+		return this.surf_alert_enable;
+	}
+
+	public void setSurfAlertEnable(Boolean surf_alert_enable) {
+		this.surf_alert_enable = surf_alert_enable;
+	}
+	
 	// Create
 	/*
 	public void addSIM(SIM sim) {
@@ -159,7 +171,9 @@ public class AccountModel extends SQLiteOpenHelper {
 				ACCOUNT_BALANCE, ACCOUNT_BALANCE_EXPIRE,
 				ACCOUNT_DATA, ACCOUNT_DATA_EXPIRE,
 				ACCOUNT_POINT, ACCOUNT_POINT_EXPIRE,
-				ACCOUNT_AUTO_REGISTER_ENABLE, ACCOUNT_AUTO_REGISTER_DATE }, ACCOUNT_ID + "=?",
+				ACCOUNT_AUTO_REGISTER_ENABLE,
+				ACCOUNT_AUTO_REGISTER_DATE,
+				ACCOUNT_SURF_ALERT_ENABLE }, ACCOUNT_ID + "=?",
 				new String[] { String.valueOf(0) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
@@ -173,6 +187,7 @@ public class AccountModel extends SQLiteOpenHelper {
 		point_expire = cursor.getString(6);
 		auto_register_enable = cursor.getInt(7) == 0 ? false : true;
 		auto_register_date = cursor.getString(8);
+		surf_alert_enable = cursor.getInt(9) == 0 ? false : true;
 	}
 	
 	// Write
@@ -188,6 +203,7 @@ public class AccountModel extends SQLiteOpenHelper {
 		values.put(ACCOUNT_POINT_EXPIRE, point_expire);
 		values.put(ACCOUNT_AUTO_REGISTER_ENABLE, auto_register_enable);
 		values.put(ACCOUNT_AUTO_REGISTER_DATE, auto_register_date);
+		values.put(ACCOUNT_SURF_ALERT_ENABLE, surf_alert_enable);
 
 		return db.update(ACCOUNT_TABLE, values, ACCOUNT_ID + " = ?",
 				new String[] { String.valueOf(0) });

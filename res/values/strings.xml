@@ -43,6 +43,15 @@
     <string name="pref_ussd_data_balance">USSD Data Balance Code</string>
     <string name="pref_ussd_data_balance_summary">USSD Data Balance Code</string>
 
+    <string name="pref_ussd_surf_alert_status">USSD Surf Alert Status Code</string>
+    <string name="pref_ussd_surf_alert_status_summary">USSD Surf Alert Status Code</string>
+
+    <string name="pref_ussd_surf_alert_on">USSD Surf Alert On Code</string>
+    <string name="pref_ussd_surf_alert_on_summary">USSD Surf Alert On Code</string>
+
+    <string name="pref_ussd_surf_alert_off">USSD Surf Alert Off Code</string>
+    <string name="pref_ussd_surf_alert_off_summary">USSD Surf Alert Off Code</string>
+
     <string name="pref_ussd_activate_load1">USSD Activate Load Code (Gosakto1)</string>
     <string name="pref_ussd_activate_load1_summary">USSD Activate Load Code (Gosakto1)</string>
 
@@ -65,6 +74,15 @@
 
     <string name="pref_sms_data_balance">SMS Data Balance Code</string>
     <string name="pref_sms_data_balance_summary">SMS Data Balance Code</string>
+
+    <string name="pref_sms_surf_alert_status">SMS Surf Alert Status Code</string>
+    <string name="pref_sms_surf_alert_status_summary">SMS Surf Alert Status Code</string>
+
+    <string name="pref_sms_surf_alert_on">SMS Surf Alert On Code</string>
+    <string name="pref_sms_surf_alert_on_summary">SMS Surf Alert On Code</string>
+
+    <string name="pref_sms_surf_alert_off">SMS Surf Alert Off Code</string>
+    <string name="pref_sms_surf_alert_off_summary">SMS Surf Alert Off Code</string>
 
     <string name="pref_sms_activate_load1">SMS Activate Load Code (Gosakto1)</string>
     <string name="pref_sms_activate_load1_summary">SMS Activate Load Code (Gosakto1)</string>

@@ -55,6 +55,19 @@ public class ReceiverSms extends BroadcastReceiver {
 						db.writeSync();
 						db.close();
 					}
+					Matcher matcher2 = Pattern.compile("Your SurfAlert is currently switched (\\w+).*").matcher(content.toString());
+					if (matcher2.find()) {
+						boolean status = false;
+						if (matcher2.group(1).equals("ON")) {
+							status = true;
+						}
+
+						AccountModel db = new AccountModel(context);
+						db.readSync();
+						db.setSurfAlertEnable(status);
+						db.writeSync();
+						db.close();
+					}
 				}
 
 				if (sender.equals("4438")) {
