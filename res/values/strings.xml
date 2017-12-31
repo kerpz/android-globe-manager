@@ -15,10 +15,7 @@
     <string name="pref_alarm">Alarm Preferences</string>
 
     <string name="pref_alarm_duration">ALarm Duration (Minutes)</string>
-    <string name="pref_alarm_duration_summary">ALarm Duration (Minutes)</string>
-
     <string name="pref_alarm_trigger">ALarm Trigger (Minutes)</string>
-    <string name="pref_alarm_trigger_summary">ALarm Trigger (Minutes)</string>
     
     <string name="pref_register">Register Preferences</string>
 
@@ -27,74 +24,33 @@
     <string name="pref_auto_register_summary_off">Auto register is disabled</string>
     
     <string name="pref_auto_register_date">Auto Register Date</string>
-    <string name="pref_auto_register_date_summary">Auto Register Date</string>
-
     <string name="pref_auto_register_time">Auto Register Time</string>
-    <string name="pref_auto_register_time_summary">Auto Register Time</string>
 
     <string name="pref_ussd">USSD Preferences</string>
 
     <string name="pref_ussd_load_balance">USSD Load Balance Code</string>
-    <string name="pref_ussd_load_balance_summary">USSD Load Balance Code</string>
-
     <string name="pref_ussd_point_balance">USSD Point Balance Code</string>
-    <string name="pref_ussd_point_balance_summary">USSD Point Balance Code</string>
-
     <string name="pref_ussd_data_balance">USSD Data Balance Code</string>
-    <string name="pref_ussd_data_balance_summary">USSD Data Balance Code</string>
-
     <string name="pref_ussd_surf_alert_status">USSD Surf Alert Status Code</string>
-    <string name="pref_ussd_surf_alert_status_summary">USSD Surf Alert Status Code</string>
-
     <string name="pref_ussd_surf_alert_on">USSD Surf Alert On Code</string>
-    <string name="pref_ussd_surf_alert_on_summary">USSD Surf Alert On Code</string>
-
     <string name="pref_ussd_surf_alert_off">USSD Surf Alert Off Code</string>
-    <string name="pref_ussd_surf_alert_off_summary">USSD Surf Alert Off Code</string>
-
     <string name="pref_ussd_activate_load1">USSD Activate Load Code (Gosakto1)</string>
-    <string name="pref_ussd_activate_load1_summary">USSD Activate Load Code (Gosakto1)</string>
-
     <string name="pref_ussd_activate_load2">USSD Activate Load Code (Gosakto2)</string>
-    <string name="pref_ussd_activate_load2_summary">USSD Activate Load Code (Gosakto2)</string>
-
     <string name="pref_ussd_activate_point">USSD Activate Point Code</string>
-    <string name="pref_ussd_activate_point_summary">USSD Activate Point Code</string>
-
     <string name="pref_ussd_send_load">USSD Send Load Code</string>
-    <string name="pref_ussd_send_load_summary">USSD Send Load Code</string>
 
     <string name="pref_sms">SMS Preferences</string>
 
     <string name="pref_sms_load_balance">SMS Load Balance Code</string>
-    <string name="pref_sms_load_balance_summary">SMS Load Balance Code</string>
-
     <string name="pref_sms_point_balance">SMS Point Balance Code</string>
-    <string name="pref_sms_point_balance_summary">SMS Point Balance Code</string>
-
     <string name="pref_sms_data_balance">SMS Data Balance Code</string>
-    <string name="pref_sms_data_balance_summary">SMS Data Balance Code</string>
-
     <string name="pref_sms_surf_alert_status">SMS Surf Alert Status Code</string>
-    <string name="pref_sms_surf_alert_status_summary">SMS Surf Alert Status Code</string>
-
     <string name="pref_sms_surf_alert_on">SMS Surf Alert On Code</string>
-    <string name="pref_sms_surf_alert_on_summary">SMS Surf Alert On Code</string>
-
     <string name="pref_sms_surf_alert_off">SMS Surf Alert Off Code</string>
-    <string name="pref_sms_surf_alert_off_summary">SMS Surf Alert Off Code</string>
-
     <string name="pref_sms_activate_load1">SMS Activate Load Code (Gosakto1)</string>
-    <string name="pref_sms_activate_load1_summary">SMS Activate Load Code (Gosakto1)</string>
-
     <string name="pref_sms_activate_load2">SMS Activate Load Code (Gosakto2)</string>
-    <string name="pref_sms_activate_load2_summary">SMS Activate Load Code (Gosakto2)</string>
-
     <string name="pref_sms_activate_point">SMS Activate Point Code</string>
-    <string name="pref_sms_activate_point_summary">SMS Activate Point Code</string>
-
     <string name="pref_sms_send_load">SMS Send Load Code</string>
-    <string name="pref_sms_send_load_summary">SMS Send Load Code</string>
 
     <string name="number">SIM Number (required)</string>
     <string name="expire">SIM Expiry (optional)</string>

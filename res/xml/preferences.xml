@@ -74,22 +74,22 @@
 			android:defaultValue="*143*2*4*3*1*2*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load1" 
-			android:summary="@string/pref_ussd_activate_load1_summary" 
+			android:summary="@string/pref_ussd_activate_load1" 
 			android:key="pref_ussd_activate_load1"
 			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load2" 
-			android:summary="@string/pref_ussd_activate_load2_summary" 
+			android:summary="@string/pref_ussd_activate_load2" 
 			android:key="pref_ussd_activate_load2"
 			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_point" 
-			android:summary="@string/pref_ussd_activate_point_summary" 
+			android:summary="@string/pref_ussd_activate_point" 
 			android:key="pref_ussd_activate_point"
 			android:defaultValue="*143*11*2#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_send_load" 
-			android:summary="@string/pref_ussd_send_load_summary" 
+			android:summary="@string/pref_ussd_send_load" 
 			android:key="pref_ussd_send_load"
 			android:defaultValue="*143*2*2*NUMBER*PIN#" />
 	</PreferenceCategory>
@@ -131,22 +131,22 @@
 			android:defaultValue="8080:Surfalert status" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_load1" 
-			android:summary="@string/pref_sms_activate_load1_summary" 
+			android:summary="@string/pref_sms_activate_load1" 
 			android:key="pref_sms_activate_load1"
 			android:defaultValue="8080:Gotscombodd70" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_load2" 
-			android:summary="@string/pref_sms_activate_load2_summary" 
+			android:summary="@string/pref_sms_activate_load2" 
 			android:key="pref_sms_activate_load2"
 			android:defaultValue="8080:Gotscombogbbff108" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_point" 
-			android:summary="@string/pref_sms_activate_point_summary" 
+			android:summary="@string/pref_sms_activate_point" 
 			android:key="pref_sms_activate_point"
 			android:defaultValue="" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_send_load" 
-			android:summary="@string/pref_sms_send_load_summary" 
+			android:summary="@string/pref_sms_send_load" 
 			android:key="pref_sms_send_load"
 			android:defaultValue="2NUMBER:5" />
 	</PreferenceCategory>
