@@ -146,7 +146,19 @@ public class ActivityMain extends AppCompatActivity {
 	        	code = sharedPrefs.getString("pref_sms_activate_load2", "8080:Gotscombogbbff108").split(":");
 				smsManager.sendTextMessage(code[0], null, code[1], null, null);
 				return true;
-	        case R.id.action_activate_point:
+	        case R.id.action_activate_point1:
+	        	// redeem gosurf50 (redeem item)
+	        	// gift gosurf50 917xxxxxxx (gift item)
+	        	// share 917xxxxxxx 10 (share points)
+	        	code = sharedPrefs.getString("pref_sms_activate_point1", "4438:Redeem gosurf50").split(":");
+				smsManager.sendTextMessage(code[0], null, code[1], null, null);
+				return true;
+	        case R.id.action_activate_point2:
+	        	// redeem gosurf50 (redeem item)
+	        	// gift gosurf50 917xxxxxxx (gift item)
+	        	// share 917xxxxxxx 10 (share points)
+	        	code = sharedPrefs.getString("pref_sms_activate_point2", "4438:Redeem gosurf99").split(":");
+				smsManager.sendTextMessage(code[0], null, code[1], null, null);
 				return true;
 	        case R.id.action_accessibility:
 	        	i = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);

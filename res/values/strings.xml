@@ -3,7 +3,8 @@
     
     <string name="action_activate_load1">Activate Load (GoSakto1)</string>
     <string name="action_activate_load2">Activate Load (GoSakto2)</string>
-    <string name="action_activate_point">Activate Point</string>
+    <string name="action_activate_point1">Activate Point (Redeem1)</string>
+    <string name="action_activate_point2">Activate Point (Redeem1)</string>
     <string name="action_accessibility">Accessibility</string>
     <string name="action_preferences">Preferences</string>
     
@@ -31,12 +32,14 @@
     <string name="pref_ussd_load_balance">USSD Load Balance Code</string>
     <string name="pref_ussd_point_balance">USSD Point Balance Code</string>
     <string name="pref_ussd_data_balance">USSD Data Balance Code</string>
+    <string name="pref_ussd_reward_balance">USSD Reward Balance Code</string>
     <string name="pref_ussd_surf_alert_status">USSD Surf Alert Status Code</string>
     <string name="pref_ussd_surf_alert_on">USSD Surf Alert On Code</string>
     <string name="pref_ussd_surf_alert_off">USSD Surf Alert Off Code</string>
     <string name="pref_ussd_activate_load1">USSD Activate Load Code (Gosakto1)</string>
     <string name="pref_ussd_activate_load2">USSD Activate Load Code (Gosakto2)</string>
-    <string name="pref_ussd_activate_point">USSD Activate Point Code</string>
+    <string name="pref_ussd_activate_point1">USSD Activate Point Code (Redeem1)</string>
+    <string name="pref_ussd_activate_point2">USSD Activate Point Code (Redeem2)</string>
     <string name="pref_ussd_send_load">USSD Send Load Code</string>
 
     <string name="pref_sms">SMS Preferences</string>
@@ -44,14 +47,17 @@
     <string name="pref_sms_load_balance">SMS Load Balance Code</string>
     <string name="pref_sms_point_balance">SMS Point Balance Code</string>
     <string name="pref_sms_data_balance">SMS Data Balance Code</string>
+    <string name="pref_sms_reward_balance">SMS Reward Balance Code</string>
     <string name="pref_sms_surf_alert_status">SMS Surf Alert Status Code</string>
     <string name="pref_sms_surf_alert_on">SMS Surf Alert On Code</string>
     <string name="pref_sms_surf_alert_off">SMS Surf Alert Off Code</string>
     <string name="pref_sms_activate_load1">SMS Activate Load Code (Gosakto1)</string>
     <string name="pref_sms_activate_load2">SMS Activate Load Code (Gosakto2)</string>
-    <string name="pref_sms_activate_point">SMS Activate Point Code</string>
+    <string name="pref_sms_activate_point1">SMS Activate Point Code (Redeem1)</string>
+    <string name="pref_sms_activate_point2">SMS Activate Point Code (Redeem2)</string>
     <string name="pref_sms_send_load">SMS Send Load Code</string>
 
+    <string name="name">SIM Name (optional)</string>
     <string name="number">SIM Number (required)</string>
     <string name="expire">SIM Expiry (optional)</string>
     <string name="balance">SIM Balance (optional)</string>

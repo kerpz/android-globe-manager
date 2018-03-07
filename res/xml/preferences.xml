@@ -58,6 +58,11 @@
 			android:key="pref_ussd_data_balance"
 			android:defaultValue="*143*1*7#" />
 		<EditTextPreference 
+			android:title="@string/pref_ussd_reward_balance" 
+			android:summary="@string/pref_ussd_reward_balance" 
+			android:key="pref_ussd_reward_balance"
+			android:defaultValue="*143#" />
+		<EditTextPreference 
 			android:title="@string/pref_ussd_surf_alert_status" 
 			android:summary="@string/pref_ussd_surf_alert_status" 
 			android:key="pref_ussd_surf_alert_status"
@@ -83,11 +88,16 @@
 			android:key="pref_ussd_activate_load2"
 			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
 		<EditTextPreference 
-			android:title="@string/pref_ussd_activate_point" 
-			android:summary="@string/pref_ussd_activate_point" 
-			android:key="pref_ussd_activate_point"
+			android:title="@string/pref_ussd_activate_point1" 
+			android:summary="@string/pref_ussd_activate_point1" 
+			android:key="pref_ussd_activate_point1"
 			android:defaultValue="*143*11*2#" />
 		<EditTextPreference 
+			android:title="@string/pref_ussd_activate_point2" 
+			android:summary="@string/pref_ussd_activate_point2" 
+			android:key="pref_ussd_activate_point2"
+			android:defaultValue="*143*11*2#" />
+				<EditTextPreference 
 			android:title="@string/pref_ussd_send_load" 
 			android:summary="@string/pref_ussd_send_load" 
 			android:key="pref_ussd_send_load"
@@ -109,6 +119,11 @@
 			android:summary="@string/pref_sms_data_balance" 
 			android:key="pref_sms_data_balance"
 			android:defaultValue="8080:Gosakto Status" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_reward_balance" 
+			android:summary="@string/pref_sms_reward_balance" 
+			android:key="pref_sms_reward_balance"
+			android:defaultValue="8080:Gosurf Rew Status" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_surf_alert_status" 
 			android:summary="@string/pref_sms_surf_alert_status" 
@@ -140,11 +155,16 @@
 			android:key="pref_sms_activate_load2"
 			android:defaultValue="8080:Gotscombogbbff108" />
 		<EditTextPreference 
-			android:title="@string/pref_sms_activate_point" 
-			android:summary="@string/pref_sms_activate_point" 
-			android:key="pref_sms_activate_point"
-			android:defaultValue="" />
+			android:title="@string/pref_sms_activate_point1" 
+			android:summary="@string/pref_sms_activate_point1" 
+			android:key="pref_sms_activate_point1"
+			android:defaultValue="4438:Redeem gosurf50" />
 		<EditTextPreference 
+			android:title="@string/pref_sms_activate_point2" 
+			android:summary="@string/pref_sms_activate_point2" 
+			android:key="pref_sms_activate_point2"
+			android:defaultValue="4438:Redeem gosurf99" />
+				<EditTextPreference 
 			android:title="@string/pref_sms_send_load" 
 			android:summary="@string/pref_sms_send_load" 
 			android:key="pref_sms_send_load"

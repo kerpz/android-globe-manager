@@ -104,7 +104,7 @@ public class FragmentCardStatus extends Fragment {
                     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
                 	int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
                     switch (getAdapterPosition()) {
-	                	case 3:
+	                	case 4:
 		    				AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		
 		    				Intent alarmIntent = new Intent(context, ActivityAlarm.class);
@@ -153,7 +153,7 @@ public class FragmentCardStatus extends Fragment {
 		                    db.writeSync();
 		                    db.close();
 		                    break;
-	                	case 4:
+	                	case 5:
                         	if (method == 1) { // ussd
     		                    if (isChecked) {
 	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_on", "*143*2*4*2*1*1#");
@@ -240,7 +240,22 @@ public class FragmentCardStatus extends Fragment {
                 				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
                         	}
                         	break;
-                    	case 4:
+                    	case 3:
+                        	//if (method == 1) { // ussd
+                            //	code = sharedPrefs.getString("pref_ussd_reward_balance", "*143#");
+                            //	code = code.replace("#", "") + Uri.encode("#");
+                    		//	i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+                    		//	context.startActivity(i);
+                        	//}
+                        	//else if (method == 2) { // sms
+                    		if (method == 1 || method == 2) { // hacks ussd not yet supported
+                	        	code = sharedPrefs.getString("pref_sms_reward_balance", "8080:Gosurf Rew status");
+                	        	String[] sms = code.split(":");
+                				SmsManager smsManager = SmsManager.getDefault();
+                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                        	}
+                        	break;
+                    	case 5:
                         	if (method == 1) { // ussd
                             	code = sharedPrefs.getString("pref_ussd_surf_alert_status", "*143*2*4*4*1#");
                             	code = code.replace("#", "") + Uri.encode("#");
@@ -346,11 +361,23 @@ public class FragmentCardStatus extends Fragment {
                 	int trigger = Integer.valueOf(sharedPrefs.getString("pref_alarm_trigger", "2")) * -1;
 
                 	Calendar calendar = Calendar.getInstance();
-			        try {
-						calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
+                	
+                	if (!db.getDataExpire().equals("1970-01-01 00:00:00"))
+                	{
+				        try {
+							calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getDataExpire()));
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+                	}
+                	else // if (!db.getRewardExpire().equals("1970-01-01 00:00:00"))
+                	{
+				        try {
+							calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getRewardExpire()));
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+                	}
 
                     //calendar.add(Calendar.DATE, 7); // add 7 days
                     calendar.add(Calendar.MINUTE, trigger); // sub 1 minute
@@ -388,7 +415,7 @@ public class FragmentCardStatus extends Fragment {
         	Calendar calendar = Calendar.getInstance();
 
             switch (position) {
-	        	case 0:
+	        	case 0: 
 	            	try {
 	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getBalanceExpire()));
 	        		} catch (ParseException e) {
@@ -398,6 +425,12 @@ public class FragmentCardStatus extends Fragment {
 		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
 		            holder.tvAmount.setText(String.format("%.2f", Float.valueOf(db.getBalance())));
 		            holder.tvUnit.setText("PHP");
+
+	            	holder.switchAlarm.setVisibility(View.GONE);
+		            holder.ibRefresh.setVisibility(View.VISIBLE);
+	            	holder.ibCalendar.setVisibility(View.GONE);
+	            	holder.ibClock.setVisibility(View.GONE);
+	            	holder.ibDownload.setVisibility(View.GONE);
 		            break;
 	        	case 1:
 	            	try {
@@ -409,6 +442,12 @@ public class FragmentCardStatus extends Fragment {
 		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
 		            holder.tvAmount.setText(String.format("%.2f", Float.valueOf(db.getPoint())));
 		            holder.tvUnit.setText("PTS");
+
+	            	holder.switchAlarm.setVisibility(View.GONE);
+		            holder.ibRefresh.setVisibility(View.VISIBLE);
+	            	holder.ibCalendar.setVisibility(View.GONE);
+	            	holder.ibClock.setVisibility(View.GONE);
+	            	holder.ibDownload.setVisibility(View.GONE);
 		            break;
 	        	case 2:
 	            	try {
@@ -420,8 +459,31 @@ public class FragmentCardStatus extends Fragment {
 		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
 		            holder.tvAmount.setText(db.getData());
 		            holder.tvUnit.setText("MB");
+
+		            holder.switchAlarm.setVisibility(View.GONE);
+		            holder.ibRefresh.setVisibility(View.VISIBLE);
+	            	holder.ibCalendar.setVisibility(View.GONE);
+	            	holder.ibClock.setVisibility(View.GONE);
+	            	holder.ibDownload.setVisibility(View.GONE);
 		            break;
 	        	case 3:
+	            	try {
+	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getRewardExpire()));
+	        		} catch (ParseException e) {
+	        			e.printStackTrace();
+	        		}
+		        	holder.tvTitle.setText("Reward Balance");
+		            holder.tvExpire.setText("expires " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
+		            holder.tvAmount.setText(db.getReward());
+		            holder.tvUnit.setText("MB");
+
+	            	holder.switchAlarm.setVisibility(View.GONE);
+		            holder.ibRefresh.setVisibility(View.VISIBLE);
+	            	holder.ibCalendar.setVisibility(View.GONE);
+	            	holder.ibClock.setVisibility(View.GONE);
+	            	holder.ibDownload.setVisibility(View.GONE);
+		            break;
+	        	case 4:
 	            	try {
 	        			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
 	        		} catch (ParseException e) {
@@ -431,6 +493,7 @@ public class FragmentCardStatus extends Fragment {
 		            holder.tvExpire.setText("triggers " + DateUtils.getRelativeTimeSpanString(calendar.getTimeInMillis(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString());
 		            holder.tvAmount.setText(new SimpleDateFormat("h:mm", Locale.getDefault()).format(calendar.getTimeInMillis()));
 		            holder.tvUnit.setText(new SimpleDateFormat("a", Locale.getDefault()).format(calendar.getTimeInMillis()));
+
 		            holder.switchAlarm.setOnCheckedChangeListener(null);
 		        	holder.switchAlarm.setChecked(db.getAutoRegisterEnable());
 		            holder.switchAlarm.setOnCheckedChangeListener(holder.switchListener);
@@ -444,7 +507,7 @@ public class FragmentCardStatus extends Fragment {
 	            	holder.ibClock.setVisibility(View.VISIBLE);
 	            	holder.ibDownload.setVisibility(View.VISIBLE);
 		            break;
-	        	case 4:
+	        	case 5:
 		        	holder.tvTitle.setText("Surf Alert");
 		            //holder.tvExpire.setVisibility(View.GONE);
 		            //holder.tvAmount.setVisibility(View.GONE);
@@ -456,10 +519,12 @@ public class FragmentCardStatus extends Fragment {
 		            	holder.tvAmount.setText("OFF");
 		            }
 		            holder.tvUnit.setText("");
+
 		            holder.switchAlarm.setOnCheckedChangeListener(null);
 		        	holder.switchAlarm.setChecked(db.getSurfAlertEnable());
 		            holder.switchAlarm.setOnCheckedChangeListener(holder.switchListener);
 	            	holder.switchAlarm.setVisibility(View.VISIBLE);
+
 	            	holder.ibRefresh.setVisibility(View.VISIBLE);
 	            	holder.ibCalendar.setVisibility(View.GONE);
 	            	holder.ibClock.setVisibility(View.GONE);
@@ -470,7 +535,7 @@ public class FragmentCardStatus extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 5;
+            return 6;
         }
     }
 	

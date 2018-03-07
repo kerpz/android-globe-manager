@@ -20,9 +20,10 @@ public class ServiceUSSD extends AccessibilityService {
 		//Log.d(TAG, "onAccessibilityEvent");
 		if (event.getClassName().equals("android.app.AlertDialog")) {
 			String text = event.getText().toString();
+			Matcher matcher;
 
 			//String test = "[The balance as of 2017/08/02 05:07:30 is P27.0 valid till 2017-08-23 10:02:55 with 0.0 Free texts. Please note that system time may vary from the time on your phone., OK]";
-			Matcher matcher = Pattern.compile("balance as of ([0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) is P([0-9]{1,5}.[0-9]{1,2}) valid till ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})").matcher(text);
+			matcher = Pattern.compile("balance as of ([0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) is P([0-9]{1,5}.[0-9]{1,2}) valid till ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})").matcher(text);
 			if (matcher.find()) {
 		        //String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date());
 
@@ -45,18 +46,20 @@ public class ServiceUSSD extends AccessibilityService {
 			}
 
 			//String test = "[The balance of 9XXXXXXXXX as of 2017/08/02 05:07:30 is P27.0 valid till 2017-08-23 10:02:55 with 0.0 Free texts.]";
-			Matcher matcher2 = Pattern.compile("([0-9]{10}) as of ([0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) is P([0-9]{1,5}.[0-9]{1,2}) valid till ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})").matcher(text);
-			if (matcher2.find()) {
+			matcher = Pattern.compile("([0-9]{10}) as of ([0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) is P([0-9]{1,5}.[0-9]{1,2}) valid till ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})").matcher(text);
+			if (matcher.find()) {
 		        //String date = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date());
 
-		        String number = matcher2.group(1);
+		        String number = matcher.group(1);
 		        //String queryDate = matcher2.group(2);
 				//queryDate.replace("/", "-");
-				String balance = matcher2.group(3);
-				String balance_expire = matcher2.group(4);
+				String balance = matcher.group(3);
+				String balance_expire = matcher.group(4);
 
 				SimModel db = new SimModel(this);
 				Sim sim = new Sim();
+				sim = db.getSim(number);
+
 				sim.setNumber(number);
 				sim.setBalance(balance);
 				sim.setBalanceExpire(balance_expire);

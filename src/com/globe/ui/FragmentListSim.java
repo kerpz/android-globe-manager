@@ -127,6 +127,8 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	    menu.add(0, 2 ,2, "Get Balance");
 	    menu.add(0, 3 ,3, "Send Load(PHP)");
 	    menu.add(0, 4 ,4, "Send Data(MB)");
+	    menu.add(0, 5 ,5, "Share Point(s)");
+	    menu.add(0, 6 ,6, "Gift Item");
 	}
 
 	@Override

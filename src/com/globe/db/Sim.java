@@ -6,6 +6,7 @@ import android.os.Parcelable;
 public class Sim implements Parcelable {
 	
 	int id;
+	String name;
 	String number;
 	String expire = "1970-01-01 00:00:00";
 	String balance = "0.0";
@@ -31,6 +32,7 @@ public class Sim implements Parcelable {
 */
 	private Sim(Parcel in) {
 		this.id = in.readInt();
+		this.name = in.readString();
 		this.number = in.readString();
 		this.expire = in.readString();
 		this.balance = in.readString();
@@ -43,6 +45,14 @@ public class Sim implements Parcelable {
 	
 	public void setID(int id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public String getNumber() {
@@ -79,7 +89,7 @@ public class Sim implements Parcelable {
 
 	@Override
 	public String toString() {
-		return "Sim [id=" + id + ", number=" + number + ", expire="
+		return "Sim [id=" + id + ", name=" + name + ", number=" + number + ", expire="
 				+ expire + ", balance=" + balance + ", balance_expire=" + balance_expire + "]";
 	}
 
@@ -113,6 +123,7 @@ public class Sim implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
 		parcel.writeInt(getID());
+		parcel.writeString(getName());
 		parcel.writeString(getNumber());
 		parcel.writeString(getExpire());
 		parcel.writeString(getBalance());

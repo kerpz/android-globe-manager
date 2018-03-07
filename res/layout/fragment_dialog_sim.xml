@@ -8,12 +8,22 @@
         android:layout_margin="5dp" >
 
         <EditText
+            android:id="@+id/etName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="100"
+            android:ems="10"
+            android:hint="@string/name"
+            android:singleLine="true" />
+
+        <EditText
             android:id="@+id/etNumber"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:maxLength="13"
             android:ems="10"
+            android:layout_below="@id/etName"
             android:hint="@string/number"
             android:singleLine="true" />
 

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class DialogFragmentAddSim extends DialogFragment {
 
+	EditText etName;
 	EditText etNumber;
 	EditText etExpire;
 	EditText etBalance;
@@ -33,6 +34,7 @@ public class DialogFragmentAddSim extends DialogFragment {
 		View customDialogView = inflater.inflate(R.layout.fragment_dialog_sim, (ViewGroup) getView(), false);
 		builder.setView(customDialogView);
 
+		etName = (EditText) customDialogView.findViewById(R.id.etName);
 		etNumber = (EditText) customDialogView.findViewById(R.id.etNumber);
 		etExpire = (EditText) customDialogView.findViewById(R.id.etExpire);
 		etBalance = (EditText) customDialogView.findViewById(R.id.etBalance);
@@ -49,6 +51,8 @@ public class DialogFragmentAddSim extends DialogFragment {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						Sim sim = new Sim();
+
+						sim.setName(etName.getText().toString());
 						// check and correct
 						String iNumber = etNumber.getText().toString();
 						if (iNumber.length() == 10) {

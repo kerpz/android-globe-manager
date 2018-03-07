@@ -14,6 +14,7 @@ public class SimModel extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "simdb";
 	private static final String SIM_TABLE = "sim";
 	private static final String SIM_ID = "id";
+	private static final String SIM_NAME = "name";
 	private static final String SIM_NUMBER = "number";
 	private static final String SIM_EXPIRE = "expire";
 	private static final String SIM_BALANCE = "balance";
@@ -27,6 +28,7 @@ public class SimModel extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_SIM_TABLE = "CREATE TABLE " + SIM_TABLE + "("
 				+ SIM_ID + " INTEGER PRIMARY KEY,"
+				+ SIM_NAME + " TEXT,"
 				+ SIM_NUMBER + " TEXT NOT NULL,"
 				+ SIM_EXPIRE + " TEXT DEFAULT '1970-01-01 00:00:00',"
 				+ SIM_BALANCE + " TEXT DEFAULT '0.0',"
@@ -46,6 +48,7 @@ public class SimModel extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put(SIM_NAME, sim.getName());
 		values.put(SIM_NUMBER, sim.getNumber());
 		if (! sim.getExpire().equals(""))
 			values.put(SIM_EXPIRE, sim.getExpire());
@@ -63,7 +66,7 @@ public class SimModel extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(SIM_TABLE, new String[] { SIM_ID,
-				SIM_NUMBER, SIM_EXPIRE, SIM_BALANCE, SIM_BALANCE_EXPIRE }, SIM_ID + "=?",
+				SIM_NAME, SIM_NUMBER, SIM_EXPIRE, SIM_BALANCE, SIM_BALANCE_EXPIRE }, SIM_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
@@ -77,10 +80,38 @@ public class SimModel extends SQLiteOpenHelper {
 		*/
 		Sim sim = new Sim();
 		sim.setID(Integer.parseInt(cursor.getString(0)));
-		sim.setNumber(cursor.getString(1));
-		sim.setExpire(cursor.getString(2));
-		sim.setBalance(cursor.getString(3));
-		sim.setBalanceExpire(cursor.getString(4));
+		sim.setName(cursor.getString(1));
+		sim.setNumber(cursor.getString(2));
+		sim.setExpire(cursor.getString(3));
+		sim.setBalance(cursor.getString(4));
+		sim.setBalanceExpire(cursor.getString(5));
+
+		return sim;
+	}
+
+	public Sim getSim(String number) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(SIM_TABLE, new String[] { SIM_ID,
+				SIM_NAME, SIM_NUMBER, SIM_EXPIRE, SIM_BALANCE, SIM_BALANCE_EXPIRE }, SIM_NUMBER + "=?",
+				new String[] { number }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		/*
+		Sim sim = new Sim(Integer.parseInt(cursor.getString(0)),
+										cursor.getString(1),
+										cursor.getString(2),
+										cursor.getString(3),
+										cursor.getString(4));
+		*/
+		Sim sim = new Sim();
+		sim.setID(Integer.parseInt(cursor.getString(0)));
+		sim.setName(cursor.getString(1));
+		sim.setNumber(cursor.getString(2));
+		sim.setExpire(cursor.getString(3));
+		sim.setBalance(cursor.getString(4));
+		sim.setBalanceExpire(cursor.getString(5));
 
 		return sim;
 	}
@@ -100,10 +131,11 @@ public class SimModel extends SQLiteOpenHelper {
 			do {
 				Sim sim = new Sim();
 				sim.setID(Integer.parseInt(cursor.getString(0)));
-				sim.setNumber(cursor.getString(1));
-				sim.setExpire(cursor.getString(2));
-				sim.setBalance(cursor.getString(3));
-				sim.setBalanceExpire(cursor.getString(4));
+				sim.setName(cursor.getString(1));
+				sim.setNumber(cursor.getString(2));
+				sim.setExpire(cursor.getString(3));
+				sim.setBalance(cursor.getString(4));
+				sim.setBalanceExpire(cursor.getString(5));
 				simList.add(sim);
 				/*
 				Device device = new Device();
@@ -125,6 +157,7 @@ public class SimModel extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put(SIM_NAME, sim.getName());
 		values.put(SIM_NUMBER, sim.getNumber());
 		values.put(SIM_EXPIRE, sim.getExpire());
 		values.put(SIM_BALANCE, sim.getBalance());
