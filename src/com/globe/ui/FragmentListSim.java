@@ -160,7 +160,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 		            break;
 		        case 2:
 		        	// Check balance @ USSD
-					code = "*143*2*1*2*"+ sim.getNumber() + Uri.encode("#");
+					code = "*143*2*2*2*"+ sim.getNumber() + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 		            break;
@@ -175,14 +175,14 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 						// 2*2*917xxxxxxx*PIN
 						public void onClick(DialogInterface dialog, int whichButton) {
 							//Toast.makeText(activity, "Sent " + input.getText() + " to " + sim.getNumber(), Toast.LENGTH_SHORT).show();
-							String code = "*143*2*3*1*"+ input.getText() +"*"+ sim.getNumber() + Uri.encode("#");
+							String code = "*143*2*4*1*"+ input.getText() +"*"+ sim.getNumber() + Uri.encode("#");
 							Intent i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 				        	startActivityForResult(i, RESULT_SETTINGS);
 						}})
 					.setNegativeButton(android.R.string.cancel, null).show();
 		        	// send load
 		        	//int load_value = 10; // php
-					//code = "*143*2*3*1*"+load_value+"*"+ sim.getNumber() + Uri.encode("#");
+					//code = "*143*2*4*1*"+load_value+"*"+ sim.getNumber() + Uri.encode("#");
 					//i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	//startActivityForResult(i, RESULT_SETTINGS);
 	                break;
@@ -190,7 +190,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 		        	// send data
 		        	//int data_value = 10; // mb
 					//code = "*143*2*3*5*"+data_value+"*"+ sim.getNumber() + Uri.encode("#");
-					code = "*143*2*3" + Uri.encode("#");
+					code = "*143*2*4" + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 	                break;

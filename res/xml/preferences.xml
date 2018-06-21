@@ -46,12 +46,12 @@
 			android:title="@string/pref_ussd_load_balance" 
 			android:summary="@string/pref_ussd_load_balance" 
 			android:key="pref_ussd_load_balance"
-			android:defaultValue="*143*2*1*1#" />
+			android:defaultValue="*143*2*2*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_point_balance" 
 			android:summary="@string/pref_ussd_point_balance" 
 			android:key="pref_ussd_point_balance"
-			android:defaultValue="*143*11*1*1#" />
+			android:defaultValue="*143*10*1*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_data_balance" 
 			android:summary="@string/pref_ussd_data_balance" 
