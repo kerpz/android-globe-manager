@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -105,53 +104,11 @@ public class FragmentCardStatus extends Fragment {
                 	int method = Integer.valueOf(sharedPrefs.getString("pref_query_method", "1"));
                     switch (getAdapterPosition()) {
 	                	case 4:
-		    				AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
-		    				Intent alarmIntent = new Intent(context, ActivityAlarm.class);
-		    		        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-		
-		                    //ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
-		                    //PackageManager pm = context.getPackageManager();
-		
-		                    AccountModel db = new AccountModel(context);
-		                    db.readSync();
-		                    
 		                    if (isChecked) {
-		                    	Calendar calendar = Calendar.getInstance();
-		                        try {
-		    						calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
-		    					} catch (ParseException e) {
-		    						e.printStackTrace();
-		    					}
-		                        
-		                        if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
-		                            Toast.makeText(context, "Invalid set date, please set a valid date.", Toast.LENGTH_SHORT).show();
-		                            switchAlarm.setChecked(false);
-		                        	return;
-		                        }
-		
-		                    	db.setAutoRegisterEnable(true);
-		    					alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-		    					
-		    					//pm.setComponentEnabledSetting(receiver,
-		    					//        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-		    					//        PackageManager.DONT_KILL_APP);
-		
-		    					Toast.makeText(context, "Alarm enabled", Toast.LENGTH_SHORT).show();
-		                        //Snackbar.make(v, "Alarm enabled", Snackbar.LENGTH_SHORT).show();
+		                    	setAlarm(true);
 		    				} else {
-		                    	db.setAutoRegisterEnable(false);
-		                        alarmManager.cancel(pendingIntent);
-		
-		                        //pm.setComponentEnabledSetting(receiver,
-		                        //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-		                        //        PackageManager.DONT_KILL_APP);
-		
-		                        Toast.makeText(context, "Alarm diasbled", Toast.LENGTH_SHORT).show();
-		                        //Snackbar.make(v, "Alarm disabled", Snackbar.LENGTH_SHORT).show();
+		                    	setAlarm(false);
 		                    }
-		                    db.writeSync();
-		                    db.close();
 		                    break;
 	                	case 5:
                         	if (method == 1) { // ussd
@@ -171,15 +128,11 @@ public class FragmentCardStatus extends Fragment {
     		                    if (isChecked) {
 	                        		// 8080:Surfalert on
 	                	        	code = sharedPrefs.getString("pref_sms_surf_alert_on", "8080:Surfalert on");
-	                	        	String[] sms = code.split(":");
-	                				SmsManager smsManager = SmsManager.getDefault();
-	                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+	                	        	sendSMS(code);
     		                    } else {
 	                        		// 8080:Surfalert off
 	                	        	code = sharedPrefs.getString("pref_sms_surf_alert_off", "8080:Surfalert off");
-	                	        	String[] sms = code.split(":");
-	                				SmsManager smsManager = SmsManager.getDefault();
-	                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+	                	        	sendSMS(code);
                 				}
                         	}
 		                    break;
@@ -210,9 +163,7 @@ public class FragmentCardStatus extends Fragment {
                         	}
                         	else if (method == 2) { // sms
                 	        	code = sharedPrefs.getString("pref_sms_load_balance", "222:Bal");
-                	        	String[] sms = code.split(":");
-                				SmsManager smsManager = SmsManager.getDefault();
-                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                	        	sendSMS(code);
                         	}
                         	break;
                     	case 1:
@@ -235,9 +186,7 @@ public class FragmentCardStatus extends Fragment {
                         	else if (method == 2) { // sms
                         		// 8080:Gotscombodd70
                 	        	code = sharedPrefs.getString("pref_sms_data_balance", "8080:Gosakto status");
-                	        	String[] sms = code.split(":");
-                				SmsManager smsManager = SmsManager.getDefault();
-                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                	        	sendSMS(code);
                         	}
                         	break;
                     	case 3:
@@ -250,9 +199,7 @@ public class FragmentCardStatus extends Fragment {
                         	//else if (method == 2) { // sms
                     		if (method == 1 || method == 2) { // hacks ussd not yet supported
                 	        	code = sharedPrefs.getString("pref_sms_reward_balance", "8080:Gosurf Rew status");
-                	        	String[] sms = code.split(":");
-                				SmsManager smsManager = SmsManager.getDefault();
-                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                	        	sendSMS(code);
                         	}
                         	break;
                     	case 5:
@@ -265,9 +212,7 @@ public class FragmentCardStatus extends Fragment {
                         	else if (method == 2) { // sms
                         		// 8080:Surfalert status
                 	        	code = sharedPrefs.getString("pref_sms_surf_alert_status", "8080:Surfalert status");
-                	        	String[] sms = code.split(":");
-                				SmsManager smsManager = SmsManager.getDefault();
-                				smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+                	        	sendSMS(code);
                         	}
                         	break;
                     }
@@ -294,7 +239,6 @@ public class FragmentCardStatus extends Fragment {
 	                        new DatePickerDialog.OnDateSetListener() {
 	                            @Override
 	                            public void onDateSet(DatePicker view, int year, int month, int day) {
-	                            	switchAlarm.setChecked(false);
 	                                calendar.set(Calendar.YEAR, year);
 	                                calendar.set(Calendar.MONTH, month);
 	                                calendar.set(Calendar.DAY_OF_MONTH, day);
@@ -305,6 +249,8 @@ public class FragmentCardStatus extends Fragment {
 	                                db.setAutoRegisterEnable(true);
 	                                db.writeSync();
 	                                db.close();
+
+	                                setAlarm(true);
 
 	                                contentAdapter.notifyDataSetChanged();
 	                            }
@@ -330,7 +276,6 @@ public class FragmentCardStatus extends Fragment {
 	                    	new TimePickerDialog.OnTimeSetListener() {
 	    	                    @Override
 	    	                    public void onTimeSet(TimePicker view, int hour, int minute) {
-	                            	switchAlarm.setChecked(false);
 	                                calendar.set(Calendar.HOUR_OF_DAY, hour);
 	                                calendar.set(Calendar.MINUTE, minute);
 	                                //calendar.set(Calendar.SECOND, 0);
@@ -342,6 +287,8 @@ public class FragmentCardStatus extends Fragment {
 	                                db.writeSync();
 	                                db.close();
 
+	                                setAlarm(true);
+
 	                                contentAdapter.notifyDataSetChanged();
 	    	                    }
 	                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
@@ -352,7 +299,6 @@ public class FragmentCardStatus extends Fragment {
             ibDownload.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                	switchAlarm.setChecked(false);
                 	Context context = view.getContext();
                 	AccountModel db = new AccountModel(context);
                     db.readSync();
@@ -388,9 +334,11 @@ public class FragmentCardStatus extends Fragment {
                     db.writeSync();
                     db.close();
 
-                    contentAdapter.notifyDataSetChanged();
+                    setAlarm(true);
 
-                    Snackbar.make(view, "Alarm is automatically set", Snackbar.LENGTH_SHORT).show();
+					contentAdapter.notifyDataSetChanged();
+
+                    //Snackbar.make(view, "Alarm is automatically set", Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
@@ -542,5 +490,56 @@ public class FragmentCardStatus extends Fragment {
 	public void updateView() {
     	contentAdapter.notifyDataSetChanged();
     }
+    
+	private static void sendSMS(String code) {
+    	String[] sms = code.split(":");
+		SmsManager smsManager = SmsManager.getDefault();
+		smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+		Toast.makeText(activity, code, Toast.LENGTH_SHORT).show();
+    }
+	
+	private static void setAlarm(boolean state) {
+		AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+		Intent alarmIntent = new Intent(activity, ActivityAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        //ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
+        //PackageManager pm = context.getPackageManager();
+
+        AccountModel db = new AccountModel(activity);
+        db.readSync();
+        
+        if (state) {
+        	Calendar calendar = Calendar.getInstance();
+            try {
+				calendar.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(db.getAutoRegisterDate()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+            
+            if (System.currentTimeMillis() > calendar.getTimeInMillis()) {
+                Toast.makeText(activity, "Invalid set date, please set a valid date.", Toast.LENGTH_SHORT).show();
+                alarmManager.cancel(pendingIntent);
+                db.setAutoRegisterEnable(false);
+                
+                contentAdapter.notifyDataSetChanged();
+            }
+            else {
+    			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    			Toast.makeText(activity, "Alarm enabled", Toast.LENGTH_SHORT).show();
+            }
+		} else {
+            alarmManager.cancel(pendingIntent);
+
+            //pm.setComponentEnabledSetting(receiver,
+            //        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            //        PackageManager.DONT_KILL_APP);
+
+            Toast.makeText(activity, "Alarm diasbled", Toast.LENGTH_SHORT).show();
+            //Snackbar.make(v, "Alarm disabled", Snackbar.LENGTH_SHORT).show();
+        }
+        db.writeSync();
+        db.close();
+	}
     
 }
