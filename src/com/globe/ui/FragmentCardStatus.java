@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.globe.db.AccountModel;
-import com.globe.reciever.ReceiverAlarm;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -501,10 +500,10 @@ public class FragmentCardStatus extends Fragment {
 	
 	private static void setAlarm(boolean state) {
 		AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-		Intent alarmIntent = new Intent(activity, ReceiverAlarm.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-		//Intent alarmIntent = new Intent(activity, ActivityAlarm.class);
-        //PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		//Intent alarmIntent = new Intent(activity, ReceiverAlarm.class);
+		//PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		Intent alarmIntent = new Intent(activity, ActivityAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         //ComponentName receiver = new ComponentName(context, ReceiverBoot.class);
         //PackageManager pm = context.getPackageManager();

@@ -23,13 +23,15 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 
+
 public class ReceiverAlarm extends BroadcastReceiver {
-	MediaPlayer ringtone;
-	Vibrator vibrator;
+
+	public static MediaPlayer ringtone;
+	public static Vibrator vibrator;
 
 	@Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("android.intent.action.ALARM_CALLED")) {
+        //if (intent.getAction().equals("android.intent.action.ALARM_CALLED")) {
         	NotificationManager notificationManager;
 
             Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -96,6 +98,6 @@ public class ReceiverAlarm extends BroadcastReceiver {
                 }
             }, duration * 60000);
         }
-    }
+    //}
 
 }
