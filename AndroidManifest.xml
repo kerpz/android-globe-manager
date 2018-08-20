@@ -46,9 +46,6 @@
             android:name="com.globe.ui.ActivityPreferences"
             android:parentActivityName="com.globe.ui.ActivityMain" >
         </activity>
-        <activity
-            android:name="com.globe.ui.ActivityAlarm" >
-        </activity>
         
         <receiver
             android:name="com.globe.reciever.ReceiverSms">   
@@ -66,7 +63,16 @@
             </intent-filter>
         </receiver>
         
-		<service
+        <receiver
+            android:name="com.globe.reciever.ReceiverAlarm"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.ALARM_CALLED"/>
+            </intent-filter>
+        </receiver>
+        
+        		<service
 		    android:name="com.globe.service.ServiceUSSD"
 		    android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
 		    <intent-filter>
