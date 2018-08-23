@@ -64,7 +64,7 @@ public class ReceiverAlarm extends BroadcastReceiver {
             notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = new Notification.Builder(context)
             	.setContentTitle(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss", Locale.getDefault()).format(calendar.getTimeInMillis()))
-            	.setContentText("GoSakto is about to expire.")
+            	.setContentText("Data is about to expire.")
             	.setSmallIcon(R.drawable.ic_launcher)
             	.setContentIntent(contentIntent)
             	.build();

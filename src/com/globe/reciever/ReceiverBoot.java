@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.globe.db.AccountModel;
-import com.globe.ui.ActivityAlarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -20,10 +19,10 @@ public class ReceiverBoot extends BroadcastReceiver {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
 			AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-			//Intent alarmIntent = new Intent(context, ReceiverAlarm.class);
-			//PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-			Intent alarmIntent = new Intent(context, ActivityAlarm.class);
-	        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			Intent alarmIntent = new Intent(context, ReceiverAlarm.class);
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+			//Intent alarmIntent = new Intent(context, ActivityAlarm.class);
+	        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AccountModel db = new AccountModel(context);
             db.readSync();

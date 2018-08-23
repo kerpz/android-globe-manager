@@ -37,7 +37,8 @@ public class ReceiverSms extends BroadcastReceiver {
 
 				if (sender.equals("8080")) {
 					Matcher matcher;
-					//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
+					//Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.
+					//Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2018-08-29 19:02:13.,Your remaining 1021.00MB of consumable internet from your GoSAKTO subscription will expire on 2018-08-29 19:02:13.
 					//Matcher matcher = Pattern.compile("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2}).,Your remaining ([0-9]{1,5})").matcher(content.toString());
 					matcher = Pattern.compile("Your remaining ([0-9]+[.][0-9]+)([A-Z])B of consumable internet from your GoSAKTO subscription will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})").matcher(content.toString());
 					if (matcher.find()) {
@@ -49,12 +50,12 @@ public class ReceiverSms extends BroadcastReceiver {
 							data = matcher.group(1);
 						}
 						//String data = matcher.group(1);
-						String year = matcher.group(2);
-						String month = matcher.group(3);
-						String day = matcher.group(4);
-						String hour = matcher.group(5);
-						String minute = matcher.group(6);
-						String second = matcher.group(7);
+						String year = matcher.group(3);
+						String month = matcher.group(4);
+						String day = matcher.group(5);
+						String hour = matcher.group(6);
+						String minute = matcher.group(7);
+						String second = matcher.group(8);
 
 						AccountModel db = new AccountModel(context);
 						db.readSync();
@@ -139,7 +140,7 @@ public class ReceiverSms extends BroadcastReceiver {
 					if (matcher.find()) {
 						AccountModel db = new AccountModel(context);
 						db.readSync();
-						db.setReward("0");
+						db.setReward("0.00");
 						db.setRewardExpire("1970-01-01 00:00:00");
 						db.writeSync();
 						db.close();
@@ -150,7 +151,7 @@ public class ReceiverSms extends BroadcastReceiver {
 					if (matcher.find()) {
 						AccountModel db = new AccountModel(context);
 						db.readSync();
-						db.setReward("0");
+						db.setReward("0.00");
 						db.setRewardExpire("1970-01-01 00:00:00");
 						db.writeSync();
 						db.close();

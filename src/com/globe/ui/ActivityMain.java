@@ -3,6 +3,8 @@ package com.globe.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.globe.reciever.ReceiverAlarm;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -84,6 +86,10 @@ public class ActivityMain extends AppCompatActivity {
 		registerReceiver(receiverStatusUpdate, new IntentFilter("com.globe.status.action.REFRESH"));
     	receiverSimUpdate = new ReceiverSimUpdate();
 		registerReceiver(receiverSimUpdate, new IntentFilter("com.globe.sim.action.REFRESH"));
+		
+		if (ReceiverAlarm.ringtone != null) ReceiverAlarm.ringtone.stop();
+		if (ReceiverAlarm.vibrator != null) ReceiverAlarm.vibrator.cancel();
+		
     }
  
     // Add Fragments to Tabs
