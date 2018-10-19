@@ -35,7 +35,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	public static final String ARG_ITEM_ID = "list_sim";
 	private static final int RESULT_SETTINGS = 1;
 
-	Activity activity;
+	static Activity activity;
 	ListView simListView;
 	ArrayList<Sim> sims;
 
@@ -134,10 +134,14 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	@Override
 	public boolean onContextItemSelected(MenuItem menuItem) {
 	    if (getUserVisibleHint()) {
-			String code;
+            //SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext());
+	    	//SmsManager smsManager = SmsManager.getDefault();
+
+	    	String code;
 			Intent i;
 		    switch (menuItem.getItemId()) {
 		        case 0:
+		        	// Edit
 					Bundle arguments = new Bundle();
 					arguments.putParcelable("selectedDevice", sim);
 					DialogFragmentEditSim customDevDialogFragment = new DialogFragmentEditSim();
@@ -145,6 +149,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 					customDevDialogFragment.show(getFragmentManager(), DialogFragmentEditSim.ARG_ITEM_ID);
 		            break;
 		        case 1:
+		        	// Delete
 					new AlertDialog.Builder(activity)
 					//.setTitle("Title")
 					.setMessage("Are you sure you want to delete?")
@@ -159,12 +164,13 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 					.setNegativeButton(android.R.string.no, null).show();
 		            break;
 		        case 2:
-		        	// Check balance @ USSD
+		        	// Get balance
 					code = "*143*2*2*2*"+ sim.getNumber() + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 		            break;
 		        case 3:
+		        	// Send load
 	                final EditText input = new EditText(activity);
 	                input.setInputType(InputType.TYPE_CLASS_NUMBER);
 	                input.setRawInputType(Configuration.KEYBOARD_12KEY);
@@ -180,13 +186,21 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 				        	startActivityForResult(i, RESULT_SETTINGS);
 						}})
 					.setNegativeButton(android.R.string.cancel, null).show();
-		        	// send load
+		        	// Send load
 		        	//int load_value = 10; // php
 					//code = "*143*2*4*1*"+load_value+"*"+ sim.getNumber() + Uri.encode("#");
 					//i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	//startActivityForResult(i, RESULT_SETTINGS);
 	                break;
 		        case 4:
+		        	// Share point
+		        	//int data_value = 10; // mb
+					//code = "*143*2*3*5*"+data_value+"*"+ sim.getNumber() + Uri.encode("#");
+					code = "*143*2*4" + Uri.encode("#");
+					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+		        	startActivityForResult(i, RESULT_SETTINGS);
+	                break;
+		        case 5:
 		        	// send data
 		        	//int data_value = 10; // mb
 					//code = "*143*2*3*5*"+data_value+"*"+ sim.getNumber() + Uri.encode("#");
@@ -194,6 +208,19 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 	                break;
+		        case 6:
+					// Gift item
+					// Text GIFT ITEMCODE 10-digit mobile number and send to 4438.
+					// 6 gosurf10 = 1 day 40mb
+					//code = "*143*10*6*NUMBER*4*9*6" + Uri.encode("#");
+					//code = "*143*10*6*"+ sim.getNumber() +"*4*9*6"+ Uri.encode("#");
+					code = "*143*10*6"+ Uri.encode("#");
+					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+					startActivityForResult(i, RESULT_SETTINGS);
+    	        	
+					//code = sharedPrefs.getString("pref_sms_gitf_item", "4438:Gift gosurf10");
+    	        	//sendSMS(code+" "+sim.getNumber());
+					break;
 		    }
 		    return true;
 	    }
@@ -240,6 +267,13 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 			}
 		}
 	}
+
+	//private static void sendSMS(String code) {
+    //	String[] sms = code.split(":");
+	//	SmsManager smsManager = SmsManager.getDefault();
+	//	smsManager.sendTextMessage(sms[0], null, sms[1], null, null);
+	//	Toast.makeText(activity, code, Toast.LENGTH_SHORT).show();
+    //}
 
 	/*
 	 * This method is invoked from MainActivity onFinishDialog() method. It is

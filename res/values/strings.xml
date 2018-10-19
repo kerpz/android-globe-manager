@@ -56,7 +56,8 @@
     <string name="pref_sms_activate_point1">SMS Activate Point Code (Redeem1)</string>
     <string name="pref_sms_activate_point2">SMS Activate Point Code (Redeem2)</string>
     <string name="pref_sms_send_load">SMS Send Load Code</string>
-
+    <string name="pref_sms_gift_item">SMS Gift Item Code</string>
+    
     <string name="name">SIM Name (optional)</string>
     <string name="number">SIM Number (required)</string>
     <string name="expire">SIM Expiry (optional)</string>

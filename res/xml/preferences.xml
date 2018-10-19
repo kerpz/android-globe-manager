@@ -164,11 +164,16 @@
 			android:summary="@string/pref_sms_activate_point2" 
 			android:key="pref_sms_activate_point2"
 			android:defaultValue="4438:Redeem gosurf99" />
-				<EditTextPreference 
+		<EditTextPreference 
 			android:title="@string/pref_sms_send_load" 
 			android:summary="@string/pref_sms_send_load" 
 			android:key="pref_sms_send_load"
 			android:defaultValue="2NUMBER:5" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_gift_item" 
+			android:summary="@string/pref_sms_gift_item" 
+			android:key="pref_sms_gift_item"
+			android:defaultValue="4438:Gift gosurf10" />
 	</PreferenceCategory>
 	
 </PreferenceScreen>
