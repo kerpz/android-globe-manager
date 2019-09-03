@@ -114,12 +114,12 @@ public class FragmentCardStatus extends Fragment {
 	                	case 5:
                         	if (method == 1) { // ussd
     		                    if (isChecked) {
-	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_on", "*143*2*4*2*1*1#");
+	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_on", "*143*2*5*2*1*1#");
 	                            	code = code.replace("#", "") + Uri.encode("#");
 	                    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 	                    			context.startActivity(i);
     		                    } else {
-	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_off", "*143*2*4*3*1*2*1#");
+	                            	code = sharedPrefs.getString("pref_ussd_surf_alert_off", "*143*2*5*3*1*2*1#");
 	                            	code = code.replace("#", "") + Uri.encode("#");
 	                    			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 	                    			context.startActivity(i);
@@ -153,7 +153,7 @@ public class FragmentCardStatus extends Fragment {
                     switch (getAdapterPosition()) {
                     	case 0:
                         	if (method == 1) { // ussd
-                	        	code = sharedPrefs.getString("pref_ussd_load_balance", "*143*2*1*1#");
+                	        	code = sharedPrefs.getString("pref_ussd_load_balance", "*143*2*2*1#");
                 	        	code = code.replace("#", "") + Uri.encode("#");
                 	        	// Check your balance @ USSD
                 				//code = "*143*2*1*1" + Uri.encode("#");
@@ -169,7 +169,7 @@ public class FragmentCardStatus extends Fragment {
                         	break;
                     	case 1:
                         	if (method == 1) { // ussd
-                            	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*11*1*1#");
+                            	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*10*1*1#");
                             	code = code.replace("#", "") + Uri.encode("#");
                     			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                     			context.startActivity(i);
@@ -178,8 +178,8 @@ public class FragmentCardStatus extends Fragment {
                         	}
                         	break;
                     	case 2:
-                        	if (method == 1) { // ussd
-                            	code = sharedPrefs.getString("pref_ussd_data_balance", "*143*1*7#");
+                        	if (method == 1) { // ussd *143*1*7
+                            	code = sharedPrefs.getString("pref_ussd_data_balance", "*143*2*5*1*4#");
                             	code = code.replace("#", "") + Uri.encode("#");
                     			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                     			context.startActivity(i);
@@ -205,7 +205,7 @@ public class FragmentCardStatus extends Fragment {
                         	break;
                     	case 5:
                         	if (method == 1) { // ussd
-                            	code = sharedPrefs.getString("pref_ussd_surf_alert_status", "*143*2*4*4*1#");
+                            	code = sharedPrefs.getString("pref_ussd_surf_alert_status", "*143*2*5*4*1#");
                             	code = code.replace("#", "") + Uri.encode("#");
                     			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                     			context.startActivity(i);

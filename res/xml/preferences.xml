@@ -56,7 +56,7 @@
 			android:title="@string/pref_ussd_data_balance" 
 			android:summary="@string/pref_ussd_data_balance" 
 			android:key="pref_ussd_data_balance"
-			android:defaultValue="*143*1*7#" />
+			android:defaultValue="*143*2*5*1*4#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_reward_balance" 
 			android:summary="@string/pref_ussd_reward_balance" 
@@ -66,17 +66,17 @@
 			android:title="@string/pref_ussd_surf_alert_status" 
 			android:summary="@string/pref_ussd_surf_alert_status" 
 			android:key="pref_ussd_surf_alert_status"
-			android:defaultValue="*143*2*4*4*1#" />
+			android:defaultValue="*143*2*5*4*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_surf_alert_on" 
 			android:summary="@string/pref_ussd_surf_alert_on" 
 			android:key="pref_ussd_surf_alert_on"
-			android:defaultValue="*143*2*4*2*1*1#" />
+			android:defaultValue="*143*2*5*2*1*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_surf_alert_off" 
 			android:summary="@string/pref_ussd_surf_alert_off" 
 			android:key="pref_ussd_surf_alert_off"
-			android:defaultValue="*143*2*4*3*1*2*1#" />
+			android:defaultValue="*143*2*5*3*1*2*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load1" 
 			android:summary="@string/pref_ussd_activate_load1" 
