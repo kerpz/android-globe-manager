@@ -91,7 +91,7 @@
 			android:title="@string/pref_ussd_activate_point1" 
 			android:summary="@string/pref_ussd_activate_point1" 
 			android:key="pref_ussd_activate_point1"
-			android:defaultValue="*143*11*2*4*9*9*9*7*2*2*1#" />
+			android:defaultValue="*143*10*2*4*9*9*9*7*2*2*1#" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_point2" 
 			android:summary="@string/pref_ussd_activate_point2" 
@@ -148,22 +148,32 @@
 			android:title="@string/pref_sms_activate_load1" 
 			android:summary="@string/pref_sms_activate_load1" 
 			android:key="pref_sms_activate_load1"
-			android:defaultValue="8080:Gotscombodd70" />
+			android:defaultValue="8080:Gosakto90" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_load2" 
 			android:summary="@string/pref_sms_activate_load2" 
 			android:key="pref_sms_activate_load2"
-			android:defaultValue="8080:Gotscombogbbff108" />
+			android:defaultValue="8080:Gotscombogbf121" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_activate_load3" 
+			android:summary="@string/pref_sms_activate_load3" 
+			android:key="pref_sms_activate_load3"
+			android:defaultValue="8080:Gounli20" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_point1" 
 			android:summary="@string/pref_sms_activate_point1" 
 			android:key="pref_sms_activate_point1"
-			android:defaultValue="4438:Redeem gosurf50" />
+			android:defaultValue="4438:Redeem gosurf15" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_activate_point2" 
 			android:summary="@string/pref_sms_activate_point2" 
 			android:key="pref_sms_activate_point2"
-			android:defaultValue="4438:Redeem gosurf99" />
+			android:defaultValue="4438:Redeem gosurf50" />
+		<EditTextPreference 
+			android:title="@string/pref_sms_activate_point3" 
+			android:summary="@string/pref_sms_activate_point3" 
+			android:key="pref_sms_activate_point3"
+			android:defaultValue="4438:Redeem gounli20" />
 		<EditTextPreference 
 			android:title="@string/pref_sms_send_load" 
 			android:summary="@string/pref_sms_send_load" 

@@ -145,25 +145,36 @@ public class ActivityMain extends AppCompatActivity {
     	String[] code;
         switch (item.getItemId()) {
 	        case R.id.action_activate_load1:
-	        	code = sharedPrefs.getString("pref_sms_activate_load1", "8080:Gotscombodd70").split(":");
+	        	code = sharedPrefs.getString("pref_sms_activate_load1", "8080:Gosakto90").split(":");
 				smsManager.sendTextMessage(code[0], null, code[1], null, null);
 				return true;
 	        case R.id.action_activate_load2:
-	        	code = sharedPrefs.getString("pref_sms_activate_load2", "8080:Gotscombogbbff108").split(":");
+	        	code = sharedPrefs.getString("pref_sms_activate_load2", "8080:Gotscombogbf121").split(":");
+				smsManager.sendTextMessage(code[0], null, code[1], null, null);
+				return true;
+	        case R.id.action_activate_load3:
+	        	code = sharedPrefs.getString("pref_sms_activate_load3", "8080:Gounli20").split(":");
 				smsManager.sendTextMessage(code[0], null, code[1], null, null);
 				return true;
 	        case R.id.action_activate_point1:
 	        	// redeem gosurf50 (redeem item)
 	        	// gift gosurf50 917xxxxxxx (gift item)
 	        	// share 917xxxxxxx 10 (share points)
-	        	code = sharedPrefs.getString("pref_sms_activate_point1", "4438:Redeem gosurf50").split(":");
+	        	code = sharedPrefs.getString("pref_sms_activate_point1", "4438:Redeem gosurf15").split(":");
 				smsManager.sendTextMessage(code[0], null, code[1], null, null);
 				return true;
 	        case R.id.action_activate_point2:
 	        	// redeem gosurf50 (redeem item)
 	        	// gift gosurf50 917xxxxxxx (gift item)
 	        	// share 917xxxxxxx 10 (share points)
-	        	code = sharedPrefs.getString("pref_sms_activate_point2", "4438:Redeem gosurf99").split(":");
+	        	code = sharedPrefs.getString("pref_sms_activate_point2", "4438:Redeem gosurf50").split(":");
+				smsManager.sendTextMessage(code[0], null, code[1], null, null);
+				return true;
+	        case R.id.action_activate_point3:
+	        	// redeem gosurf50 (redeem item)
+	        	// gift gosurf50 917xxxxxxx (gift item)
+	        	// share 917xxxxxxx 10 (share points)
+	        	code = sharedPrefs.getString("pref_sms_activate_point3", "4438:Redeem gounli20").split(":");
 				smsManager.sendTextMessage(code[0], null, code[1], null, null);
 				return true;
 	        case R.id.action_accessibility:

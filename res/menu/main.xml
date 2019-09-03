@@ -13,6 +13,11 @@
         android:showAsAction="never"
         android:title="@string/action_activate_load2"/>
     <item
+        android:id="@+id/action_activate_load3"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_activate_load3"/>
+    <item
         android:id="@+id/action_activate_point1"
         android:orderInCategory="100"
         android:showAsAction="never"
@@ -22,6 +27,11 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_activate_point2"/>
+    <item
+        android:id="@+id/action_activate_point3"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_activate_point3"/>
     <item
         android:id="@+id/action_accessibility"
         android:orderInCategory="100"

@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Globe Manager</string>
     
-    <string name="action_activate_load1">Activate Load (GoSakto1)</string>
-    <string name="action_activate_load2">Activate Load (GoSakto2)</string>
-    <string name="action_activate_point1">Activate Point (Redeem1)</string>
-    <string name="action_activate_point2">Activate Point (Redeem1)</string>
+    <string name="action_activate_load1">Promo 1 (Gosakto90)</string>
+    <string name="action_activate_load2">Promo 2 (Gotscombogbf121)</string>
+    <string name="action_activate_load3">Promo 3 (Gounli20)</string>
+    <string name="action_activate_point1">Redeem 3pts (Redeem gosurf15)</string>
+    <string name="action_activate_point2">Redeem 10pts (Redeem gosurf50)</string>
+    <string name="action_activate_point3">Redeem 4pts (Redeem gounli20)</string>
     <string name="action_accessibility">Accessibility</string>
     <string name="action_preferences">Preferences</string>
     
@@ -36,10 +38,12 @@
     <string name="pref_ussd_surf_alert_status">USSD Surf Alert Status Code</string>
     <string name="pref_ussd_surf_alert_on">USSD Surf Alert On Code</string>
     <string name="pref_ussd_surf_alert_off">USSD Surf Alert Off Code</string>
-    <string name="pref_ussd_activate_load1">USSD Activate Load Code (Gosakto1)</string>
-    <string name="pref_ussd_activate_load2">USSD Activate Load Code (Gosakto2)</string>
-    <string name="pref_ussd_activate_point1">USSD Activate Point Code (Redeem1)</string>
-    <string name="pref_ussd_activate_point2">USSD Activate Point Code (Redeem2)</string>
+    <string name="pref_ussd_activate_load1">USSD Promo Code 1</string>
+    <string name="pref_ussd_activate_load2">USSD Promo Code 2</string>
+    <string name="pref_ussd_activate_load3">USSD Promo Code 3</string>
+    <string name="pref_ussd_activate_point1">USSD Redeem Code 1</string>
+    <string name="pref_ussd_activate_point2">USSD Redeem Code 2</string>
+    <string name="pref_ussd_activate_point3">USSD Redeem Code 3</string>
     <string name="pref_ussd_send_load">USSD Send Load Code</string>
 
     <string name="pref_sms">SMS Preferences</string>
@@ -51,10 +55,12 @@
     <string name="pref_sms_surf_alert_status">SMS Surf Alert Status Code</string>
     <string name="pref_sms_surf_alert_on">SMS Surf Alert On Code</string>
     <string name="pref_sms_surf_alert_off">SMS Surf Alert Off Code</string>
-    <string name="pref_sms_activate_load1">SMS Activate Load Code (Gosakto1)</string>
-    <string name="pref_sms_activate_load2">SMS Activate Load Code (Gosakto2)</string>
-    <string name="pref_sms_activate_point1">SMS Activate Point Code (Redeem1)</string>
-    <string name="pref_sms_activate_point2">SMS Activate Point Code (Redeem2)</string>
+    <string name="pref_sms_activate_load1">SMS Promo Code 1</string>
+    <string name="pref_sms_activate_load2">SMS Promo Code 2</string>
+    <string name="pref_sms_activate_load3">SMS Promo Code 3</string>
+    <string name="pref_sms_activate_point1">SMS Redeem Code 1</string>
+    <string name="pref_sms_activate_point2">SMS Redeem Code 2</string>
+    <string name="pref_sms_activate_point3">SMS Redeem Code 3</string>
     <string name="pref_sms_send_load">SMS Send Load Code</string>
     <string name="pref_sms_gift_item">SMS Gift Item Code</string>
     
