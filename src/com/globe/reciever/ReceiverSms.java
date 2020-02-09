@@ -173,8 +173,8 @@ public class ReceiverSms extends BroadcastReceiver {
 
 				if (sender.equals("4438")) {
 					Matcher matcher;
-					//String test = "Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.";
-					matcher = Pattern.compile("Your regular points of ([0-9]+[.][0-9]+) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
+					// You have a total of 10 Globe Rewards point/s. Points earned in 2019 are valid for redemption until 03/31/2020 only. Download the Globe Rewards app via http://glbe.co/GRewardsApp to know the list of items you can redeem and partner stores where you can use your points as cash.Your regular points of 10 point/s will expire on 2020-04-01
+					matcher = Pattern.compile("Your regular points of ([0-9]+) point/s will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2})").matcher(content.toString());
 					if (matcher.find()) {
 						String point = matcher.group(1);
 						String year = matcher.group(2);
