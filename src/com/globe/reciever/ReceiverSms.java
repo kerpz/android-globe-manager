@@ -65,7 +65,7 @@ public class ReceiverSms extends BroadcastReceiver {
 						db.close();
 					}
 
-					//Your GoSAKTO promo has expired. Enjoy a week of surfing, texts and calls with the new GOSAKTO120! It has unli allnet texts, unli Globe/TM calls and 1GB for surfing, valid for 7 days, all for just P120. To register, text GOSAKTO120 to 8080 or dial *143# and choose GoSAKTO. You may also try GOSAKTO140, which has unli allnet texts, unli Globe/TM calls and 2GB for surfing, valid for 7 days.
+					// Your GoSAKTO promo has expired. Enjoy a week of surfing, texts and calls with the new GOSAKTO120! It has unli allnet texts, unli Globe/TM calls and 1GB for surfing, valid for 7 days, all for just P120. To register, text GOSAKTO120 to 8080 or dial *143# and choose GoSAKTO. You may also try GOSAKTO140, which has unli allnet texts, unli Globe/TM calls and 2GB for surfing, valid for 7 days.
 					matcher = Pattern.compile("Your GoSAKTO promo has expired.").matcher(content.toString());
 					if (matcher.find()) {
 						AccountModel db = new AccountModel(context);
@@ -156,6 +156,8 @@ public class ReceiverSms extends BroadcastReceiver {
 						db.writeSync();
 						db.close();
 					}
+					
+					// Hi! As of 2019-09-03, 19:35:51, the remaining MB on your active promos are: DATA: 4.86GB (until 2019-09-10, 06:40:57) GoSURF Free WiFi POC: 1GB (until 2019-09-10, 06:40:58) GOWATCH AND PLAY: 2.00GB (until 2019-09-10, 06:40:58)
 
 					matcher = Pattern.compile("Your SurfAlert is currently switched (\\w+).*").matcher(content.toString());
 					if (matcher.find()) {
