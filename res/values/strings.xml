@@ -15,8 +15,10 @@
 
     <string name="image_description">imageButton</string>
 
+    <string name="pref_account">Account Preferences</string>
+    <string name="pref_account_number">Account Number (Globe)</string>
+    
     <string name="pref_alarm">Alarm Preferences</string>
-
     <string name="pref_alarm_duration">ALarm Duration (Minutes)</string>
     <string name="pref_alarm_trigger">ALarm Trigger (Minutes)</string>
     

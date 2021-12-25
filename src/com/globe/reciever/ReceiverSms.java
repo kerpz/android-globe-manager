@@ -37,9 +37,11 @@ public class ReceiverSms extends BroadcastReceiver {
 
 				if (sender.equals("8080")) {
 					Matcher matcher;
+					//gosakto status to 8080
 					//Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.,Your remaining 2947MB of consumable internet from your GoSAKTO subscription will expire on 2017-08-07 22:10:00.
 					//Status: Your Unlimited Texts to All Networks from your GoSAKTO subscription will expire on 2018-08-29 19:02:13.,Your remaining 1021.00MB of consumable internet from your GoSAKTO subscription will expire on 2018-08-29 19:02:13.
-					//Matcher matcher = Pattern.compile("([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2}).,Your remaining ([0-9]{1,5})").matcher(content.toString());
+					//Status: Your 7856.00 Texts to Globe/TM/Cherry from your GoSAKTO subscription will expire on 2020-11-27 07:26:13.,Your remaining 16052.00MB of consumable internet from your GoSAKTO subscription will expire on 2020-11-27 07:26:13.
+					//matcher = Pattern.compile("Your () Texts to () from your GoSAKTO subscription will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2}).").matcher(content.toString());
 					matcher = Pattern.compile("Your remaining ([0-9]+[.][0-9]+)([A-Z])B of consumable internet from your GoSAKTO subscription will expire on ([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})").matcher(content.toString());
 					if (matcher.find()) {
 						String data;

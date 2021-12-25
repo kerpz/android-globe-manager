@@ -71,13 +71,6 @@ public class SimModel extends SQLiteOpenHelper {
 		if (cursor != null)
 			cursor.moveToFirst();
 
-		/*
-		Sim sim = new Sim(Integer.parseInt(cursor.getString(0)),
-										cursor.getString(1),
-										cursor.getString(2),
-										cursor.getString(3),
-										cursor.getString(4));
-		*/
 		Sim sim = new Sim();
 		sim.setID(Integer.parseInt(cursor.getString(0)));
 		sim.setName(cursor.getString(1));
@@ -98,13 +91,6 @@ public class SimModel extends SQLiteOpenHelper {
 		if (cursor != null)
 			cursor.moveToFirst();
 
-		/*
-		Sim sim = new Sim(Integer.parseInt(cursor.getString(0)),
-										cursor.getString(1),
-										cursor.getString(2),
-										cursor.getString(3),
-										cursor.getString(4));
-		*/
 		Sim sim = new Sim();
 		sim.setID(Integer.parseInt(cursor.getString(0)));
 		sim.setName(cursor.getString(1));

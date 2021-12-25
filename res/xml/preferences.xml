@@ -22,6 +22,13 @@
 				android:defaultValue="00:00" />
 	</PreferenceCategory>
  	-->
+ 	<PreferenceCategory android:title="@string/pref_account" >
+		<EditTextPreference 
+			android:title="@string/pref_account_number" 
+			android:summary="@string/pref_account_number" 
+			android:key="pref_account_number"
+			android:defaultValue="9170000000" />
+	</PreferenceCategory>
  	<PreferenceCategory android:title="@string/pref_alarm" >
 		<EditTextPreference 
 			android:title="@string/pref_alarm_duration" 
@@ -34,7 +41,7 @@
 			android:key="pref_alarm_trigger"
 			android:defaultValue="2" />
 	</PreferenceCategory>
-		<ListPreference
+	<ListPreference
 	    android:title="Query Method"
 		android:summary="Select the type of query method"
 		android:key="pref_query_method"
@@ -45,63 +52,51 @@
 		<EditTextPreference 
 			android:title="@string/pref_ussd_load_balance" 
 			android:summary="@string/pref_ussd_load_balance" 
-			android:key="pref_ussd_load_balance"
-			android:defaultValue="*143*2*2*1#" />
+			android:key="pref_ussd_load_balance" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_point_balance" 
 			android:summary="@string/pref_ussd_point_balance" 
-			android:key="pref_ussd_point_balance"
-			android:defaultValue="*143*10*1*1#" />
+			android:key="pref_ussd_point_balance" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_data_balance" 
 			android:summary="@string/pref_ussd_data_balance" 
-			android:key="pref_ussd_data_balance"
-			android:defaultValue="*143*2*5*1*4#" />
+			android:key="pref_ussd_data_balance" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_reward_balance" 
 			android:summary="@string/pref_ussd_reward_balance" 
-			android:key="pref_ussd_reward_balance"
-			android:defaultValue="*143#" />
+			android:key="pref_ussd_reward_balance" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_surf_alert_status" 
 			android:summary="@string/pref_ussd_surf_alert_status" 
-			android:key="pref_ussd_surf_alert_status"
-			android:defaultValue="*143*2*5*4*1#" />
+			android:key="pref_ussd_surf_alert_status" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_surf_alert_on" 
 			android:summary="@string/pref_ussd_surf_alert_on" 
-			android:key="pref_ussd_surf_alert_on"
-			android:defaultValue="*143*2*5*2*1*1#" />
+			android:key="pref_ussd_surf_alert_on" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_surf_alert_off" 
 			android:summary="@string/pref_ussd_surf_alert_off" 
-			android:key="pref_ussd_surf_alert_off"
-			android:defaultValue="*143*2*5*3*1*2*1#" />
+			android:key="pref_ussd_surf_alert_off" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load1" 
 			android:summary="@string/pref_ussd_activate_load1" 
-			android:key="pref_ussd_activate_load1"
-			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
+			android:key="pref_ussd_activate_load1" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_load2" 
 			android:summary="@string/pref_ussd_activate_load2" 
-			android:key="pref_ussd_activate_load2"
-			android:defaultValue="*143*1*1*6*1*4*1*5*3*1#" />
+			android:key="pref_ussd_activate_load2" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_point1" 
 			android:summary="@string/pref_ussd_activate_point1" 
-			android:key="pref_ussd_activate_point1"
-			android:defaultValue="*143*10*2*4*9*9*9*7*2*2*1#" />
+			android:key="pref_ussd_activate_point1" />
 		<EditTextPreference 
 			android:title="@string/pref_ussd_activate_point2" 
 			android:summary="@string/pref_ussd_activate_point2" 
-			android:key="pref_ussd_activate_point2"
-			android:defaultValue="*143*11*2#" />
-				<EditTextPreference 
+			android:key="pref_ussd_activate_point2" />
+		<EditTextPreference 
 			android:title="@string/pref_ussd_send_load" 
 			android:summary="@string/pref_ussd_send_load" 
-			android:key="pref_ussd_send_load"
-			android:defaultValue="*143*2*2*NUMBER*PIN#" />
+			android:key="pref_ussd_send_load" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_sms" >
 		<EditTextPreference 

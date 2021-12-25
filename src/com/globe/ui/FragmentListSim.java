@@ -128,7 +128,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	    menu.add(0, 3 ,3, "Send Load(PHP)");
 	    menu.add(0, 4 ,4, "Send Data(MB)");
 	    menu.add(0, 5 ,5, "Share Point(s)");
-	    menu.add(0, 6 ,6, "Gift Item");
+	    menu.add(0, 6 ,6, "Send Promo");
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 		            break;
 		        case 2:
 		        	// Get balance
-					code = "*143*2*2*2*"+ sim.getNumber() + Uri.encode("#");
+					code = "*143*0*5*1*1*"+ sim.getNumber() + "*1" + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 		            break;
@@ -178,48 +178,40 @@ public class FragmentListSim extends Fragment implements OnItemClickListener, On
 	                .setTitle("Amount")
 	                .setView(input)  
 					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						// 2*2*917xxxxxxx*PIN
 						public void onClick(DialogInterface dialog, int whichButton) {
-							//Toast.makeText(activity, "Sent " + input.getText() + " to " + sim.getNumber(), Toast.LENGTH_SHORT).show();
-							String code = "*143*2*4*1*"+ input.getText() +"*"+ sim.getNumber() + Uri.encode("#");
+							String code = "*143*0*5*1*1*"+ sim.getNumber() +"*3*1*"+ input.getText() + Uri.encode("#");
 							Intent i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 				        	startActivityForResult(i, RESULT_SETTINGS);
 						}})
 					.setNegativeButton(android.R.string.cancel, null).show();
-		        	// Send load
-		        	//int load_value = 10; // php
-					//code = "*143*2*4*1*"+load_value+"*"+ sim.getNumber() + Uri.encode("#");
-					//i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-		        	//startActivityForResult(i, RESULT_SETTINGS);
 	                break;
 		        case 4:
-		        	// Share point
-		        	//int data_value = 10; // mb
-					//code = "*143*2*3*5*"+data_value+"*"+ sim.getNumber() + Uri.encode("#");
-					code = "*143*2*4" + Uri.encode("#");
+		        	// send point
+					code = "*143*0*5*1*1*"+ sim.getNumber() + "*2*1" + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
 		        	startActivityForResult(i, RESULT_SETTINGS);
 	                break;
 		        case 5:
 		        	// send data
-		        	//int data_value = 10; // mb
-					//code = "*143*2*3*5*"+data_value+"*"+ sim.getNumber() + Uri.encode("#");
-					code = "*143*2*4" + Uri.encode("#");
-					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-		        	startActivityForResult(i, RESULT_SETTINGS);
+	                final EditText input2 = new EditText(activity);
+	                input2.setInputType(InputType.TYPE_CLASS_NUMBER);
+	                input2.setRawInputType(Configuration.KEYBOARD_12KEY);
+		        	new AlertDialog.Builder(activity)
+	                .setTitle("Amount")
+	                .setView(input2)  
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int whichButton) {
+							String code = "*143*0*5*1*1*"+ sim.getNumber() +"*4*1*"+ input2.getText() + Uri.encode("#");
+							Intent i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
+				        	startActivityForResult(i, RESULT_SETTINGS);
+						}})
+					.setNegativeButton(android.R.string.cancel, null).show();
 	                break;
 		        case 6:
-					// Gift item
-					// Text GIFT ITEMCODE 10-digit mobile number and send to 4438.
-					// 6 gosurf10 = 1 day 40mb
-					//code = "*143*10*6*NUMBER*4*9*6" + Uri.encode("#");
-					//code = "*143*10*6*"+ sim.getNumber() +"*4*9*6"+ Uri.encode("#");
-					code = "*143*10*6"+ Uri.encode("#");
+					// send promo
+					code = "*143*0*5*1*1*"+ sim.getNumber() + "*2*1" + Uri.encode("#");
 					i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
-					startActivityForResult(i, RESULT_SETTINGS);
-    	        	
-					//code = sharedPrefs.getString("pref_sms_gitf_item", "4438:Gift gosurf10");
-    	        	//sendSMS(code+" "+sim.getNumber());
+		        	startActivityForResult(i, RESULT_SETTINGS);
 					break;
 		    }
 		    return true;
