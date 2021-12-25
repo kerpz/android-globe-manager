@@ -146,7 +146,6 @@ public class FragmentCardStatus extends Fragment {
                 public void onClick(View v) {
                 	Context context = v.getContext();
                 	Intent i;
-                	String number;
                 	String code;
                     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
                     //String videoRtspUrl = sharedPrefs.getString("prefHost", "rtsp://kerpz.no-ip.org/ch1.h264");
@@ -154,9 +153,12 @@ public class FragmentCardStatus extends Fragment {
                     switch (getAdapterPosition()) {
                     	case 0:
                         	if (method == 1) { // ussd
-                	        	number = sharedPrefs.getString("pref_account_number", "9170000000");
-                				code = "*143*0*5*1*1*"+ number + "*1" + Uri.encode("#");
-                	        	//code = "*143" + Uri.encode("#");
+                	        	code = sharedPrefs.getString("pref_ussd_load_balance", "*143*2*2*1#");
+                	        	code = code.replace("#", "") + Uri.encode("#");
+                	        	// Check your balance @ USSD
+                				//code = "*143*2*1*1" + Uri.encode("#");
+                	        	// Check other's balance @ USSD
+                				//String code = "*143*2*1*2*" + "9XXXXXXXXX" + Uri.encode("#");
                 				i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                 				context.startActivity(i);
                         	}
@@ -167,7 +169,7 @@ public class FragmentCardStatus extends Fragment {
                         	break;
                     	case 1:
                         	if (method == 1) { // ussd
-                            	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*7*2*1#");
+                            	code = sharedPrefs.getString("pref_ussd_point_balance", "*143*10*1*1#");
                             	code = code.replace("#", "") + Uri.encode("#");
                     			i = new Intent("android.intent.action.CALL", Uri.parse("tel:" + code));
                     			context.startActivity(i);
